@@ -1,0 +1,2687 @@
+\documentclass[11pt,a4paper,twoside]{article}
+
+% =========================================================
+% 中文
+% =========================================================
+\usepackage{fontspec}
+\usepackage{xeCJK}
+
+% TeX Live / Overleaf 通常可使用
+% \setmainfont{TeX Gyre Termes}
+% \setCJKmainfont{FandolSong-Regular}
+
+% Windows 本地已安裝字型（實際可用）
+\setmainfont{Times New Roman}
+\setCJKmainfont{Noto Serif TC}
+
+% 如果你在 Windows 上想更接近舊式中文數學書，
+% 可把上一行改成：
+% \setCJKmainfont{PMingLiU}
+% 或：
+% \setCJKmainfont{標楷體}
+
+% =========================================================
+% 數學套件
+% =========================================================
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{mathtools}
+\usepackage{empheq}
+\usepackage[most]{tcolorbox}
+
+% =========================================================
+% 學習註解模式
+% studynotestrue  = 顯示學習註解
+% studynotesfalse = 隱藏學習註解，恢復原書式排版
+% =========================================================
+\newif\ifstudynotes
+\studynotestrue
+% \studynotesfalse
+
+\newtcolorbox{studyNote}[1][]{
+    enhanced,
+    breakable,
+    colback=gray!4,
+    colframe=black!35,
+    boxrule=0.5pt,
+    arc=1mm,
+    left=2mm,
+    right=2mm,
+    top=1.5mm,
+    bottom=1.5mm,
+    before skip=6pt,
+    after skip=8pt,
+    fonttitle=\bfseries,
+    title={複習註解},
+    #1
+}
+
+\newtcolorbox{importantNote}[1][]{
+    enhanced,
+    breakable,
+    colback=gray!8,
+    colframe=black!65,
+    boxrule=0.8pt,
+    arc=1mm,
+    left=2mm,
+    right=2mm,
+    top=1.5mm,
+    bottom=1.5mm,
+    before skip=7pt,
+    after skip=9pt,
+    fonttitle=\bfseries,
+    title={重要觀念},
+    #1
+}
+
+\newcommand{\StudyNote}[2]{%
+    \ifstudynotes
+    \begin{studyNote}[title={#1}]
+    #2
+    \end{studyNote}
+    \fi
+}
+
+\newcommand{\ImportantNote}[2]{%
+    \ifstudynotes
+    \begin{importantNote}[title={#1}]
+    #2
+    \end{importantNote}
+    \fi
+}
+
+% =========================================================
+% 版面設定
+% =========================================================
+\usepackage[
+    a4paper,
+    inner=2.5cm,
+    outer=2.0cm,
+    top=2.5cm,
+    bottom=2.5cm
+]{geometry}
+
+\usepackage{setspace}
+\setstretch{1.25}
+
+\setlength{\parindent}{2em}
+\setlength{\parskip}{0pt}
+
+\setlength{\abovedisplayskip}{6pt}
+\setlength{\belowdisplayskip}{6pt}
+\setlength{\abovedisplayshortskip}{4pt}
+\setlength{\belowdisplayshortskip}{4pt}
+
+% =========================================================
+% 頁碼：模仿原書奇數頁右下、偶數頁左下
+% =========================================================
+\usepackage{fancyhdr}
+\usepackage[hang,flushmargin]{footmisc}
+\pagestyle{fancy}
+\fancyhf{}
+\renewcommand{\headrulewidth}{0pt}
+\fancyfoot[RO,LE]{\small $\boldsymbol{\cdot}\;\thepage\;\boldsymbol{\cdot}$}
+
+% =========================================================
+% 段落定位編號
+% 放在左側，不屬於原書正文
+% =========================================================
+\newcommand{\pnum}[1]{%
+    \makebox[0pt][r]{%
+        \scriptsize\textbf{[#1]}\hspace{0.7em}%
+    }%
+}
+
+% =========================================================
+% 常用符號
+% =========================================================
+\newcommand{\supp}{\operatorname{supp}}
+
+% =========================================================
+% 文件開始
+% =========================================================
+\begin{document}
+
+\setcounter{page}{3}
+
+
+
+\textbf{1.2\qquad 定義與記號}
+
+\vspace{0.8em}
+
+\noindent
+\pnum{1}
+今後將不加聲明地使用下列的記號和定義：
+
+\noindent
+\pnum{2}
+以
+$\{u_1,\cdots,u_n\}$
+表示 $n$ 個元素
+$u_1,\cdots,u_n$
+的集合，而以 $\{u_k\}$ 表示由可數個元素
+$u_1,u_2,\cdots$
+組成的序列。符號 $\Lambda$ 表示空集。以
+$\{x\mid P\}$
+表示具有性質 $P$ 的所有元素 $x$ 的集合。兩個集合 $A$ 與 $B$ 的差
+
+\[
+    A-B=\{x\mid x\in A,\ x\notin B\}
+\]
+
+常以 $A\backslash B$ 表示。
+
+\noindent
+\pnum{3}
+以 $R^n$ 表示所有 $n$ 維點
+$x=(x_1,\cdots,x_n)$
+的集合，叫做 $n$ 維向量空間，
+\[
+    |x|
+    =
+    \left(x_1^2+\cdots+x_n^2\right)^{\frac12}
+\]
+為點 $x$ 的範數（長度），
+\[
+    x\cdot y
+    =
+    x_1y_1+\cdots+x_ny_n
+\]
+為兩點 $x$ 與 $y$ 的內積。$R^1=R$。
+
+\noindent
+\pnum{4}
+$R^n$ 中的一個連通開集 $\Omega$ 叫做 $R^n$ 中的一個區域，
+$\partial\Omega$ 表示 $\Omega$ 的邊界，
+\[
+    \overline{\Omega}=\Omega+\partial\Omega
+\]
+表示 $\Omega$ 在 $R^n$ 中的閉包，$|\Omega|$ 表示 $\Omega$ 的體積。
+如果 $D$ 也是一個區域，且 $\overline{D}$ 是 $\Omega$ 的緊子集
+（有界閉子集），則記為
+\[
+    D\subset \subset \Omega.
+\]
+
+\[
+    B_r(y)
+    =
+    \{x\in\Omega\mid |x-y|<r\}
+\]
+表示中心在 $y$、半徑為 $r$ 的開球。
+
+\noindent
+\pnum{5}
+對函數
+$u(x)=u(x_1,\cdots,x_n)$，
+記
+\[
+    D_i u=\frac{\partial u}{\partial x_i},
+    \qquad
+    D_{ij}u
+    =
+    \frac{\partial^2u}{\partial x_i\partial x_j},
+\]
+\[
+    Du
+    =
+    \nabla u
+    =
+    (D_1u,\cdots,D_nu)
+\]
+為 $u$ 的梯度，
+\[
+    Du\cdot Dv
+    =
+    D_1uD_1v+\cdots+D_nuD_nv,
+\]
+\[
+    |Du|
+    =
+    \left(
+    |D_1u|^2+\cdots+|D_nu|^2
+    \right)^{\frac12},
+\]
+\[
+    \Delta u
+    =
+    D_{11}u+\cdots+D_{nn}u,
+\]
+$\Delta$ 稱為（$n$ 維）Laplace 算子。
+
+\noindent
+\pnum{6}
+非負整數組
+\[
+    a =(a_1,\cdots,a_n)
+\]
+又叫做重指標，並記
+\[
+    |a|
+    =
+    a_1+\cdots+a_n,
+    \qquad
+    a!
+    =
+    a_1!a_2!\cdots a_n!,
+\]
+\[
+    x^a
+    =
+    x_1^{a_1}\cdots x_n^{a_n},
+    \qquad
+    D^a
+    =
+    D_1^{a_1}\cdots D_n^{a_n}
+\]
+表示一個 $|a|$ 階的微分算子。
+
+\noindent
+\pnum{7}
+對定義在區域 $\Omega$ 內的函數，集合
+
+% =========================================================
+% 忠實按照原書換頁
+% =========================================================
+\newpage
+
+% =========================================================
+% 原書第 4 頁
+% =========================================================
+
+\[
+    \supp u
+    =
+    \{x\in\Omega\mid u(x)\neq0\}\text{ 的閉包}
+\]
+
+\noindent
+稱為 $u$ 的支集。如果
+\[
+    \supp u\subset \subset \Omega,
+\]
+則稱 $u$ 在 $\Omega$ 中有緊支集。
+
+\StudyNote{複習註解：支集與緊支集}{
+    \[
+        \supp u
+        =\overline{\{x\in\Omega\mid u(x)\neq0\}}
+    \]
+    可以把 $\supp u$ 直覺理解為「函數真正有活動的區域」。
+    若
+    \[
+        \supp u\subset\subset\Omega,
+    \]
+    表示支集完整縮在 $\Omega$ 的內部，沒有碰到邊界 $\partial\Omega$；
+    因此在靠近邊界的一整個鄰域內，$u=0$。
+
+    要特別區分：$u|_{\partial\Omega}=0$ 只表示「邊界上的值為零」；
+    緊支集則要求函數在抵達邊界以前就已經變成零。
+}
+
+\noindent
+\pnum{8}
+設 $m$ 為非負整數，我們常用到下面一些由連續函數組成的集合
+（也叫做函數空間）。
+
+\[
+    C^m(\Omega)
+    =
+    \left\{
+    u\mid
+    D^\alpha u\text{ 在 }\Omega\text{ 內連續 }
+    \forall\,|\alpha|\leq m
+    \right\}.
+\]
+
+\StudyNote{複習註解：$C^m(\Omega)$}{
+    $C^m(\Omega)$ 表示所有「直到 $m$ 階偏導數都連續」的函數。
+    其中 $|\alpha|$ 代表總微分階數，因此
+    \[
+        |\alpha|\le m
+    \]
+    就是要求所有 $0$ 階、$1$ 階、\ldots、$m$ 階偏導數都連續。
+    例如二維中，$u\in C^2(\Omega)$ 表示
+    \[
+        u,\;u_x,\;u_y,\;u_{xx},\;u_{xy},\;u_{yx},\;u_{yy}
+    \]
+    皆連續。
+
+    \[
+        \boxed{C^m=\text{連續可微到 }m\text{ 階}}
+    \]
+}
+
+\[
+    C^\infty(\Omega)
+    =
+    \bigcap_{m=0}^{\infty}C^m(\Omega)
+    =
+    \left\{
+    u\mid
+    D^\alpha u\text{ 在 }\Omega\text{ 內連續 }
+    \forall\,\alpha
+    \right\}.
+\]
+
+\StudyNote{複習註解：$C^\infty(\Omega)$}{
+    $C^\infty(\Omega)$ 稱為光滑函數空間（smooth functions）。
+    \[
+        C^\infty(\Omega)=\bigcap_{m=0}^{\infty}C^m(\Omega)
+    \]
+    表示函數同時屬於 $C^0(\Omega),C^1(\Omega),C^2(\Omega),\ldots$，
+    也就是不論微分多少次，所得偏導數都存在且連續。
+
+    \[
+        C^\infty(\Omega)\subset\cdots\subset C^2(\Omega)\subset C^1(\Omega)\subset C^0(\Omega).
+    \]
+
+    \[
+        \boxed{C^\infty=\text{無限次連續可微}}
+    \]
+}
+
+\[
+    C_0^m(\Omega)
+    =
+    \left\{
+    u\in C^m(\Omega)
+    \mid
+    u\text{ 在 }\Omega\text{ 中有緊支集}
+    \right\}.
+\]
+
+\StudyNote{複習註解：$C_0^m(\Omega)$}{
+    下標 $0$ 不表示 $u\equiv0$。這裡真正增加的條件是
+    \[
+        \supp u\subset\subset\Omega.
+    \]
+    也就是 $u$ 除了屬於 $C^m(\Omega)$，支集還必須完全位於 $\Omega$ 內部。
+    因此可以記成
+    \[
+        \boxed{C_0^m=C^m+\text{緊支集}}.
+    \]
+}
+
+\[
+    C_0^\infty(\Omega)
+    =
+    \left\{
+    u\in C^\infty(\Omega)
+    \mid
+    u\text{ 在 }\Omega\text{ 中有緊支集}
+    \right\}.
+\]
+
+\ImportantNote{重要觀念：$C_0^\infty(\Omega)$}{
+    \[
+        C_0^\infty(\Omega)
+        =
+        \text{無限光滑}+\text{緊支集}.
+    \]
+    這類函數在 PDE 中通常作為\textbf{測試函數（test function）}。
+    它們可以任意次微分，而且在靠近 $\partial\Omega$ 的地方完全為零，
+    所以做分部積分時特別方便，許多邊界項會消失。
+
+    後面看到
+    \[
+        \forall\,\varphi\in C_0^\infty(\Omega)
+    \]
+    可以直接讀成：「對所有無限光滑、且支集完全位於 $\Omega$ 內部的測試函數 $\varphi$。」
+}
+
+\[
+    C^m(\overline{\Omega})
+    =
+    \left\{
+    u\mid
+    D^\alpha u\text{ 在 }\overline{\Omega}\text{ 上連續 }
+    \forall\,|\alpha|\leq m
+    \right\}.
+\]
+
+\StudyNote{複習註解：$C^m(\overline{\Omega})$}{
+因為
+\[
+    \overline{\Omega}=\Omega\cup\partial\Omega,
+\]
+所以 $C^m(\overline{\Omega})$ 不只要求函數在區域內部光滑到 $m$ 階，
+還要求這些導數的連續性可以一路延伸到邊界。
+
+例如 $\Omega=(0,1)$ 時，$u(x)=1/x$ 在 $\Omega$ 內屬於 $C^\infty(\Omega)$，
+但 $x\to0^+$ 時發散，因此不能連續延伸到 $\overline{\Omega}=[0,1]$。
+
+\[
+    \boxed{C^m(\Omega):\text{只管內部}\qquad
+        C^m(\overline{\Omega}):\text{連邊界也管}}
+\]
+}
+
+\StudyNote{一眼複習：這五個函數空間}{
+    \begin{align*}
+        C^m(\Omega)
+         & :\quad \text{到 }m\text{ 階偏導數都連續}, \\
+        C^\infty(\Omega)
+         & :\quad \text{所有階偏導數都連續（無限光滑）},    \\
+        C_0^m(\Omega)
+         & :\quad C^m+\text{緊支集},            \\
+        C_0^\infty(\Omega)
+         & :\quad C^\infty+\text{緊支集（測試函數）}, \\
+        C^m(\overline{\Omega})
+         & :\quad \text{光滑性延伸到邊界}.
+    \end{align*}
+
+    複習時只問三件事：
+    \begin{enumerate}
+        \item 可以連續微分到幾階？
+        \item 支集有沒有碰到邊界？
+        \item 是否要求連邊界上的連續性也成立？
+    \end{enumerate}
+}
+
+\noindent
+\pnum{9}
+以後如果沒有特別說明，都假定 $\Omega$ 是 $R^n$ 中的有界區域，並記
+\[
+    C(\Omega)=C^0(\Omega),
+    \qquad
+    C_0(\Omega)=C_0^0(\Omega),
+    \qquad
+    C(\overline{\Omega})=C^0(\overline{\Omega}).
+\]
+
+\vspace{1.1em}
+
+\noindent
+\textbf{1.3\qquad Poisson 方程邊值問題與變分問題}
+
+\vspace{0.9em}
+
+\noindent
+\pnum{10}
+本節證明 Poisson 方程 Dirichlet 問題
+
+\begin{empheq}[left=\empheqlbrace]{align}
+    -\Delta u &= f(x) \qquad \text{在 }\Omega\text{ 中}\tag{1.3.1}\\
+    u &= 0 \qquad\qquad \text{在 }\partial\Omega\text{ 上}\tag{1.3.2}
+\end{empheq}
+
+等價於一個變分問題。為此，我們先證明下面的引理。
+
+\vspace{0.4em}
+
+\noindent
+\pnum{11}
+\textbf{變分法基本引理}\qquad
+如果函數 $u\in C^0(\Omega)$ 滿足
+
+\begin{equation}
+    \int_{\Omega}u(x)\varphi(x)\,dx
+    =
+    0,
+    \qquad
+    \forall\,\varphi\in C_0^\infty(\Omega),
+    \tag{1.3.3}
+\end{equation}
+
+則在 $\Omega$ 中 $u\equiv 0 $。
+
+\vspace{0.3em}
+
+\noindent
+\pnum{12}
+\textbf{證}\qquad
+用反證法。假定存在 $x_0\in\Omega$ 使 $u(x_0)\neq0$，
+不妨假定
+\[
+    u(x_0)>0.
+\]
+由函數 $u(x)$ 的連續性，存在 $x_0$ 的鄰域
+$B_\varepsilon(x_0)\Subset\Omega$，使得
+\[
+    u(x)>0
+    \qquad
+    \forall\,x\in B_\varepsilon(x_0).
+\]
+
+\noindent
+\pnum{13}
+對於函數
+\[
+    \varphi(x)
+    =
+    \begin{cases}
+        \displaystyle
+        \exp\left\{
+        \frac{|x-x_0|^2}
+        {|x-x_0|^2-\varepsilon^2}
+        \right\},
+         &
+        \text{當 }x\in B_\varepsilon(x_0),
+        \\[3ex]
+        0,
+         &
+        \text{當 }x\in\Omega\backslash B_\varepsilon(x_0),
+    \end{cases}
+\]
+
+% =========================================================
+
+% 原書第 5 頁
+% =========================================================
+\newpage
+
+\noindent
+\pnum{14}
+容易驗證
+\[
+    \varphi(x)\in C_0^\infty(\Omega),
+    \qquad
+    \varphi(x)>0,
+    \qquad
+    \forall\,x\in B_\varepsilon(x_0).
+\]
+
+於是有
+\begin{equation*}
+    \int_{\Omega}u(x)\varphi(x)\,dx
+    =
+    \int_{B_\varepsilon(x_0)}u(x)\varphi(x)\,dx
+    >0.
+\end{equation*}
+
+此式與假設 $u$ 滿足條件（1.3.3）矛盾。
+
+\StudyNote{複習註解：變分法基本引理的反證法收尾}{
+    前面假設存在 $x_0\in\Omega$ 使 $u(x_0)>0$，並選取
+    $\varphi\in C_0^\infty(\Omega)$，使它只在 $B_\varepsilon(x_0)$
+    附近活動且保持正值。
+
+    因此在 $B_\varepsilon(x_0)$ 中，
+    \[
+        u(x)>0,\qquad \varphi(x)>0,
+    \]
+    所以
+    \[
+        u(x)\varphi(x)>0.
+    \]
+    積分自然得到
+    \[
+        \int_\Omega u\varphi\,dx>0.
+    \]
+    但假設（1.3.3）要求對所有
+    $\varphi\in C_0^\infty(\Omega)$ 都有
+    \[
+        \int_\Omega u\varphi\,dx=0,
+    \]
+    兩者矛盾，因此只能有 $u\equiv0$。
+
+    \[
+        \boxed{\text{測試函數 }\varphi\text{ 的作用：把 }u\text{ 在局部的正值「抓出來」}}
+    \]
+}
+
+\vspace{0.4em}
+
+\noindent
+\pnum{15}
+採用記號
+\[
+    B_0^2
+    =
+    \left\{
+    v\in C^2(\Omega)\cap C^1(\overline{\Omega})
+    \mid
+    v=0\text{ 在 }\partial\Omega\text{ 上}
+    \right\},
+\]
+\begin{equation}
+    I(v)
+    =
+    \int_{\Omega}
+    \left(
+    \frac12 |Dv|^2-fv
+    \right)\,dx.
+    \tag{1.3.4}
+\end{equation}
+
+\StudyNote{複習註解：$B_0^2$ 與泛函 $I(v)$}{
+    $B_0^2$ 是本節允許拿來比較的函數集合。對 $v\in B_0^2$：
+
+    \[
+        v\in C^2(\Omega)
+    \]
+    表示 $v$ 在 $\Omega$ 內具有連續的二階偏導數；
+
+    \[
+        v\in C^1(\overline{\Omega})
+    \]
+    表示 $v$ 與一階偏導數可以連續延伸到邊界；
+
+    而
+    \[
+        v=0\qquad\text{在 }\partial\Omega\text{ 上}
+    \]
+    正是齊次 Dirichlet 邊界條件。
+
+    泛函
+    \[
+        I(v)=\int_\Omega\left(\frac12|Dv|^2-fv\right)\,dx
+    \]
+    不是把一個點 $x$ 映成數，而是把「整個函數 $v$」映成一個實數。
+    因此可以把 $I$ 想成函數空間上的「能量」。
+
+    \[
+        \boxed{v\longmapsto I(v)}
+    \]
+}
+
+\noindent
+\pnum{16}
+下面的定理說明，求邊值問題（1.3.1）、（1.3.2）在 $B_0^2$ 中的解等價
+於在 $B_0^2$ 中求泛函（1.3.4）的極值函數。
+
+\vspace{0.5em}
+
+\noindent
+\pnum{17}
+\textbf{定理 1.3.1}\qquad
+設 $\Omega$ 具有 $C^1$ 邊界 $\partial\Omega$，
+$f\in C^0(\Omega)$，$u\in B_0^2$。那麼，
+$u$ 是 Poisson 方程（1.3.1）的解的充要條件是 $u$ 是變分問題
+\begin{equation}
+    I(u)
+    =
+    \min_{v\in B_0^2} I(v)
+    \tag{1.3.5}
+\end{equation}
+的解。
+
+\ImportantNote{重要觀念：Poisson 方程與變分問題的等價}{
+    這個定理是本節的核心：
+
+    \[
+        -\Delta u=f,\qquad u|_{\partial\Omega}=0
+    \]
+
+    與
+
+    \[
+        I(u)=\min_{v\in B_0^2}I(v)
+    \]
+
+    在這裡是等價的。
+
+    也就是說，同一個 $u$ 可以用兩種角度描述：
+
+    \[
+        \boxed{
+            \begin{array}{c}
+                \text{微分方程觀點：解 Poisson 方程} \\[2mm]
+                \Updownarrow               \\[2mm]
+                \text{變分觀點：找使能量 }I\text{ 最小的函數}
+            \end{array}}
+    \]
+
+    這也是後面把 PDE 轉成變分問題、再進一步討論弱解的重要起點。
+}
+
+\vspace{0.4em}
+
+\noindent
+\pnum{18}
+\textbf{證}\qquad
+先證明條件是必要的。設 $u\in B_0^2$ 是 Poisson 方程（1.3.1）
+的解。在奧式公式（Euler 定理）%
+\footnote{\textbf{redderLCA註：}現代通常稱為「散度定理」（Divergence Theorem）。}
+\begin{equation}
+    \int_{\Omega}
+    \left(
+    D_1u_1'+\cdots+D_nu_n'
+    \right)\,dx
+    =
+    \int_{\partial\Omega}
+    \left[
+        u_1'\cos(\nu,x_1)+\cdots+u_n'\cos(\nu,x_n)
+        \right]\,ds
+    \tag{1.3.6}
+\end{equation}
+（其中 $\nu$ 為外法向單位向量）中取
+\[
+    (u_1',\cdots,u_n')
+    =
+    (vD_1u,\cdots,vD_nu)
+    =
+    vDu,
+\]
+得出格林（Green）公式
+\begin{equation}
+    \int_{\Omega}v\Delta u\,dx
+    +
+    \int_{\Omega}Du\cdot Dv\,dx
+    =
+    \int_{\partial\Omega}
+    v\frac{\partial u}{\partial\nu}\,ds.
+    \tag{1.3.7}
+\end{equation}
+
+\StudyNote{複習註解：從 Euler 定理到 Green 公式}{
+    式（1.3.6）就是 $n$ 維的 Gauss 散度定理（本書稱為 Euler 定理）。
+    本書因舊式印刷，向量場分量記成
+    \[
+        (u_1',\ldots,u_n').
+    \]
+    這裡的 $u_i'$ 是（1.3.6）中輔助向量場的第 $i$ 個分量，
+    \textbf{不要把它直接理解成 Poisson 方程中 $u$ 的偏導數}。
+
+    \vspace{0.4em}
+    \noindent
+    \textbf{第一步：選擇向量場}
+
+    作者在（1.3.6）中取
+    \[
+        (u_1',\ldots,u_n')
+        =
+        (vD_1u,\ldots,vD_nu)
+        =
+        vDu.
+    \]
+    也就是對每個 $i=1,\ldots,n$，
+    \[
+        u_i'=vD_i u.
+    \]
+
+    \vspace{0.4em}
+    \noindent
+    \textbf{第二步：處理（1.3.6）的左邊}
+
+    因為（1.3.6）的左邊本來就是
+    \[
+        D_1u_1'+\cdots+D_nu_n',
+    \]
+    所以代入 $u_i'=vD_i u$ 後，
+    \[
+        D_i u_i'
+        =
+        D_i(vD_i u).
+    \]
+    使用乘積微分法則，
+    \[
+        D_i(vD_i u)
+        =
+        (D_i v)(D_i u)+vD_{ii}u.
+    \]
+    把 $i=1,\ldots,n$ 全部相加：
+    \[
+        \begin{aligned}
+            \sum_{i=1}^{n}D_i u_i'
+             & =
+            \sum_{i=1}^{n}(D_i v)(D_i u)
+            +
+            v\sum_{i=1}^{n}D_{ii}u
+            \\
+             & =
+            Du\cdot Dv+v\Delta u.
+        \end{aligned}
+    \]
+    其中
+    \[
+        Du\cdot Dv
+        =
+        \sum_{i=1}^{n}(D_i u)(D_i v),
+        \qquad
+        \Delta u
+        =
+        \sum_{i=1}^{n}D_{ii}u.
+    \]
+
+    \vspace{0.4em}
+    \noindent
+    \textbf{第三步：處理（1.3.6）的右邊}
+
+    因為外法向單位向量 $\nu$ 的第 $i$ 個分量可以寫成方向餘弦
+    \[
+        \nu_i=\cos(\nu,x_i),
+    \]
+    所以代入 $u_i'=vD_i u$：
+    \[
+        \begin{aligned}
+             & u_1'\cos(\nu,x_1)+\cdots+u_n'\cos(\nu,x_n)
+            \\
+             & \qquad
+            =
+            v\sum_{i=1}^{n}D_i u\,\nu_i
+            =
+            v(Du\cdot\nu).
+        \end{aligned}
+    \]
+    而 $u$ 沿外法向方向的方向導數定義為
+    \[
+        \boxed{
+            \frac{\partial u}{\partial\nu}
+            =
+            Du\cdot\nu
+        }.
+    \]
+    因此（1.3.6）的邊界項就是
+    \[
+        v\frac{\partial u}{\partial\nu}.
+    \]
+
+    \vspace{0.4em}
+    \noindent
+    \textbf{第四步：代回散度定理}
+
+    於是（1.3.6）變成
+    \[
+        \int_{\Omega}
+        \left(
+        Du\cdot Dv+v\Delta u
+        \right)\,dx
+        =
+        \int_{\partial\Omega}
+        v\frac{\partial u}{\partial\nu}\,ds.
+    \]
+    也就是（1.3.7）：
+    \[
+        \boxed{
+            \int_{\Omega}v\Delta u\,dx
+            +
+            \int_{\Omega}Du\cdot Dv\,dx
+            =
+            \int_{\partial\Omega}
+            v\frac{\partial u}{\partial\nu}\,ds
+        }.
+    \]
+
+    因此這一段的推導主線可以記成
+    \[
+        \boxed{
+            \text{Gauss 散度定理（1.3.6）}
+            \;+\;
+            (u_1',\ldots,u_n')=vDu
+            \;+\;
+            \text{乘積法則}
+            \;\Longrightarrow\;
+            \text{Green 公式（1.3.7）}
+        }.
+    \]
+
+    而（1.3.7）本質上就是多維的分部積分：
+    \[
+        \boxed{
+            \int_\Omega v\Delta u\,dx
+            =
+            -\int_\Omega Du\cdot Dv\,dx
+            +
+            \int_{\partial\Omega}
+            v\frac{\partial u}{\partial\nu}\,ds
+        }.
+    \]
+}
+
+\StudyNote{複習註解：法向導數 $\displaystyle \frac{\partial u}{\partial\nu}$}{
+    法向導數其實就是\textbf{方向導數}的一個特殊情形：方向特別選成邊界
+    $\partial\Omega$ 上的外法向單位向量 $\nu$。
+
+    設 $x_0\in\partial\Omega$，從 $x_0$ 沿著外法向方向 $\nu$ 移動。
+    用參數 $t$ 表示移動距離，路徑可寫成
+    \[
+        x(t)=x_0+t\nu.
+    \]
+    把多變數函數 $u$ 限制在這條直線上，得到一個一變數函數
+    \[
+        g(t)=u(x_0+t\nu).
+    \]
+    因此，$u$ 在 $x_0$ 沿 $\nu$ 方向的變化率就是
+    \[
+        \frac{\partial u}{\partial\nu}(x_0)
+        =
+        \left.
+        \frac{d}{dt}u(x_0+t\nu)
+        \right|_{t=0}.
+    \]
+
+    利用鏈式法則，
+    \[
+        \frac{d}{dt}u(x_0+t\nu)
+        =
+        Du(x_0+t\nu)\cdot\nu.
+    \]
+    令 $t=0$，便得到
+    \[
+        \boxed{
+            \frac{\partial u}{\partial\nu}(x_0)
+            =
+            Du(x_0)\cdot\nu
+        }.
+    \]
+
+    在二維中，若
+    \[
+        Du=(D_1u,D_2u),
+        \qquad
+        \nu=(\nu_1,\nu_2),
+    \]
+    則
+    \[
+        \frac{\partial u}{\partial\nu}
+        =
+        D_1u\,\nu_1+D_2u\,\nu_2.
+    \]
+    而本書（1.3.6）使用方向餘弦記號
+    \[
+        \nu_i=\cos(\nu,x_i),
+    \]
+    因此在 $n$ 維中
+    \[
+        \frac{\partial u}{\partial\nu}
+        =
+        \sum_{i=1}^{n}
+        D_i u\,\cos(\nu,x_i).
+    \]
+
+    幾何上，
+    \[
+        Du\cdot\nu
+        =
+        |Du|\,|\nu|\cos\theta.
+    \]
+    由於 $\nu$ 是單位向量，$|\nu|=1$，所以
+    \[
+        \frac{\partial u}{\partial\nu}
+        =
+        |Du|\cos\theta.
+    \]
+    因此法向導數可理解成：
+    \[
+        \boxed{
+            \text{梯度 }Du\text{ 在外法線方向 }\nu\text{ 上的分量（投影）}
+        }.
+    \]
+
+    這也說明為什麼 Green 公式的邊界項會出現
+    \[
+        v\frac{\partial u}{\partial\nu}.
+    \]
+    因為散度定理的邊界積分只取向量場穿過邊界的\textbf{法向分量}。
+}
+
+
+\noindent
+\pnum{19}
+由於 $-\Delta u=f$，由上式得出，對任意 $v\in B_0^2$ 有
+\begin{equation}
+    \int_{\Omega}
+    \left(
+    Du\cdot Dv-fv
+    \right)\,dx
+    =
+    0.
+    \tag{1.3.8}
+\end{equation}
+
+\ImportantNote{重要觀念：式（1.3.8）在說什麼？}{
+    因為 $v\in B_0^2$，所以
+    \[
+        v=0\qquad\text{在 }\partial\Omega\text{ 上}.
+    \]
+    因此 Green 公式中的邊界項
+    \[
+        \int_{\partial\Omega}
+        v\frac{\partial u}{\partial\nu}\,ds
+    \]
+    直接消失。
+
+    再利用
+    \[
+        -\Delta u=f
+        \quad\Longleftrightarrow\quad
+        \Delta u=-f,
+    \]
+    便得到
+    \[
+        \int_\Omega(Du\cdot Dv-fv)\,dx=0.
+    \]
+
+    這個式子已經開始具有「弱形式」的味道：
+    原本的二階導數 $\Delta u$ 經由分部積分，被轉成只含一階導數的
+    $Du\cdot Dv$。
+    這個技巧之後會成為弱解與 Sobolev 空間的核心。
+}
+
+
+% 原書第 6 頁
+% =========================================================
+\newpage
+
+\noindent
+\pnum{20}
+由（1.3.4）及（1.3.8）有
+\begin{equation}
+    \begin{aligned}
+        I(v)
+         & =
+        \frac{1}{2}\int_{\Omega}|Dv|^2\,dx
+        -
+        \int_{\Omega}fv\,dx
+        \\
+         & =
+        \frac{1}{2}\int_{\Omega}|Dv|^2\,dx
+        -
+        \int_{\Omega}Du\cdot Dv\,dx
+        \\
+         & =
+        \frac{1}{2}\int_{\Omega}|Dv-Du|^2\,dx
+        -
+        \frac{1}{2}\int_{\Omega}|Du|^2\,dx.
+    \end{aligned}
+    \tag{1.3.9}
+\end{equation}
+
+\noindent
+\pnum{21}
+由此知
+\[
+    I(u)
+    =
+    -\frac{1}{2}\int_{\Omega}|Du|^2\,dx
+    \leq I(v),
+    \qquad
+    \forall\,v\in B_0^2.
+\]
+
+此式表明 $u$ 是變分問題（1.3.5）的解。
+
+
+\StudyNote{複習註解：為什麼這表示 $u$ 是變分問題的解？}{
+    由（1.3.9）可改寫成
+    \[
+        I(v)
+        =
+        I(u)
+        +
+        \frac12\int_{\Omega}|Dv-Du|^2\,dx.
+    \]
+    因為平方恆非負，
+    \[
+        \frac12\int_{\Omega}|Dv-Du|^2\,dx\ge0,
+    \]
+    所以對所有 $v\in B_0^2$ 都有
+    \[
+        I(v)\ge I(u).
+    \]
+    也就是
+    \[
+        \boxed{
+            I(u)=\min_{v\in B_0^2}I(v)
+        }.
+    \]
+    因此 $u$ 正是變分問題（1.3.5）的解。
+
+    可類比普通微積分：
+    \[
+        f(x)=c+x^2\ge c=f(0).
+    \]
+    在變分法中，只是把「數 $x$」換成「函數 $v$」。
+}
+
+
+\noindent
+\pnum{22}
+再證明條件是充分的。設 $u\in B_0^2$ 是變分問題（1.3.5）的解。
+任取函數 $\varphi\in C_0^\infty(\Omega)$，於是對任意參數
+$t\in R$ 有 $u+t\varphi\in B_0^2$。由（1.3.5）知道
+\[
+    I(u)=\min_{t\in R}I(u+t\varphi).
+\]
+
+因此有
+\begin{equation}
+    \left.
+    \frac{d}{dt}I(u+t\varphi)
+    \right|_{t=0}
+    =
+    0.
+    \tag{1.3.10}
+\end{equation}
+
+\noindent
+\pnum{23}
+由 $I$ 的定義（1.3.4）有
+\[
+    \begin{aligned}
+        I(u+t\varphi)
+         & =
+        \int_{\Omega}
+        \left[
+            \frac{1}{2}|Du+tD\varphi|^2-f(u+t\varphi)
+            \right]\,dx
+        \\
+         & =
+        I(u)
+        +
+        t\int_{\Omega}
+        \left(Du\cdot D\varphi-f\varphi\right)\,dx
+        +
+        \frac{t^2}{2}\int_{\Omega}|D\varphi|^2\,dx.
+    \end{aligned}
+\]
+
+將此式代入（1.3.10）得出
+\begin{equation}
+    \int_{\Omega}\left(Du\cdot D\varphi-f\varphi\right)\,dx=0.
+    \tag{1.3.11}
+\end{equation}
+
+
+\StudyNote{複習註解：式（1.3.11）如何得到？為什麼不能直接代 $t=0$？}{
+    因為 $u$ 是泛函 $I$ 的極小解，所以對任意
+    $\varphi\in C_0^\infty(\Omega)$，考慮擾動
+    \[
+        u+t\varphi.
+    \]
+    令
+    \[
+        F(t)=I(u+t\varphi).
+    \]
+    當 $t=0$ 時，$F(0)=I(u)$，而 $u$ 是極小解，因此 $t=0$ 是
+    $F(t)$ 的極小點。由普通微積分的極值必要條件，
+    \[
+        \boxed{
+            F'(0)=
+            \left.
+            \frac{d}{dt}I(u+t\varphi)
+            \right|_{t=0}
+            =0.
+        }
+    \]
+
+    由 $I$ 的定義展開：
+    \[
+        I(u+t\varphi)
+        =
+        I(u)
+        +
+        t\int_{\Omega}
+        (Du\cdot D\varphi-f\varphi)\,dx
+        +
+        \frac{t^2}{2}
+        \int_{\Omega}|D\varphi|^2\,dx.
+    \]
+    若記
+    \[
+        A=
+        \int_{\Omega}
+        (Du\cdot D\varphi-f\varphi)\,dx,
+        \qquad
+        B=
+        \int_{\Omega}|D\varphi|^2\,dx,
+    \]
+    則
+    \[
+        I(u+t\varphi)=I(u)+tA+\frac{t^2}{2}B.
+    \]
+    先對 $t$ 微分：
+    \[
+        \frac{d}{dt}I(u+t\varphi)
+        =
+        A+tB.
+    \]
+    再令 $t=0$：
+    \[
+        A=0,
+    \]
+    因此
+    \[
+        \boxed{
+            \int_{\Omega}
+            (Du\cdot D\varphi-f\varphi)\,dx=0,
+        }
+    \]
+    這就是（1.3.11）。
+
+    \textbf{為什麼不能一開始直接代 $t=0$？}
+
+    因為若直接代入原式，只得到
+    \[
+        I(u+0\varphi)=I(u),
+    \]
+    也就是
+    \[
+        I(u)=I(u),
+    \]
+    這只告訴我們函數值，沒有提供任何極值條件。
+
+    真正有用的是「$t=0$ 附近的變化率」，所以必須
+    \[
+        \boxed{
+            \text{先對 }t\text{ 微分，再代 }t=0.
+        }
+    \]
+
+    這一步就是變分法中的「第一變分為零」：
+    \[
+        \delta I(u;\varphi)
+        =
+        \left.
+        \frac{d}{dt}I(u+t\varphi)
+        \right|_{t=0}
+        =0.
+    \]
+}
+
+
+\noindent
+\pnum{24}
+在格林公式（1.3.7）中令
+$v=\varphi\in C_0^\infty(\Omega)$ 得出
+\begin{equation}
+    \int_{\Omega}\varphi\Delta u\,dx
+    +
+    \int_{\Omega}D\varphi\cdot Du\,dx
+    =
+    0.
+    \tag{1.3.12}
+\end{equation}
+
+由（1.3.12）減去（1.3.11）得
+\[
+    \int_{\Omega}\varphi(\Delta u+f)\,dx=0.
+\]
+
+% =========================================================
+% 原書第 7 頁
+% =========================================================
+\newpage
+
+\noindent
+\pnum{25}
+由於 $\varphi\in C_0^\infty(\Omega)$ 是任意的，對上式利用變分法基本引理知道
+\[
+    \Delta u+f=0,
+\]
+即 $u$ 滿足 Poisson 方程（1.3.1）。\qquad 證完。
+
+\noindent
+\pnum{26}
+從變分問題出發導出的微分方程稱為該變分問題的歐拉（Euler）方程。
+因此，Poisson 方程（1.3.1）是變分問題（1.3.5）的歐拉方程。
+
+\noindent
+\pnum{27}
+上面的定理說明，在函數類 $B_0^2$ 中，求 Poisson 方程（1.3.1）的解
+與求變分問題（1.3.5）的解是等價的；也就是說，對 Poisson 方程邊值問題
+（1.3.1）、（1.3.2）的研究可以化為對變分問題（1.3.5）的研究。
+通過變分問題的研究解決微分方程邊值問題，這就是微分方程中的變分方法。
+
+% =========================================================
+% 原書第 8 頁
+% =========================================================
+\newpage
+
+\begin{center}
+    {\Large\bfseries 第二章\qquad Banach 空間與 Hilbert 空間}
+\end{center}
+
+\vspace{1.2em}
+
+\noindent
+\pnum{28}
+這一章為第三章及第四章用變分方法研究線性微分方程邊值問題提供必要的泛函分析基礎知識。
+本書將限於討論實方程及實解，因此，我們用到的線性空間都假定是定義在實數域 $R$ 上的。
+
+\noindent
+\pnum{29}
+\textbf{定義}\quad
+$V$ 是一個非空集合。如果
+
+\noindent
+（i）$V$ 中有加法運算：
+\[
+    V\times V\longrightarrow V,
+\]
+即對任意兩個元素 $x,y\in V$，存在唯一的元素 $x+y\in V$；且 $V$ 對此加法成一加群，
+即滿足
+
+\[
+    1^\circ\ \text{交換律}\qquad x+y=y+x,
+\]
+
+\[
+    2^\circ\ \text{結合律}\qquad (x+y)+z=x+(y+z),
+\]
+
+\[
+    3^\circ\ \text{逆運算減法存在}\qquad
+    \text{對一切 }x,y\in V,\text{ 存在唯一的 }z\in V,
+\]
+使得
+\[
+    x+z=y,
+\]
+並記
+\[
+    z=y-x.
+\]
+
+\noindent
+（ii）實數域 $R$ 與 $V$ 中元素有數乘運算：
+\[
+    R\times V\longrightarrow V,
+\]
+即對任一數 $a\in R$ 及任一元素 $x\in V$，存在唯一的元素 $ax\in V$ 與之對應；
+且數乘滿足通常向量的運算規則：
+
+\[
+    5^\circ\ \text{結合律}\qquad a(bx)=(ab)x,
+\]
+
+\[
+    6^\circ\ \text{數乘與 }V\text{ 中加法的分配律}\qquad
+    a(x+y)=ax+ay,
+\]
+
+\[
+    7^\circ\ \text{實數加法與數乘的分配律}\qquad
+    (a+b)x=ax+bx,
+\]
+
+\[
+    8^\circ\qquad 1\cdot x=x.
+\]
+
+那麼，$V$ 叫做實線性空間，簡稱線性空間。
+
+\noindent
+\pnum{30}
+線性空間 $V$ 的子集合 $D$ 滿足條件
+\[
+    x,y\in D,\quad \text{則 }x+y\in D,
+\]
+\[
+    a\in R,\ x\in D,\quad \text{則 }ax\in D
+\]
+時，$D$ 也是一個線性空間，稱為 $V$ 的線性子集合或線性子空間，簡稱為 $V$ 的子空間。
+
+% =========================================================
+% 原書第 9 頁
+% =========================================================
+\newpage
+
+\noindent
+\textbf{2.1\qquad Banach 空間}
+
+\vspace{0.8em}
+
+\noindent
+\pnum{31}
+\textbf{定義 1}\quad
+$V$ 是一個線性空間。如果 $V\to R$ 的映射
+\[
+    x\longmapsto \|x\|
+\]
+滿足
+
+\[
+    1^\circ\quad
+    \|x\|\ge 0\qquad \forall\,x\in V,
+    \qquad
+    \|x\|=0\ \text{當且僅當 }x=0,
+\]
+
+\[
+    2^\circ\quad
+    \|ax\|=|a|\,\|x\|
+    \qquad
+    \forall\,a\in R,\ x\in V,
+\]
+
+\[
+    3^\circ\quad
+    \|x+y\|\le \|x\|+\|y\|
+    \qquad
+    \forall\,x,y\in V
+    \quad
+    (\text{三角形不等式}),
+\]
+
+則稱 $\|x\|$ 是 $V$ 中元素 $x$ 的範數。
+對線性空間 $V$ 賦予範數後，稱 $V$ 為線性賦範空間。
+
+\noindent
+\pnum{32}
+\textbf{定義 2}\quad
+$V$ 是一個線性賦範空間，且
+\[
+    x_n\in V,\qquad n=1,2,3,\cdots.
+\]
+如果 $m,n\to\infty$ 時，
+\[
+    \|x_m-x_n\|\to 0,
+\]
+則稱序列 $\{x_n\}$ 在 $V$ 中自身收斂或 $\{x_n\}$ 為 $V$ 中的 Cauchy 序列。
+如果 $x\in V$，且當 $n\to\infty$ 時，
+\[
+    \|x_n-x\|\to 0,
+\]
+則稱序列 $\{x_n\}$ 在 $V$ 中收斂於 $x$。
+如果 $V$ 中每一 Cauchy 序列均收斂於 $V$ 中的一個元素，
+則稱 $V$ 為完備的。完備的線性賦範空間又稱為 Banach 空間。
+
+\noindent
+\pnum{33}
+\textbf{例 1}\quad
+$n$ 維歐氏空間 $R^n$ 關於範數（長度）
+\[
+    |x|
+    =
+    \left(
+    x_1^2+\cdots+x_n^2
+    \right)^{\frac12}
+\]
+是 Banach 空間。
+
+\noindent
+\pnum{34}
+\textbf{例 2}\quad
+對有界區域 $\Omega\subset R^n$，函數集合
+\[
+    C^m(\overline{\Omega})
+    =
+    \left\{
+    u\mid
+    D^\alpha u\text{ 在 }\overline{\Omega}\text{ 上連續},
+    \ \forall\,|\alpha|\le m
+    \right\}
+\]
+關於範數
+\[
+    \|u\|_m
+    =
+    \|u\|_{m,\Omega}
+    =
+    \|u\|_{C^m(\overline{\Omega})}
+    =
+    \max_{|\alpha|\le m}
+    \max_{x\in\overline{\Omega}}
+    |D^\alpha u(x)|
+\]
+成為一個 Banach 空間。
+
+\noindent
+\pnum{35}
+\textbf{例 3}\quad
+閉區間 $[-1,1]$ 上所有連續函數的集合 $C([-1,1])$ 關於範數
+\begin{equation}
+    \|u\|_2
+    =
+    \|u\|_{2,\Omega}
+    =
+    \|u\|_{L^2(\Omega)}
+    =
+    \left(
+    \int_{-1}^{1}|u(x)|^2\,dx
+    \right)^{\frac12}
+    \tag{2.1.1}
+\end{equation}
+
+% =========================================================
+% 原書第 11 頁
+% =========================================================
+\newpage
+
+\noindent
+\pnum{36}
+我們來證明 $\{\varphi_n\}$ 在 $C([-1,1])$ 中沒有極限元素。相反地，我們假定
+$\{\varphi_n\}$ 有極限元素 $\overline{\varphi}\in C([-1,1])$，即
+\begin{equation}
+    \|\varphi_n-\overline{\varphi}\|_2^2
+    =
+    \int_{-1}^{1}
+    |\varphi_n(x)-\overline{\varphi}(x)|^2\,dx
+    \longrightarrow 0
+    \qquad
+    \text{當 }n\to\infty.
+    \tag{2.1.5}
+\end{equation}
+
+\noindent
+\pnum{37}
+由（2.1.4）及（2.1.5）得出
+\[
+    \begin{aligned}
+        \int_{-1}^{0}
+        |\overline{\varphi}(x)-\varphi(x)|^2\,dx
+         & \leq
+        \int_{-1}^{1}
+        |\overline{\varphi}(x)-\varphi(x)|^2\,dx
+        \\
+         & \leq
+        \int_{-1}^{1}
+        \left|
+        [\varphi_n(x)-\varphi(x)]
+        -
+        [\varphi_n(x)-\overline{\varphi}(x)]
+        \right|^2\,dx
+        \\
+         & \leq
+        2\int_{-1}^{1}
+        |\varphi_n(x)-\varphi(x)|^2\,dx
+        +
+        2\int_{-1}^{1}
+        |\varphi_n(x)-\overline{\varphi}(x)|^2\,dx
+        \\
+         & \longrightarrow 0
+        \qquad
+        \text{當 }n\to\infty.
+    \end{aligned}
+\]
+
+因此
+\[
+    \int_{-1}^{0}
+    |\overline{\varphi}(x)-\varphi(x)|^2\,dx
+    =
+    0.
+\]
+
+\noindent
+\pnum{38}
+而 $\overline{\varphi}(x)$ 及 $\varphi(x)$ 在半開區間 $[-1,0)$ 上都是連續函數。
+於是在 $[-1,0)$ 上有
+                \[
+                    \overline{\varphi}(x)=\varphi(x).
+                \]
+                同理可證，在 $(0,1]$ 上也有
+\[
+    \overline{\varphi}(x)=\varphi(x).
+\]
+再由（2.1.3）得
+\begin{equation}
+    \overline{\varphi}(x)
+    =
+    \begin{cases}
+        -1, & \text{當 }-1\leq x<0, \\
+        1,  & \text{當 }0<x\leq 1.
+    \end{cases}
+    \tag{2.1.6}
+\end{equation}
+
+\noindent
+\pnum{39}
+由此看出，$\overline{\varphi}(x)$ 在 $[-1,1]$ 上不可能是連續函數，這就與假定
+$\overline{\varphi}(x)\in C([-1,1])$ 矛盾。因此，$\{\varphi_n\}$ 在
+$C([-1,1])$ 中沒有極限元素，即 $C([-1,1])$ 關於範數（2.1.1）
+是不完備的線性賦範空間。
+
+\noindent
+\pnum{40}
+在例 3 的論述中還可以看出，對於（2.1.1）定義的範數，空間
+$C([-1,1])$ 中的 Cauchy 序列（2.1.2）在 $C([-1,1])$ 中沒有極限元素，
+但由（2.1.6）定義的平方可積函數 $\overline{\varphi}(x)$
+（$\overline{\varphi}(0)$ 的值可以任意取定）實際上是序列
+$\{\varphi_n\}$ 的極限函數，只是此極限函數不再屬於 $C([-1,1])$。
+這裡需要指出，由（2.1.6）定義但具有不同值 $\overline{\varphi}(0)$
+的這些函數 $\overline{\varphi}(x)$ 稱為在 $[-1,1]$ 上幾乎處處相等的，
+並在可積函數
+
+% =========================================================
+% 原書第 12 頁
+% =========================================================
+\newpage
+
+\noindent
+\pnum{41}
+類中視它們為同一個函數。
+
+\noindent
+\pnum{42}
+如象在有理數集合中補充無理數得到實數集合一樣，我們可以對不完備的線性賦範空間
+$V$ 用下述方法補充一些新元素而得到一個完備的線性賦範空間（Banach 空間）。
+$V$ 中 Cauchy 序列 $\{\varphi_n\}$ 如果沒有屬於 $V$ 的極限元素，
+則定義一個新元素 $\varphi$ 作為序列 $\{\varphi_n\}$ 的極限元素；
+如果另有 Cauchy 序列 $\{\varphi_n'\}$ 滿足
+\[
+    \|\varphi_n-\varphi_n'\|\longrightarrow 0
+    \qquad
+    \text{當 }n\to\infty,
+\]
+則視 $\{\varphi_n'\}$ 與 $\{\varphi_n\}$ 有相同的極限元素 $\varphi$；
+對新元素 $\varphi$ 定義範數
+\[
+    \|\varphi\|
+    =
+    \lim_{n\to\infty}\|\varphi_n\|.
+\]
+這樣得到一個包含 $V$ 的完備空間稱為 $V$ 的完備化（空間）。
+
+\noindent
+\pnum{43}
+空間 $C([-1,1])$ 關於範數（2.1.1）完備化所得到的空間稱為
+（在 Lebesgue 意義下的）平方可積函數空間，記為
+\[
+    L^2([-1,1]).
+\]
+
+一般地，設 $p\geq 1$，$\Omega$ 是 $n$ 維區域，則
+$C(\overline{\Omega})$ 關於範數
+\[
+    \|u\|_{L^p(\Omega)}
+    =
+    \|u\|_p
+    =
+    \|u\|_{p,\Omega}
+    =
+    \left(
+    \int_{\Omega}|u(x)|^p\,dx
+    \right)^{\frac1p}
+\]
+的完備化是 $\Omega$ 上 $p$ 次方可積函數空間
+\[
+    L^p(\Omega)
+    =
+    \left\{
+    u\ \middle|\
+    \int_{\Omega}|u(x)|^p\,dx<\infty
+    \right\}.
+\]
+
+\noindent
+\pnum{44}
+\textbf{定義 3}\quad
+設 $E$ 是 Banach 空間，$A$ 是 $E$ 的一個子集。
+
+\noindent
+（i）如果存在 $C\in R$，使得
+\[
+    \|u\|\leq C
+    \qquad
+    \forall\,u\in A,
+\]
+則稱 $A$ 為 $E$ 中的有界集。
+
+\noindent
+（ii）如果 $A$ 中的每一個 Cauchy 序列的極限元素都屬於 $A$，
+則稱 $A$ 為 $E$ 中的閉集。
+
+\noindent
+（iii）如果 $S\subset A$，且對每一元素 $u\in A$，都存在
+$\{u_n\}\subset S$，使得當 $n\to\infty$ 時，在 $E$ 中有
+\[
+    u_n\to u,
+\]
+則稱 $S$ 為 $A$ 的稠密子集或 $S$ 在 $A$ 中稠密。
+
+\noindent
+（iv）如果 $A$ 的每一個無窮子集都有收斂的子序列，則稱 $A$ 是 $E$
+中的列緊集或準緊集。如果 $E$ 中的列緊集 $A$ 又是閉集
+（即 $A$ 的每一個無窮子集的每一個收斂子序列的極限元素都屬於 $A$），
+則稱 $A$ 是
+
+% =========================================================
+% 原書第 13 頁
+% =========================================================
+\newpage
+
+\noindent
+\pnum{45}
+$E$ 中的緊集。
+
+\noindent
+\pnum{46}
+Banach 空間中的列緊集都是有界集。在有限維 Banach 空間中，
+有界集都是列緊集，有界閉集都是緊集。
+
+\noindent
+\pnum{47}
+無限維 Banach 空間中的有界集不一定是列緊集。例如，當
+\[
+    u_n(x)=\frac{1}{\sqrt{\pi}}\sin nx
+\]
+時，有
+\[
+    \|u_n\|_2^2
+    =
+    \frac{1}{\pi}
+    \int_{-\pi}^{\pi}\sin^2 nx\,dx
+    =
+    1.
+\]
+因而序列 $\{u_n(x)\}$ 是 $L^2([-\pi,\pi])$ 中的有界集。但對 $m\neq n$ 有
+\[
+    \|u_m-u_n\|=\sqrt{2},
+\]
+即 $\{u_n(x)\}$ 在 $L^2([-\pi,\pi])$ 中沒有收斂的子序列。
+這就證明了 $\{u_n(x)\}$ 在 $L^2([-\pi,\pi])$ 中是有界集而不是列緊集。
+
+\noindent
+\pnum{48}
+對於 $R^n$ 中的有界區域 $\Omega$，著名的 Arzela--Ascoli 定理給出了
+$C(\overline{\Omega})$ 中的集合具有列緊性的條件。
+
+\noindent
+\pnum{49}
+\textbf{定理 2.1.1}\quad
+如果 $C(\overline{\Omega})$ 中的集合 $S$ 滿足條件：
+
+\noindent
+（i）$S$ 是一致有界的，即存在常數 $K>0$，使得
+\[
+    |u(x)|\le K
+    \qquad
+    \forall\,x\in\overline{\Omega},\ u\in S,
+\]
+亦即
+\[
+    \|u\|_{C(\overline{\Omega})}
+    =
+    \max_{x\in\overline{\Omega}}|u(x)|
+    \le K
+    \qquad
+    \forall\,u\in S,
+\]
+
+\noindent
+（ii）$S$ 是等度連續的，即對於任意 $\varepsilon>0$，存在
+$\delta=\delta(\varepsilon)>0$，使得對任意
+$x,y\in\overline{\Omega}$，且
+\[
+    |x-y|<\delta,
+\]
+則
+\[
+    |u(x)-u(y)|<\varepsilon
+    \qquad
+    \forall\,u\in S,
+\]
+那麼，$S$ 是 $C(\overline{\Omega})$ 中的列緊集。
+
+\noindent
+\pnum{50}
+對於空間 $L^p(\Omega)$，有類似的列緊性判別定理如下。
+
+\noindent
+\pnum{51}
+\textbf{定理 2.1.2}\quad
+設 $\Omega$ 是 $R^n$ 中的有界區域，
+$1\le p<\infty$，$S\subset L^p(\Omega)$ 滿足下列條件：
+
+\noindent
+（i）$S$ 是有界的，即存在常數 $K>0$，使得
+
+% =========================================================
+% 原書第 14 頁
+% =========================================================
+\newpage
+
+\noindent
+\pnum{52}
+\[
+    \|u\|_p\le K
+    \qquad
+    \forall\,u\in S.
+\]
+
+\noindent
+（ii）$S$ 是「等度整體連續」的，即對任意 $\varepsilon>0$，存在
+$\delta=\delta(\varepsilon)>0$，使得對任意 $h\in R^n$，只要
+\[
+    |h|<\delta,
+\]
+就有
+\[
+    \|u(x+h)-u(x)\|_p
+    =
+    \left(
+    \int_\Omega |u(x+h)-u(x)|^p\,dx
+    \right)^{\frac1p}
+    <\varepsilon
+    \qquad
+    \forall\,u\in S.
+\]
+
+其中視
+\[
+    u(x)=0
+    \qquad
+    \forall\,x\in R^n\setminus\Omega.
+\]
+
+那麼，$S$ 是 $L^p(\Omega)$ 中的列緊集。
+
+\noindent
+\pnum{53}
+這個定理屬於 Riesz M\textsuperscript{[34]}，也可在文獻 [9] 及 [17] 中找到更一般的定理
+（即包含 $\Omega$ 為無界區域的情形）。
+定理 2.1.1 及定理 2.1.2 的證明詳見附錄 2。
+
+\noindent
+\pnum{54}
+\textbf{定義 4}\quad
+設 $S$ 是一個非空集合。如果函數
+\[
+    \rho:S\times S\longrightarrow R
+\]
+滿足條件：
+
+\[
+    \text{（i）}\quad
+    \rho(x,y)\ge 0;
+    \qquad
+    \rho(x,y)=0\text{ 的充要條件是 }x=y,
+\]
+
+\[
+    \text{（ii）}\quad
+    \rho(x,y)=\rho(y,x),
+\]
+
+\[
+    \text{（iii）}\quad
+    \text{（三角形不等式）}\qquad
+    \rho(x,y)\le \rho(x,z)+\rho(z,y),
+\]
+
+則稱 $\rho(x,y)$ 為 $x$ 與 $y$ 的距離。
+此時稱 $(S,\rho)$ 或 $S$ 為距離空間或度量空間。
+
+\noindent
+\pnum{55}
+顯然，對線性賦範空間 $V$ 中的任一非空子集 $S$，如果定義
+\[
+    \rho(x,y)=\|x-y\|,
+\]
+則 $S$ 成為一個度量空間。
+
+\noindent
+\pnum{56}
+\textbf{定義 5}\quad
+設 $S$ 是一個度量空間，如果 $x\in S$，序列
+$\{x_k\}\subset S$ 滿足
+\[
+    \rho(x_k,x)\longrightarrow 0
+    \qquad
+    \text{當 }k\to\infty,
+\]
+則稱序列 $\{x_k\}$ 收斂於 $x$，記為
+\[
+    x_k\to x\quad(k\to\infty)
+\]
+或
+\[
+    \lim_{k\to\infty}x_k=x.
+\]
+
+根據這個定義，可以將定義 2、3 中空間的完備性、閉集、（列）緊集及稠密等概念照搬到度量空間中來。
+
+\noindent
+\pnum{57}
+\textbf{定義 6}\quad
+如果在度量空間 $S$ 中存在稠密的可數子集，則稱 $S$ 是可分的。
+
+\noindent
+\pnum{58}
+\textbf{例 4}\quad
+$n$ 維歐氏空間 $R^n$ 是可分的。因為所有坐標
+$x_i\ (i=1,2,$
+
+% =========================================================
+% 原書第 15 頁
+% =========================================================
+\newpage
+
+\noindent
+\pnum{59}
+$\cdots,n)$ 為有理數的點
+\[
+    x=(x_1,\cdots,x_n)
+\]
+的集合 $S$ 是 $R^n$ 的可數子集，且 $S$ 在 $R^n$ 中稠密。
+
+\noindent
+\pnum{60}
+\textbf{例 5}\quad
+設 $\Omega$ 是 $R^n$ 中的有界區域，空間
+$C(\overline{\Omega})$ 是可分的。
+由 Stone--Weierstrass 定理，
+$x=(x_1,\cdots,x_n)$ 的所有實係數多項式所成的集合 $P$
+在 $C(\overline{\Omega})$ 中是稠密的；
+而 $x$ 的所有有理係數多項式所成的集合 $A$ 在 $P$ 中是稠密的；
+因此，集合 $A$ 在 $C(\overline{\Omega})$ 中也是稠密的，
+再由於 $A$ 是 $C(\overline{\Omega})$ 的可數子集得知
+$C(\overline{\Omega})$ 是可分空間。
+
+\noindent
+\pnum{61}
+\textbf{例 6}\quad
+對 $R^n$ 中的有界區域 $\Omega$，$1\le p<\infty$，
+空間 $L^p(\Omega)$ 是可分的。
+由例 5，有理係數多項式的集合 $A$ 在 $C(\overline{\Omega})$
+中關於範數
+\[
+    \|\cdot\|_{C(\overline{\Omega})}
+\]
+是稠密的，易證 $A$ 在 $C(\overline{\Omega})$ 中關於範數
+\[
+    \|\cdot\|_{L^p(\Omega)}
+\]
+也是稠密的。但由 $L^p(\Omega)$ 為 $C(\overline{\Omega})$
+關於範數 $\|\cdot\|_{L^p(\Omega)}$ 的完備化知道，
+$C(\overline{\Omega})$ 在 $L^p(\Omega)$ 中是稠密的。
+因此，有理係數多項式所成的可數集合 $A$ 在 $L^p(\Omega)$ 中是稠密的，
+即 $L^p(\Omega)$ 是可分空間。
+
+\noindent
+\pnum{62}
+\textbf{定理 2.1.3}\quad
+可分度量空間的子空間也是可分空間。
+
+\noindent
+\pnum{63}
+\textbf{證}\quad
+設度量空間 $V$ 有可數稠密子集
+\[
+    S=\{x_k\},
+\]
+$W$ 是 $V$ 的子空間。
+取
+\[
+    \delta_1>\delta_2>\cdots>\delta_j>\cdots>0
+\]
+使得
+\[
+    \delta_j\to0
+    \qquad
+    (\text{當 }j\to\infty).
+\]
+對 $\delta_j$，由於 $S$ 在 $V$ 中稠密及定義
+\begin{equation}
+    \operatorname{dist}(x_k,W)
+    =
+    \inf_{z\in W}\|z-x_k\|,
+    \tag{2.1.7}
+\end{equation}
+存在 $z_{kj}\in W$ 使得
+\begin{equation}
+    \|z_{kj}-x_k\|
+    <
+    \operatorname{dist}(x_k,W)+\delta_j.
+    \tag{2.1.8}
+\end{equation}
+
+\noindent
+\pnum{64}
+今證
+\[
+    Z=\{z_{kj}\}
+\]
+是 $W$ 的稠密子集。
+設 $x\in W$。
+對任意正數 $\varepsilon$，視 $x\in V$，
+由 $S$ 是 $V$ 的稠密子集知道：
+存在 $x_k\in S$ 使得
+\begin{equation}
+    \|x_k-x\|<\frac{\varepsilon}{3}.
+    \tag{2.1.9}
+\end{equation}
+取 $j$ 充分大使
+\[
+    \delta_j<\frac{\varepsilon}{3}.
+\]
+由（2.1.8）、（2.1.9）及（2.1.7）得出
+\[
+    \begin{aligned}
+        \|z_{kj}-x\|
+         & \le
+        \|z_{kj}-x_k\|
+        +
+        \|x_k-x\|
+        \\
+         & <
+        \operatorname{dist}(x_k,W)
+        +
+        \delta_j
+        +
+        \frac{\varepsilon}{3}.
+    \end{aligned}
+\]
+
+% =========================================================
+% 原書第 16 頁
+% =========================================================
+\newpage
+
+\noindent
+\pnum{65}
+\[
+    \|z_{kj}-x\|
+    <
+    \|x-x_k\|
+    +
+    \frac{\varepsilon}{3}
+    +
+    \frac{\varepsilon}{3}
+\]
+\[
+    <
+    \frac{\varepsilon}{3}
+    +
+    \frac{\varepsilon}{3}
+    +
+    \frac{\varepsilon}{3}
+    =
+    \varepsilon.
+\]
+
+這就證明了可數集
+\[
+    Z=\{z_{kj}\}
+\]
+是 $W$ 的稠密子集，從而 $W$ 是可分的。
+
+\vspace{0.8em}
+
+\noindent
+\textbf{2.2\qquad 算子與泛函}
+
+\vspace{0.6em}
+
+\noindent
+\pnum{66}
+設 $E$ 及 $B$ 是兩個 Banach 空間，$D\subset E$，$A$ 為 $D$ 到 $B$ 中的算子
+（即 $D$ 中每一元素 $x$ 對應於 $B$ 中唯一的元素 $Ax$），記為
+\[
+    A:D\longrightarrow B.
+\]
+算子
+\[
+    A:D\longrightarrow E
+\]
+又稱為 $D$ 上的算子。
+
+\noindent
+\pnum{67}
+若算子 $A$ 把 $D$ 中任何有界集均映成 $B$ 中的有界集，則稱 $A$ 在 $D$ 上有界。
+
+\noindent
+\pnum{68}
+若對任意元素 $x\in D$ 及序列 $\{x_n\}\subset D$，當
+\[
+    x_n\to x
+    \qquad
+    (\text{在 }E\text{ 中})
+\]
+時，必有
+\[
+    Ax_n\to Ax
+    \qquad
+    (\text{在 }B\text{ 中}),
+\]
+則稱 $A$ 在 $D$ 上連續。
+
+\noindent
+\pnum{69}
+若 $A$ 把 $D$ 中任意有界集均映成 $B$ 中的列緊集，則稱 $A$ 是 $D$ 到 $B$ 中的緊算子。
+
+顯然，緊算子必定是有界的。
+
+$D$ 到 $B$ 中的連續緊算子又叫做 $D$ 到 $B$ 中的全連續算子。
+
+\noindent
+\pnum{70}
+若對算子
+\[
+    A:D\longrightarrow B,
+\]
+存在常數 $M>0$，使得
+\begin{equation}
+    \|Ax\|_B
+    \le
+    M\|x\|_E,
+    \qquad
+    \forall\,x\in D,
+    \tag{2.2.1}
+\end{equation}
+則 $A$ 把 $D$ 中的有界集映成 $B$ 中的有界集，即 $A$ 在 $D$ 上有界。
+一般說來，有界算子 $A:D\to B$ 不一定滿足條件（2.2.1）。
+
+\noindent
+\pnum{71}
+若算子
+\[
+    A:D\longrightarrow B
+\]
+滿足條件
+\[
+    A(x+y)=Ax+Ay,
+    \qquad
+    \forall\,x,y\in D,
+\]
+\[
+    A(ax)=aAx,
+    \qquad
+    \forall\,a\in R,\ x\in D,
+\]
+則稱 $A$ 在 $D$ 上是線性的。
+
+\noindent
+\pnum{72}
+單位球面
+\[
+    S_1
+    =
+    \{x\in E\mid \|x\|_E=1\}
+\]
+是 $E$ 中的有界集。
+若算子
+\[
+    A:E\longrightarrow B
+\]
+是有界的，則集合
+\[
+    \{Ax\mid x\in S_1\}
+\]
+在 $B$ 中是有界集。若算子
+
+% =========================================================
+% 原書第 17 頁
+% =========================================================
+\newpage
+
+\noindent
+\pnum{73}
+\[
+    \sup_{\substack{x\in E\\ \|x\|_E=1}}
+    \|Ax\|_B
+    =
+    M
+    <
+    \infty.
+\]
+
+集合 $S_1$ 又可表示為
+\begin{equation}
+    S_1
+    =
+    \left\{
+    y=\frac{x}{\|x\|_E}
+    \ \middle|\
+    0\neq x\in E
+    \right\}.
+    \tag{2.2.2}
+\end{equation}
+
+\noindent
+\pnum{74}
+若
+\[
+    A:E\longrightarrow B
+\]
+是線性算子，則對
+\[
+    y=\frac{x}{\|x\|_E}
+\]
+有
+\begin{equation}
+    Ay
+    =
+    \frac{Ax}{\|x\|_E},
+    \qquad
+    \|Ay\|_B
+    =
+    \frac{\|Ax\|_B}{\|x\|_E}.
+    \tag{2.2.3}
+\end{equation}
+
+\noindent
+\pnum{75}
+若
+\[
+    A:E\longrightarrow B
+\]
+是線性有界算子，由（2.2.3）及（2.2.2）得出
+\begin{equation}
+    \sup_{0\neq x\in E}
+    \frac{\|Ax\|_B}{\|x\|_E}
+    =
+    \sup_{\substack{x\in E\\ \|x\|_E=1}}
+    \|Ax\|_B
+    =
+    M
+    <
+    \infty.
+    \tag{2.2.4}
+\end{equation}
+
+由此式易知：線性有界算子
+\[
+    A:E\longrightarrow B
+\]
+滿足條件
+\begin{equation}
+    \|Ax\|_B
+    \le
+    M\|x\|_E,
+    \qquad
+    \forall\,x\in E.
+    \tag{2.2.5}
+\end{equation}
+
+反之，若線性算子
+\[
+    A:E\longrightarrow B
+\]
+滿足條件（2.2.5），則 $A$ 在 $E$ 上是有界的。
+因此，一般又把滿足條件（2.2.5）的線性算子
+\[
+    A:E\longrightarrow B
+\]
+稱為 $E$ 上的線性有界算子。
+
+\noindent
+\pnum{76}
+設
+\[
+    A:E\longrightarrow B
+\]
+是線性有界算子，則對任意 $x\in E$ 及
+$\{x_n\}\subset E$，由（2.2.5）得
+\[
+    \|Ax_n-Ax\|_B
+    =
+    \|A(x_n-x)\|_B
+    \le
+    M\|x_n-x\|_E.
+\]
+由此知道，當 $x_n\to x$ 時推出
+\[
+    Ax_n\to Ax.
+\]
+這就是說，線性有界算子
+\[
+    A:E\longrightarrow B
+\]
+是線性連續算子。
+因此，線性緊算子
+\[
+    A:E\longrightarrow B
+\]
+是線性有界算子，也是線性連續算子，也是線性全連續算子。
+
+\noindent
+\pnum{77}
+以
+\[
+    \mathcal{L}(E,B)
+\]
+表示所有線性有界算子
+\[
+    A:E\longrightarrow B
+\]
+的集合。
+對
+\[
+    A_1,A_2\in\mathcal{L}(E,B)
+\]
+定義算子的加法
+\[
+    A=A_1+A_2
+\]
+為
+\[
+    Ax=A_1x+A_2x,
+    \qquad
+    \forall\,x\in E.
+\]
+定義數 $a\in R$ 與算子
+\[
+    A\in\mathcal{L}(E,B)
+\]
+的乘法 $aA$ 為
+\[
+    (aA)x
+    =
+    a(Ax).
+\]
+
+再將等式（2.2.4）定義為算子 $A$ 的範數，即
+
+% =========================================================
+% 原書第 18 頁
+% =========================================================
+\newpage
+
+\noindent
+\pnum{78}
+\[
+    \|A\|
+    =
+    \sup_{\substack{x\in E\\x\neq 0}}
+    \frac{\|Ax\|_B}{\|x\|_E}
+    =
+    \sup_{\substack{x\in E\\ \|x\|_E=1}}
+    \|Ax\|_B.
+\]
+
+容易證明，$\mathcal{L}(E,B)$ 也是一個 Banach 空間，稱為 $E$ 到 $B$ 中的線性有界算子空間。
+
+\noindent
+\pnum{79}
+算子
+\[
+    A:E\longrightarrow R
+\]
+又稱為 $E$ 上的泛函。
+Banach 空間 $E$ 上所有線性連續泛函所成的 Banach 空間
+\[
+    \mathcal{L}(E,R)
+\]
+稱為 $E$ 的共軛空間或對偶空間，記為 $E^*$ 或 $E'$。
+
+\noindent
+\pnum{80}
+設 $D\subset E$，對所有 $x\in D$，把 $x$ 映成 $x$ 自身（即 $Ix=x$）的算子 $I$
+稱為 $D$ 上的恆等算子或單位算子。
+
+\noindent
+\pnum{81}
+設 $A$ 與 $B$ 都是 $E\to E$ 的算子，則由對應
+\[
+    x\longmapsto B(Ax)
+\]
+確定一個 $E\to E$ 的算子，稱為算子 $B$ 與 $A$ 的乘積，記為 $BA$，即
+\[
+    (BA)(x)=B(Ax).
+\]
+
+\noindent
+\pnum{82}
+\textbf{引理 2.2.1}\quad
+設 $A$ 是 $E\to E$ 的線性有界算子，則
+\[
+    A^0=I,
+    \qquad
+    A^m=A(A^{m-1})
+    \quad
+    (\text{整數 }m\ge1)
+\]
+都是線性有界算子，且有
+\begin{equation}
+    \|A^m\|
+    \le
+    \|A\|^m.
+    \tag{2.2.6}
+\end{equation}
+
+此引理由數學歸納法容易證明。
+
+\noindent
+\pnum{83}
+設 $D\subset E$，$A:D\to B$。如果對每一元素 $y\in B$，方程
+\begin{equation}
+    Ax=y
+    \tag{2.2.7}
+\end{equation}
+有唯一解 $x\in D$，則把對應 $y\mapsto x$ 看成 $B$ 到 $E$ 中的算子，
+稱為 $A$ 的逆（算子），記為 $A^{-1}$，即
+\[
+    A^{-1}y=x,
+    \qquad
+    \forall\,y\in B.
+\]
+這時稱 $A$ 為可逆的。
+
+顯然，
+\[
+    AA^{-1}=I_B
+\]
+是 $B$ 上的恆等算子，
+\[
+    A^{-1}A=I_D
+\]
+是 $D$ 上的恆等算子。
+容易證明：若
+\[
+    A:D\to E
+\]
+是線性的，則
+\[
+    A^{-1}:B\to E
+\]
+也是線性的。
+
+\noindent
+\pnum{84}
+\textbf{定理 2.2.2}\quad
+設 $E$ 是 Banach 空間，
+\[
+    A:E\to E
+\]
+為有界線性算子，且
+\[
+    \|A\|<1,
+\]
+那麼有
+
+% =========================================================
+% 原書第 19 頁
+% =========================================================
+\newpage
+
+\noindent
+\pnum{85}
+（i）對所有 $x\in E$，
+\[
+    \sum_{k=0}^{m}A^k x
+\]
+在 $E$ 中收斂（當 $m\to\infty$），記極限元素為
+\[
+    \sum_{k=0}^{\infty}A^k x,
+\]
+即
+\begin{equation}
+    \sum_{k=0}^{\infty}A^k x
+    =
+    \lim_{m\to\infty}
+    \sum_{k=0}^{m}A^k x.
+    \tag{2.2.8}
+\end{equation}
+
+\noindent
+（ii）對應
+\[
+    x\longmapsto
+    \sum_{k=0}^{\infty}A^k x
+\]
+確定的算子
+\[
+    \sum_{k=0}^{\infty}A^k:E\to E
+\]
+是線性有界的。
+
+\noindent
+（iii）$I-A$ 為可逆算子，且
+\begin{equation}
+    (I-A)^{-1}
+    =
+    \sum_{k=0}^{\infty}A^k.
+    \tag{2.2.9}
+\end{equation}
+
+\noindent
+\pnum{86}
+\textbf{證}\quad
+因為 $\|A\|<1$，故級數
+\[
+    \sum_{k=0}^{\infty}\|A\|^k
+\]
+收斂，記
+\begin{equation}
+    \sum_{k=0}^{\infty}\|A\|^k=M.
+    \tag{2.2.10}
+\end{equation}
+
+\noindent
+（i）對任意 $x\in E$，令
+\[
+    y_m
+    =
+    \sum_{k=0}^{m}A^k x.
+\]
+當 $m>l$ 時，由引理 2.2.1 及級數（2.2.10）的收斂性得
+\[
+    \begin{aligned}
+        \|y_m-y_l\|
+         & =
+        \left\|
+        \sum_{k=0}^{m}A^k x
+        -
+        \sum_{k=0}^{l}A^k x
+        \right\|
+        \\
+         & =
+        \left\|
+        \sum_{k=l+1}^{m}A^k x
+        \right\|
+        \\
+         & \le
+        \sum_{k=l+1}^{m}
+        \|A^k x\|
+        \\
+         & \le
+        \sum_{k=l+1}^{m}
+        \|A^k\|\,\|x\|
+        \\
+         & \le
+        \sum_{k=l+1}^{m}
+        \|A\|^k\,\|x\|
+        \longrightarrow 0,
+        \qquad
+        \text{當 }m,l\to\infty.
+    \end{aligned}
+\]
+
+於是 $\{y_m\}$ 為 $E$ 中的 Cauchy 序列，若記它的極限元素為
+\[
+    \sum_{k=0}^{\infty}A^k x,
+\]
+則有
+\begin{equation}
+    y_m
+    =
+    \sum_{k=0}^{m}A^k x
+    \longrightarrow
+    \sum_{k=0}^{\infty}A^k x
+    \qquad
+    \text{在 }E\text{ 中}.
+    \tag{2.2.11}
+\end{equation}
+
+% =========================================================
+% 原書第 20 頁
+% =========================================================
+\newpage
+
+\noindent
+\pnum{87}
+即（2.2.8）成立。
+
+\noindent
+（ii）算子
+\[
+    \sum_{k=0}^{\infty}A^k
+\]
+顯然是線性的。
+對任意 $x\in E$，由（2.2.6）及（2.2.10）得出
+\begin{equation}
+    \begin{aligned}
+        \left\|
+        \sum_{k=0}^{m}A^k x
+        \right\|
+         & \le
+        \sum_{k=0}^{m}
+        \|A^k x\|
+        \\
+         & \le
+        \sum_{k=0}^{m}
+        \|A^k\|\,\|x\|
+        \\
+         & \le
+        \sum_{k=0}^{m}
+        \|A\|^k\,\|x\|
+        \\
+         & \le
+        M\|x\|.
+    \end{aligned}
+    \tag{2.2.12}
+\end{equation}
+
+而由（2.2.11）知道
+\begin{equation}
+    \left\|
+    \sum_{k=0}^{m}A^k x
+    \right\|
+    \longrightarrow
+    \left\|
+    \sum_{k=0}^{\infty}A^k x
+    \right\|.
+    \tag{2.2.13}
+\end{equation}
+
+由（2.2.12）及（2.2.13）得
+\[
+    \left\|
+    \sum_{k=0}^{\infty}A^k x
+    \right\|
+    \le
+    M\|x\|.
+\]
+這式說明算子
+\[
+    \sum_{k=0}^{\infty}A^k
+\]
+是有界的。
+
+\noindent
+\pnum{88}
+（iii）對於任意 $x\in E$ 有
+\[
+    (I-A)\sum_{k=0}^{m}A^k x
+    =
+    \sum_{k=0}^{m}A^k x
+    -
+    \sum_{k=1}^{m+1}A^k x
+    =
+    x-A^{m+1}x,
+\]
+於是
+\begin{equation}
+    \left\|
+    (I-A)\sum_{k=0}^{m}A^k x-x
+    \right\|
+    =
+    \|A^{m+1}x\|
+    \le
+    \|A\|^{m+1}\|x\|
+    \longrightarrow0,
+    \qquad
+    \text{當 }m\to\infty.
+    \tag{2.2.14}
+\end{equation}
+
+因為 $I-A$ 為線性有界算子，所以 $I-A$ 也是連續算子，
+由（2.2.11）得出
+\begin{equation}
+    (I-A)\sum_{k=0}^{m}A^k x
+    \longrightarrow
+    (I-A)\sum_{k=0}^{\infty}A^k x
+    \qquad
+    \text{當 }m\to\infty.
+    \tag{2.2.15}
+\end{equation}
+
+根據（2.2.14）及（2.2.15）知道
+
+\end{document}

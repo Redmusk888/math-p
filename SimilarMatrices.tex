@@ -1,0 +1,107 @@
+\documentclass[12pt]{article}
+
+\usepackage{xeCJK}            % 中文支持，編譯請用 XeLaTeX
+% 须放在\usepackage{}列中足够前的位置
+\usepackage{fontspec}
+\setCJKmainfont{標楷體}
+\usepackage{amsmath, amssymb, amsfonts}
+\usepackage{geometry}
+\geometry{margin=1in}
+
+
+
+
+\usepackage{enumitem}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{6pt}
+
+\title{相似矩陣\,\textendash\,練習題\thanks{Similar\_Matrices \textendash\ Practice\_Set}}
+\author{}
+\date{}
+
+\begin{document}
+\maketitle
+
+共 \textbf{5 題}\quad 主題：\textit{相似、對角化、Jordan 形式、投影}\bigskip
+
+\begin{enumerate}[label=\arabic*., leftmargin=0pt, itemindent=2em]
+
+%---------------------------------------------------------
+\item \textbf{題 1\; 找出相似矩陣的換基底矩陣 $B$}
+
+設
+\[
+A = \begin{bmatrix}4 & 2 \\ 0 & 1\end{bmatrix},\quad
+C = \begin{bmatrix}4 & 0 \\ 0 & 1\end{bmatrix}.
+\]
+
+\begin{enumerate}[label=\alph*]
+  \item 證明 $A$ 與 $C$ 相似。
+  \item 找出可逆矩陣 $B$ 使 $A = BCB^{-1}$。
+  \item 利用 (b) 快速計算 $A^{10}$。
+\end{enumerate}
+
+%---------------------------------------------------------
+\item \textbf{題 2\; 同一特徵值但不可對角化}
+
+令
+\[
+A = \begin{bmatrix}3 & 1 & 0 \\ 0 & 3 & 1 \\ 0 & 0 & 3\end{bmatrix}.
+\]
+
+\begin{enumerate}[label=\alph*]
+  \item 求 $A$ 的特徵值與幾何重數。
+  \item 寫出 $A$ 的 Jordan 分解 $A = BJB^{-1}$。
+  \item 直接利用 $J$ 計算 $\displaystyle e^{tA}$。
+\end{enumerate}
+
+%---------------------------------------------------------
+\item \textbf{題 3\; 判斷兩矩陣是否相似}
+
+\[
+A = \begin{bmatrix}2 & 0 \\ 0 & -1\end{bmatrix},\quad
+B = \tfrac{1}{\sqrt 2}\begin{bmatrix}1 & -1 \\ 1 & 1\end{bmatrix},\quad
+C = BAB^{\mathsf T}.
+\]
+
+\begin{enumerate}[label=\alph*]
+  \item 實際算出 $C$。
+  \item 檢查 $A$ 與 $C$ 是否相似？若是，寫出對應的相似變換；若否，說明原因。
+  \item 比較 $A, C$ 在 \emph{對稱}／\emph{正交} 性質上的差異。
+\end{enumerate}
+
+%---------------------------------------------------------
+\item \textbf{題 4\; 投影矩陣家族}
+
+設
+\[
+\mathbf u = \begin{bmatrix}2 \\ -1 \\ 2\end{bmatrix},\qquad
+P = \frac{\mathbf u\mathbf u^{\mathsf T}}{\mathbf u^{\mathsf T}\mathbf u}.
+\]
+
+\begin{enumerate}[label=\alph*]
+  \item 證明 $P^2 = P$ 且 $P$ 的特徵值只有 $1,0$。
+  \item 求所有與 $P$ 相似但\textbf{非對稱}的 $3\times3$ 矩陣形式。
+  \item 指出這些矩陣的秩、行列式與跡。
+\end{enumerate}
+
+%---------------------------------------------------------
+\item \textbf{題 5\; \; 相似不變量綜合題}
+
+已知 $A$ 與 $C$ 相似，且
+\begin{itemize}
+  \item $\operatorname{tr}A = 1$，$\det(A) = 0$；
+  \item 特徵多項式 $\chi_{A}{(\lambda)} = \lambda{(\lambda-2)}^{2}(\lambda+3)$；
+  \item 幾何重數：$\dim E_{0}=1,\; \dim E_{2}=1,\; \dim E_{-3}=1$。
+\end{itemize}
+
+\begin{enumerate}[label=\alph*]
+  \item 寫出 $C$（Jordan 形式）的所有可能形狀。
+  \item 共有多少種不同的相似類？
+  \item 各類別分別舉一個具體矩陣代表。
+\end{enumerate}
+
+%---------------------------------------------------------
+\end{enumerate}
+
+\end{document}

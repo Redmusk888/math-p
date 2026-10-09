@@ -1,0 +1,109 @@
+% moved/renamed from 'Difference Equations Summary.tex'
+\documentclass[a4paper,12pt]{article}
+
+\usepackage{fontspec}
+\usepackage{xeCJK}
+\usepackage{amsmath,amssymb,geometry,graphicx}
+\geometry{a4paper, margin=1in}
+\setlength{\parskip}{0.8em}
+\setlength{\parindent}{0em}
+\setmainfont{Times New Roman}
+\setCJKmainfont{標楷體}
+% 若系統無此字型，可改用：
+% \setCJKmainfont{DFKai-SB} % Windows 備選
+% \setCJKmainfont{Noto Serif CJK TC} % 跨平台常見
+\XeTeXlinebreakskip = 0pt plus 1pt
+
+
+\title{Difference Equations Summary}
+\author{李辰安}
+\date{\today}
+
+
+\begin{document}
+\maketitle
+\section*{1. 問題背景}
+考慮簡諧運動的微分方程：
+\[
+y'' = -y,
+\]
+其解為 $y(t) = \cos t$，在 $(y, y')$ 平面上是一個圓。若要在電腦上模擬此運動，必須將連續時間轉為離散時間 $t_n = n\Delta t$，以差分近似取代微分：
+\[
+\frac{Y_{n+1} - 2Y_n + Y_{n-1}}{(\Delta t)^2} \approx -Y_n.
+\]
+
+
+\section*{2. 三種差分方法}
+以下為將 $y'' = -y$ 直接離散化的三種方式（以 RHS 上 $Y$ 的取樣點命名；注意這些二階差分法與第三節「先改寫為一階系統再用 Euler 法」不同）：
+\begin{center}
+\begin{tabular}{|c|c|c|}
+\hline
+方法（取樣點） & 近似公式 & 數值行為（Eigenvalue 性質） \\
+\hline
+Forward（用 $Y_{n-1}$） & $Y_{n+1} = 2Y_n - Y_{n-1} - (\Delta t)^2 Y_{n-1}$ & $|\lambda| > 1$，螺旋發散 \\
+Centered（用 $Y_{n}$；Leapfrog） & $Y_{n+1} = 2Y_n - Y_{n-1} - (\Delta t)^2 Y_n$ & 對 SHO：$|\lambda| = 1$ 需 $\Delta t \le 2$ \\
+Backward（用 $Y_{n+1}$） & $Y_{n+1} = 2Y_n - Y_{n-1} - (\Delta t)^2 Y_{n+1}$ & $|\lambda| < 1$，螺旋收縮 \\
+\hline
+\end{tabular}
+\end{center}
+註：對 $y'' + y = 0$，Centered（Leapfrog）在 $\Delta t \le 2$ 時滿足 $|\lambda|=1$（界內穩定）；若 $\Delta t>2$ 則不穩定。
+
+
+\section*{3. 化為一階系統}
+定義 $Z_n \approx Y'(t_n)$，並設
+\[
+U_n = \begin{bmatrix} Y_n \\ Z_n \end{bmatrix}.
+\]
+對於 Forward Euler（先將 $y''=-y$ 寫為 $u' = Ju$，$J=\begin{bmatrix}0&1\\-1&0\end{bmatrix}$），有
+\[
+U_{n+1} = (I + \Delta t\, J)\, U_n, \quad
+A := I + \Delta t\, J = \begin{bmatrix} 1 & \Delta t \\ -\Delta t & 1 \end{bmatrix}.
+\]
+Backward Euler 對同一一階系統的一步矩陣為
+\[
+U_{n+1} = (I - \Delta t\, J)^{-1} U_n \;=:\; B.
+\]
+
+
+\section*{4. 特徵值分析}
+矩陣 $A$ 的特徵值為：
+\[
+\lambda(A) = 1 \pm i\Delta t, \quad |\lambda(A)| = \sqrt{1 + (\Delta t)^2} > 1.
+\]
+因此 $(Y_n, Z_n)$ 的軌跡會逐漸往外螺旋。對於 Backward Euler，
+\[
+B = (I - \Delta t\, J)^{-1} \;\;\Rightarrow\;\; \lambda(B) = \frac{1}{1 \mp i\Delta t}, \quad |\lambda(B)| = \frac{1}{\sqrt{1+(\Delta t)^2}} < 1,
+\]
+故軌跡往內收縮。中心差分（Leapfrog）在滿足 $\Delta t \le 2$ 的條件下有 $|\lambda|=1$，近似能量守恆，軌跡接近圓形（帶相位誤差）。
+
+
+\section*{5. 幾何詮釋}
+真實解 $u(t) = (\cos t, -\sin t)$ 恆在單位圓上。三種方法的幾何行為如下：
+\begin{itemize}
+\item \textbf{Forward Euler（前向法，一階）}: 軌跡向外膨脹，能量增加。
+\item \textbf{Backward Euler（後向法，一階）}: 軌跡向內收縮，能量減少。
+\item \textbf{Centered／Leapfrog（二階差分）}: 在 $\Delta t \le 2$ 時軌跡保持在圓附近，最穩定。
+\end{itemize}
+
+
+\section*{6. 數值穩定性意義}
+此例展示了\textbf{數值穩定性（numerical stability）}的概念。系統長期行為取決於特徵值的模長：
+\begin{itemize}
+\item 若 $|\lambda|>1$：系統不穩定，誤差放大。
+\item 若 $|\lambda|=1$：系統邊界穩定，能量（近似）守恆，但可能有相位漂移。
+\item 若 $|\lambda|<1$：系統耗散，能量衰減。
+\end{itemize}
+因此，中心差分（Leapfrog）法常用於模擬振動、天體運動或分子動力學等守恆系統，但需選擇合適步長（如 $\Delta t \le 2$ 對 SHO）。
+
+
+\section*{7. 學習重點整理}
+\begin{enumerate}
+\item 了解如何將 $y''=-y$ 轉為差分形式（索引一致性很重要）。
+\item 學會將二階方程改寫為一階系統 $U_{n+1}=AU_n$ 或 $U_{n+1}=BU_n$。
+\item 透過特徵值分析長期穩定性（\(|\lambda|\) 大小）。
+\item 建立幾何直覺：模長決定螺旋方向與能量變化。
+\item 認識 Leapfrog 法的時間對稱性、穩定域與近似能量守恆特性。
+\end{enumerate}
+
+\end{document}
+
