@@ -47,3 +47,27 @@ xelatex git_basic_tutorial.tex
 ## 備註
 
 本版本庫主要供個人學習、練習與資料整理使用。
+
+
+## 讀書筆記 PDF
+
+### 數學
+
+- [變分法與微分方程](Variation_methods_in_differential_equations.pdf)
+- [相似矩陣](SimilarMatrices.pdf)
+- [測度論](measure_theory/measure_theory_minimal_module.pdf)
+- [差分方程摘要](linear-algebra/Difference-Equations-Summary.pdf)
+
+### 古典力學
+
+- [Euler–Lagrange 方程](classical_mechanics/7.1.1_the_euler-lagrange_equations.pdf)
+- [費馬原理](classical_mechanics/7.1.2_Fermats_Principle.pdf)
+- [第二變分](classical_mechanics/7.1.3_The_Second_Variation.pdf)
+
+### 每週練習
+
+- [物理數學第二週練習](week_practice/physics_math_W02_2026-10-09.pdf)
+
+### Git 教學
+
+- [Git 基礎教學](git_tutorial/git_basic_tutorial.pdf)
