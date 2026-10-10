@@ -1,0 +1,27 @@
+# LaTeX intermediate and editor-generated files
+*.aux
+*.bbl
+*.bcf
+*.blg
+*.fdb_latexmk
+*.fls
+*.lof
+*.log
+*.lot
+*.nav
+*.out
+*.run.xml
+*.snm
+*.synctex.gz
+*.toc
+*.vrb
+*.xdv
+
+# Temporary files
+*.bak
+*.tmp
+*~
+
+# Keep source and final PDF files tracked.
+!*.tex
+!*.pdf

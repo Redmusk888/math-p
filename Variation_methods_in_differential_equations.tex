@@ -12,7 +12,7 @@
 
 % Windows 本地已安裝字型（實際可用）
 \setmainfont{Times New Roman}
-\setCJKmainfont{Noto Serif TC}
+\setCJKmainfont[AutoFakeBold=2.5]{標楷體}
 
 % 如果你在 Windows 上想更接近舊式中文數學書，
 % 可把上一行改成：
@@ -103,9 +103,11 @@
 
 \usepackage{setspace}
 \setstretch{1.25}
+\raggedbottom
 
 \setlength{\parindent}{2em}
 \setlength{\parskip}{0pt}
+\emergencystretch=2em
 
 \setlength{\abovedisplayskip}{6pt}
 \setlength{\belowdisplayskip}{6pt}
@@ -304,20 +306,20 @@ $\Delta$ 稱為（$n$ 維）Laplace 算子。
 則稱 $u$ 在 $\Omega$ 中有緊支集。
 
 \StudyNote{複習註解：支集與緊支集}{
-    \[
-        \supp u
-        =\overline{\{x\in\Omega\mid u(x)\neq0\}}
-    \]
-    可以把 $\supp u$ 直覺理解為「函數真正有活動的區域」。
-    若
-    \[
-        \supp u\subset\subset\Omega,
-    \]
-    表示支集完整縮在 $\Omega$ 的內部，沒有碰到邊界 $\partial\Omega$；
-    因此在靠近邊界的一整個鄰域內，$u=0$。
+\[
+    \supp u
+    ={\{x\in\Omega\mid u(x)\neq0\}}
+\]
+可以把 $\supp u$ 直覺理解為「函數真正有活動的區域」。
+若
+\[
+    \supp u\subset\subset\Omega,
+\]
+表示支集完整縮在 $\Omega$ 的內部，沒有碰到邊界 $\partial\Omega$；
+因此在靠近邊界的一整個鄰域內，$u=0$。
 
-    要特別區分：$u|_{\partial\Omega}=0$ 只表示「邊界上的值為零」；
-    緊支集則要求函數在抵達邊界以前就已經變成零。
+要特別區分：$u|_{\partial\Omega}=0$ 只表示「邊界上的值為零」；
+緊支集則要求函數在抵達邊界以前就已經變成零。
 }
 
 \noindent
@@ -1528,12 +1530,219 @@ $n$ 維歐氏空間 $R^n$ 關於範數（長度）
 \end{equation}
 
 % =========================================================
+% 原書第 10 頁
+% =========================================================
+
+\noindent
+\pnum{36}
+成為一個線性賦範空間，但它不是完備的。例如，這個空間的函數序列
+\begin{equation}
+    \varphi_n(x)
+    =
+    \begin{cases}
+        -1, & \text{當 } -1\le x\le -\dfrac{1}{n},           \\[1.2ex]
+        nx, & \text{當 } -\dfrac{1}{n}\le x\le \dfrac{1}{n}, \\[1.2ex]
+        1,  & \text{當 } \dfrac{1}{n}\le x\le 1,
+    \end{cases}
+    \tag{2.1.2}
+\end{equation}
+
+滿足：當 $m>n$ 時有
+\[
+    \begin{aligned}
+        \|\varphi_m-\varphi_n\|_2^2
+         & =
+        \int_{-1}^{1}
+        |\varphi_m(x)-\varphi_n(x)|^2\,dx
+        \\
+         & =
+        2\int_{0}^{1}
+        |\varphi_m(x)-\varphi_n(x)|^2\,dx
+        \\
+         & =
+        2\int_{0}^{1/m}
+        |mx-nx|^2\,dx
+        +
+        2\int_{1/m}^{1/n}
+        |1-nx|^2\,dx.
+    \end{aligned}
+\]
+
+\StudyNote{複習註解：為什麼這裡要拆積分區間？}{
+    因為題設 $m>n$，所以 $\frac1m<\frac1n$。
+
+    在正半軸 $0\le x\le1$ 上，
+    \[
+        \varphi_k(x)=
+        \begin{cases}
+            kx, & 0\le x\le \frac1k, \\[1mm]
+            1,  & \frac1k\le x\le1.
+        \end{cases}
+    \]
+
+    因此要依照 $\varphi_m$、$\varphi_n$ 的分段點，
+    將 $[0,1]$ 分成
+    \[
+        \left[0,\frac1m\right],\qquad
+        \left[\frac1m,\frac1n\right],\qquad
+        \left[\frac1n,1\right].
+    \]
+
+    \textbf{第一段：}
+    當 $0\le x\le\frac1m$ 時，兩個函數都還在斜線區，因此
+    \[
+        \varphi_m(x)=mx,\qquad
+        \varphi_n(x)=nx,
+    \]
+    所以
+    \[
+        |\varphi_m-\varphi_n|^2=|mx-nx|^2.
+    \]
+
+    \textbf{第二段：}
+    當 $\frac1m\le x\le\frac1n$ 時，
+    $\varphi_m$ 已進入常數區，而 $\varphi_n$ 仍在斜線區，因此
+    \[
+        \varphi_m(x)=1,\qquad
+        \varphi_n(x)=nx,
+    \]
+    所以
+    \[
+        |\varphi_m-\varphi_n|^2=|1-nx|^2.
+    \]
+
+    \textbf{第三段：}
+    當 $\frac1n\le x\le1$ 時，兩者皆為 $1$，因此
+    \[
+        |\varphi_m-\varphi_n|^2=0.
+    \]
+    所以這一段的積分為零，作者便直接省略。
+
+    因此
+    \[
+        \boxed{
+            2\int_0^1|\varphi_m-\varphi_n|^2\,dx
+            =
+            2\int_0^{1/m}|mx-nx|^2\,dx
+            +
+            2\int_{1/m}^{1/n}|1-nx|^2\,dx
+        }.
+    \]
+
+    \textbf{重點：}這一步是在依照分段函數的定義拆分積分區間，
+    並不是做變數代換。
+}
+
+\[
+    \begin{aligned}
+        \|\varphi_m-\varphi_n\|_2^2
+         & =
+        2(m-n)^2
+        \int_{0}^{1/m}x^2\,dx
+        -
+        \left.
+        \frac{2}{3n}(1-nx)^3
+        \right|_{1/m}^{1/n}
+        \\
+         & =
+        \frac{2(m-n)^2}{3m^3}
+        +
+        \frac{2}{3n}
+        \left(1-\frac{n}{m}\right)^3
+        \\
+         & =
+        \frac{2(m-n)^2}{3m^2n}
+        \le
+        \frac{2}{3n}.
+    \end{aligned}
+\]
+
+\noindent
+\pnum{37}
+由此式得出：當 $m,n\to\infty$ 時有
+\[
+    \|\varphi_m-\varphi_n\|_2\to0,
+\]
+即 $\{\varphi_n\}$ 是函數空間 $C([-1,1])$ 中的 Cauchy 序列。
+顯然，在普通逐點收斂的意義下，$\{\varphi_n\}$ 的極限函數是
+\begin{equation}
+    \varphi(x)
+    =
+    \begin{cases}
+        -1, & \text{當 } -1\le x<0, \\
+        0,  & \text{當 } x=0,       \\
+        1,  & \text{當 } 0<x\le1.
+    \end{cases}
+    \tag{2.1.3}
+\end{equation}
+
+由（2.1.2）及（2.1.3），當 $n\to\infty$ 時有
+\begin{equation}
+    \begin{aligned}
+        \int_{-1}^{1}
+        |\varphi_n(x)-\varphi(x)|^2\,dx
+         & =
+        2\int_{0}^{1}
+        |\varphi_n(x)-\varphi(x)|^2\,dx
+        \\
+         & =
+        2\int_{0}^{1/n}
+        |nx-1|^2\,dx
+        =
+        \frac{2}{3n}
+        \longrightarrow0.
+    \end{aligned}
+    \tag{2.1.4}
+\end{equation}
+\StudyNote{註解1：為什麼這串估計最後可以推出積分等於零？}{
+    先注意
+    \[
+        \overline{\varphi}-\varphi
+        =
+        (\varphi_n-\varphi)-(\varphi_n-\overline{\varphi}).
+    \]
+    所以原式中把 $\overline{\varphi}-\varphi$ 改寫成兩個差的組合，
+    本質上只是代數恆等式。
+
+    接著使用
+    \[
+        |a-b|^2\le 2|a|^2+2|b|^2,
+    \]
+    令 $a=\varphi_n-\varphi$、$b=\varphi_n-\overline{\varphi}$，得到
+    \[
+        |\overline{\varphi}-\varphi|^2
+        \le
+        2|\varphi_n-\varphi|^2
+        +
+        2|\varphi_n-\overline{\varphi}|^2.
+    \]
+
+    積分後，第一項由（2.1.4）趨近 $0$，第二項由（2.1.5）趨近 $0$。
+    因此
+    \[
+        0\le
+        \int_{-1}^{0}
+        |\overline{\varphi}-\varphi|^2\,dx
+        \le
+        \text{一個趨近 }0\text{ 的量}.
+    \]
+
+    左側積分本身不含 $n$，是一個固定的非負數；
+    既然它可以被任意小的正數壓住，只能有
+    \[
+        \boxed{
+            \int_{-1}^{0}
+            |\overline{\varphi}(x)-\varphi(x)|^2\,dx=0
+        }.
+    \]
+}
+% =========================================================
 % 原書第 11 頁
 % =========================================================
 \newpage
 
 \noindent
-\pnum{36}
+\pnum{38}
 我們來證明 $\{\varphi_n\}$ 在 $C([-1,1])$ 中沒有極限元素。相反地，我們假定
 $\{\varphi_n\}$ 有極限元素 $\overline{\varphi}\in C([-1,1])$，即
 \begin{equation}
@@ -1548,7 +1757,7 @@ $\{\varphi_n\}$ 有極限元素 $\overline{\varphi}\in C([-1,1])$，即
 \end{equation}
 
 \noindent
-\pnum{37}
+\pnum{39}
 由（2.1.4）及（2.1.5）得出
 \[
     \begin{aligned}
@@ -1588,7 +1797,7 @@ $\{\varphi_n\}$ 有極限元素 $\overline{\varphi}\in C([-1,1])$，即
 \]
 
 \noindent
-\pnum{38}
+\pnum{40}
 而 $\overline{\varphi}(x)$ 及 $\varphi(x)$ 在半開區間 $[-1,0)$ 上都是連續函數。
 於是在 $[-1,0)$ 上有
                 \[
@@ -1610,14 +1819,28 @@ $\{\varphi_n\}$ 有極限元素 $\overline{\varphi}\in C([-1,1])$，即
 \end{equation}
 
 \noindent
-\pnum{39}
+\pnum{41}
 由此看出，$\overline{\varphi}(x)$ 在 $[-1,1]$ 上不可能是連續函數，這就與假定
 $\overline{\varphi}(x)\in C([-1,1])$ 矛盾。因此，$\{\varphi_n\}$ 在
 $C([-1,1])$ 中沒有極限元素，即 $C([-1,1])$ 關於範數（2.1.1）
 是不完備的線性賦範空間。
+\StudyNote{複習註解：為什麼 $\overline{\varphi}(0)$ 可以任意取？}{
+    在 $L^2$ 中，函數的距離由積分決定。
+    如果兩個函數只在單一點 $x=0$ 不同，因為單點集合的測度為零，
+    所以這個差異不會影響積分。
 
+    因此，即使改變 $\overline{\varphi}(0)$ 的值，仍有相同的 $L^2$ 元素。
+    這就是「幾乎處處相等」的概念：
+    \[
+        f=g\quad\text{a.e.}
+    \]
+    表示 $f$、$g$ 只在一個測度為零的集合上可能不同。
+
+    所以在 $L^p$ 空間中，更精確地說，元素不是某一個單獨的函數，
+    而是由「幾乎處處相等」所形成的函數等價類。
+}
 \noindent
-\pnum{40}
+\pnum{42}
 在例 3 的論述中還可以看出，對於（2.1.1）定義的範數，空間
 $C([-1,1])$ 中的 Cauchy 序列（2.1.2）在 $C([-1,1])$ 中沒有極限元素，
 但由（2.1.6）定義的平方可積函數 $\overline{\varphi}(x)$
@@ -1626,6 +1849,40 @@ $\{\varphi_n\}$ 的極限函數，只是此極限函數不再屬於 $C([-1,1])$�
 這裡需要指出，由（2.1.6）定義但具有不同值 $\overline{\varphi}(0)$
 的這些函數 $\overline{\varphi}(x)$ 稱為在 $[-1,1]$ 上幾乎處處相等的，
 並在可積函數
+\StudyNote{複習註解：什麼是完備化？}{
+    完備化的核心思想是：
+    若空間 $V$ 中存在 Cauchy 序列，但它的極限不在 $V$ 中，
+    就把這些缺少的極限補進來，使新空間成為完備空間。
+
+    這和
+    \[
+        \mathbb{Q}\longrightarrow\mathbb{R}
+    \]
+    的想法相同：有理數中有些 Cauchy 序列的極限不是有理數，
+    補入這些缺少的極限後得到實數。
+
+    若兩個 Cauchy 序列 $\{\varphi_n\}$、$\{\varphi_n'\}$ 滿足
+    \[
+        \|\varphi_n-\varphi_n'\|\to0,
+    \]
+    則它們代表同一個新極限元素，而不是兩個不同的新元素。
+
+    對這個新元素 $\varphi$，定義
+    \[
+        \|\varphi\|
+        =
+        \lim_{n\to\infty}\|\varphi_n\|.
+    \]
+
+    因此可以記成
+    \[
+        \boxed{
+            \text{完備化}
+            =
+            \text{把所有 Cauchy 序列缺少的極限補進來}
+        }.
+    \]
+}
 
 % =========================================================
 % 原書第 12 頁
@@ -1633,11 +1890,45 @@ $\{\varphi_n\}$ 的極限函數，只是此極限函數不再屬於 $C([-1,1])$�
 \newpage
 
 \noindent
-\pnum{41}
+\pnum{43}
 類中視它們為同一個函數。
+\StudyNote{複習註解：例 3 為什麼會導向 $L^2$ 與 $L^p$？}{
+    例 3 已經證明：
+    $C([-1,1])$ 配上 $L^2$ 範數時並不完備，
+    因為連續函數的 Cauchy 序列可能在 $L^2$ 意義下收斂到不連續函數。
 
+    因此把這些缺少的 $L^2$ 極限補進來後，得到
+    \[
+        \boxed{
+            C([-1,1])
+            \overset{\text{完備化}}{\longrightarrow}
+            L^2([-1,1])
+        }.
+    \]
+
+    一般化後，對 $p\ge1$，
+    \[
+        \|u\|_{L^p(\Omega)}
+        =
+        \left(
+        \int_{\Omega}|u(x)|^p\,dx
+        \right)^{1/p},
+    \]
+    相應的完備空間就是 $L^p(\Omega)$。
+
+    所以例 3 的主線是：
+    \[
+        \boxed{
+            \text{Cauchy 序列的極限跑出原空間}
+            \;\Longrightarrow\;
+            \text{原空間不完備}
+            \;\Longrightarrow\;
+            \text{做完備化}
+        }.
+    \]
+}
 \noindent
-\pnum{42}
+\pnum{44}
 如象在有理數集合中補充無理數得到實數集合一樣，我們可以對不完備的線性賦範空間
 $V$ 用下述方法補充一些新元素而得到一個完備的線性賦範空間（Banach 空間）。
 $V$ 中 Cauchy 序列 $\{\varphi_n\}$ 如果沒有屬於 $V$ 的極限元素，
@@ -1658,7 +1949,7 @@ $V$ 中 Cauchy 序列 $\{\varphi_n\}$ 如果沒有屬於 $V$ 的極限元素，
 這樣得到一個包含 $V$ 的完備空間稱為 $V$ 的完備化（空間）。
 
 \noindent
-\pnum{43}
+\pnum{45}
 空間 $C([-1,1])$ 關於範數（2.1.1）完備化所得到的空間稱為
 （在 Lebesgue 意義下的）平方可積函數空間，記為
 \[
@@ -1687,9 +1978,46 @@ $C(\overline{\Omega})$ 關於範數
     \int_{\Omega}|u(x)|^p\,dx<\infty
     \right\}.
 \]
+% =========================================================
+% 註解插入位置：段落 45 結束後
+% =========================================================
+\StudyNote{複習註解：有界、閉、稠密、列緊與緊集}{
+    這幾個概念都是在描述 Banach 空間中「集合」的性質。
 
+    \textbf{有界：}
+    存在固定常數 $C$，使每個 $u\in A$ 都滿足 $\|u\|\le C$。
+    直覺上，整個集合可以被某個有限大小的球包住。
+
+    \textbf{閉：}
+    集合不會漏掉自己的極限。
+    若 $A$ 中的序列收斂，而極限仍屬於 $A$，就表示極限沒有跑出集合。
+
+    \textbf{稠密：}
+    若 $S\subset A$，而 $A$ 中每個元素都能被 $S$ 中的序列逼近，
+    則稱 $S$ 在 $A$ 中稠密。
+    典型直覺是用較簡單的元素逼近較一般的元素。
+
+    \textbf{列緊：}
+    從集合中的任意無窮序列（或無窮子集）中，
+    都能抽出一個收斂子序列。
+    原序列本身不必收斂，重點是「可以抽出收斂的部分」。
+
+    \textbf{緊集：}
+    依本書目前的定義，可以記成
+    \[
+        \boxed{
+            \text{緊集}
+            =
+            \text{列緊}
+            +
+            \text{閉}
+        }.
+    \]
+
+    這些概念之後在存在性證明、變分法與 PDE 中會反覆出現。
+}
 \noindent
-\pnum{44}
+\pnum{46}
 \textbf{定義 3}\quad
 設 $E$ 是 Banach 空間，$A$ 是 $E$ 的一個子集。
 
@@ -1726,16 +2054,16 @@ $\{u_n\}\subset S$，使得當 $n\to\infty$ 時，在 $E$ 中有
 \newpage
 
 \noindent
-\pnum{45}
+\pnum{47}
 $E$ 中的緊集。
 
 \noindent
-\pnum{46}
+\pnum{48}
 Banach 空間中的列緊集都是有界集。在有限維 Banach 空間中，
 有界集都是列緊集，有界閉集都是緊集。
 
 \noindent
-\pnum{47}
+\pnum{49}
 無限維 Banach 空間中的有界集不一定是列緊集。例如，當
 \[
     u_n(x)=\frac{1}{\sqrt{\pi}}\sin nx
@@ -1757,12 +2085,12 @@ Banach 空間中的列緊集都是有界集。在有限維 Banach 空間中，
 這就證明了 $\{u_n(x)\}$ 在 $L^2([-\pi,\pi])$ 中是有界集而不是列緊集。
 
 \noindent
-\pnum{48}
+\pnum{50}
 對於 $R^n$ 中的有界區域 $\Omega$，著名的 Arzela--Ascoli 定理給出了
 $C(\overline{\Omega})$ 中的集合具有列緊性的條件。
 
 \noindent
-\pnum{49}
+\pnum{51}
 \textbf{定理 2.1.1}\quad
 如果 $C(\overline{\Omega})$ 中的集合 $S$ 滿足條件：
 
@@ -1799,11 +2127,11 @@ $x,y\in\overline{\Omega}$，且
 那麼，$S$ 是 $C(\overline{\Omega})$ 中的列緊集。
 
 \noindent
-\pnum{50}
+\pnum{52}
 對於空間 $L^p(\Omega)$，有類似的列緊性判別定理如下。
 
 \noindent
-\pnum{51}
+\pnum{53}
 \textbf{定理 2.1.2}\quad
 設 $\Omega$ 是 $R^n$ 中的有界區域，
 $1\le p<\infty$，$S\subset L^p(\Omega)$ 滿足下列條件：
@@ -1817,7 +2145,7 @@ $1\le p<\infty$，$S\subset L^p(\Omega)$ 滿足下列條件：
 \newpage
 
 \noindent
-\pnum{52}
+\pnum{54}
 \[
     \|u\|_p\le K
     \qquad
@@ -1852,13 +2180,13 @@ $\delta=\delta(\varepsilon)>0$，使得對任意 $h\in R^n$，只要
 那麼，$S$ 是 $L^p(\Omega)$ 中的列緊集。
 
 \noindent
-\pnum{53}
+\pnum{55}
 這個定理屬於 Riesz M\textsuperscript{[34]}，也可在文獻 [9] 及 [17] 中找到更一般的定理
 （即包含 $\Omega$ 為無界區域的情形）。
 定理 2.1.1 及定理 2.1.2 的證明詳見附錄 2。
 
 \noindent
-\pnum{54}
+\pnum{56}
 \textbf{定義 4}\quad
 設 $S$ 是一個非空集合。如果函數
 \[
@@ -1888,7 +2216,7 @@ $\delta=\delta(\varepsilon)>0$，使得對任意 $h\in R^n$，只要
 此時稱 $(S,\rho)$ 或 $S$ 為距離空間或度量空間。
 
 \noindent
-\pnum{55}
+\pnum{57}
 顯然，對線性賦範空間 $V$ 中的任一非空子集 $S$，如果定義
 \[
     \rho(x,y)=\|x-y\|,
@@ -1896,7 +2224,7 @@ $\delta=\delta(\varepsilon)>0$，使得對任意 $h\in R^n$，只要
 則 $S$ 成為一個度量空間。
 
 \noindent
-\pnum{56}
+\pnum{58}
 \textbf{定義 5}\quad
 設 $S$ 是一個度量空間，如果 $x\in S$，序列
 $\{x_k\}\subset S$ 滿足
@@ -1917,12 +2245,12 @@ $\{x_k\}\subset S$ 滿足
 根據這個定義，可以將定義 2、3 中空間的完備性、閉集、（列）緊集及稠密等概念照搬到度量空間中來。
 
 \noindent
-\pnum{57}
+\pnum{59}
 \textbf{定義 6}\quad
 如果在度量空間 $S$ 中存在稠密的可數子集，則稱 $S$ 是可分的。
 
 \noindent
-\pnum{58}
+\pnum{60}
 \textbf{例 4}\quad
 $n$ 維歐氏空間 $R^n$ 是可分的。因為所有坐標
 $x_i\ (i=1,2,$
@@ -1933,7 +2261,7 @@ $x_i\ (i=1,2,$
 \newpage
 
 \noindent
-\pnum{59}
+\pnum{61}
 $\cdots,n)$ 為有理數的點
 \[
     x=(x_1,\cdots,x_n)
@@ -1941,7 +2269,7 @@ $\cdots,n)$ 為有理數的點
 的集合 $S$ 是 $R^n$ 的可數子集，且 $S$ 在 $R^n$ 中稠密。
 
 \noindent
-\pnum{60}
+\pnum{62}
 \textbf{例 5}\quad
 設 $\Omega$ 是 $R^n$ 中的有界區域，空間
 $C(\overline{\Omega})$ 是可分的。
@@ -1954,7 +2282,7 @@ $x=(x_1,\cdots,x_n)$ 的所有實係數多項式所成的集合 $P$
 $C(\overline{\Omega})$ 是可分空間。
 
 \noindent
-\pnum{61}
+\pnum{63}
 \textbf{例 6}\quad
 對 $R^n$ 中的有界區域 $\Omega$，$1\le p<\infty$，
 空間 $L^p(\Omega)$ 是可分的。
@@ -1974,12 +2302,12 @@ $C(\overline{\Omega})$ 在 $L^p(\Omega)$ 中是稠密的。
 即 $L^p(\Omega)$ 是可分空間。
 
 \noindent
-\pnum{62}
+\pnum{64}
 \textbf{定理 2.1.3}\quad
 可分度量空間的子空間也是可分空間。
 
 \noindent
-\pnum{63}
+\pnum{65}
 \textbf{證}\quad
 設度量空間 $V$ 有可數稠密子集
 \[
@@ -2012,7 +2340,7 @@ $W$ 是 $V$ 的子空間。
 \end{equation}
 
 \noindent
-\pnum{64}
+\pnum{66}
 今證
 \[
     Z=\{z_{kj}\}
@@ -2054,7 +2382,7 @@ $W$ 是 $V$ 的子空間。
 \newpage
 
 \noindent
-\pnum{65}
+\pnum{67}
 \[
     \|z_{kj}-x\|
     <
@@ -2089,7 +2417,7 @@ $W$ 是 $V$ 的子空間。
 \vspace{0.6em}
 
 \noindent
-\pnum{66}
+\pnum{68}
 設 $E$ 及 $B$ 是兩個 Banach 空間，$D\subset E$，$A$ 為 $D$ 到 $B$ 中的算子
 （即 $D$ 中每一元素 $x$ 對應於 $B$ 中唯一的元素 $Ax$），記為
 \[
@@ -2102,11 +2430,11 @@ $W$ 是 $V$ 的子空間。
 又稱為 $D$ 上的算子。
 
 \noindent
-\pnum{67}
+\pnum{69}
 若算子 $A$ 把 $D$ 中任何有界集均映成 $B$ 中的有界集，則稱 $A$ 在 $D$ 上有界。
 
 \noindent
-\pnum{68}
+\pnum{70}
 若對任意元素 $x\in D$ 及序列 $\{x_n\}\subset D$，當
 \[
     x_n\to x
@@ -2122,7 +2450,7 @@ $W$ 是 $V$ 的子空間。
 則稱 $A$ 在 $D$ 上連續。
 
 \noindent
-\pnum{69}
+\pnum{71}
 若 $A$ 把 $D$ 中任意有界集均映成 $B$ 中的列緊集，則稱 $A$ 是 $D$ 到 $B$ 中的緊算子。
 
 顯然，緊算子必定是有界的。
@@ -2130,7 +2458,7 @@ $W$ 是 $V$ 的子空間。
 $D$ 到 $B$ 中的連續緊算子又叫做 $D$ 到 $B$ 中的全連續算子。
 
 \noindent
-\pnum{70}
+\pnum{72}
 若對算子
 \[
     A:D\longrightarrow B,
@@ -2148,7 +2476,7 @@ $D$ 到 $B$ 中的連續緊算子又叫做 $D$ 到 $B$ 中的全連續算子。
 一般說來，有界算子 $A:D\to B$ 不一定滿足條件（2.2.1）。
 
 \noindent
-\pnum{71}
+\pnum{73}
 若算子
 \[
     A:D\longrightarrow B
@@ -2167,7 +2495,7 @@ $D$ 到 $B$ 中的連續緊算子又叫做 $D$ 到 $B$ 中的全連續算子。
 則稱 $A$ 在 $D$ 上是線性的。
 
 \noindent
-\pnum{72}
+\pnum{74}
 單位球面
 \[
     S_1
@@ -2191,7 +2519,7 @@ $D$ 到 $B$ 中的連續緊算子又叫做 $D$ 到 $B$ 中的全連續算子。
 \newpage
 
 \noindent
-\pnum{73}
+\pnum{75}
 \[
     \sup_{\substack{x\in E\\ \|x\|_E=1}}
     \|Ax\|_B
@@ -2214,7 +2542,7 @@ $D$ 到 $B$ 中的連續緊算子又叫做 $D$ 到 $B$ 中的全連續算子。
 \end{equation}
 
 \noindent
-\pnum{74}
+\pnum{76}
 若
 \[
     A:E\longrightarrow B
@@ -2236,7 +2564,7 @@ $D$ 到 $B$ 中的連續緊算子又叫做 $D$ 到 $B$ 中的全連續算子。
 \end{equation}
 
 \noindent
-\pnum{75}
+\pnum{77}
 若
 \[
     A:E\longrightarrow B
@@ -2281,7 +2609,7 @@ $D$ 到 $B$ 中的連續緊算子又叫做 $D$ 到 $B$ 中的全連續算子。
 稱為 $E$ 上的線性有界算子。
 
 \noindent
-\pnum{76}
+\pnum{78}
 設
 \[
     A:E\longrightarrow B
@@ -2311,7 +2639,7 @@ $\{x_n\}\subset E$，由（2.2.5）得
 是線性有界算子，也是線性連續算子，也是線性全連續算子。
 
 \noindent
-\pnum{77}
+\pnum{79}
 以
 \[
     \mathcal{L}(E,B)
@@ -2354,7 +2682,7 @@ $\{x_n\}\subset E$，由（2.2.5）得
 \newpage
 
 \noindent
-\pnum{78}
+\pnum{80}
 \[
     \|A\|
     =
@@ -2368,7 +2696,7 @@ $\{x_n\}\subset E$，由（2.2.5）得
 容易證明，$\mathcal{L}(E,B)$ 也是一個 Banach 空間，稱為 $E$ 到 $B$ 中的線性有界算子空間。
 
 \noindent
-\pnum{79}
+\pnum{81}
 算子
 \[
     A:E\longrightarrow R
@@ -2381,12 +2709,12 @@ Banach 空間 $E$ 上所有線性連續泛函所成的 Banach 空間
 稱為 $E$ 的共軛空間或對偶空間，記為 $E^*$ 或 $E'$。
 
 \noindent
-\pnum{80}
+\pnum{82}
 設 $D\subset E$，對所有 $x\in D$，把 $x$ 映成 $x$ 自身（即 $Ix=x$）的算子 $I$
 稱為 $D$ 上的恆等算子或單位算子。
 
 \noindent
-\pnum{81}
+\pnum{83}
 設 $A$ 與 $B$ 都是 $E\to E$ 的算子，則由對應
 \[
     x\longmapsto B(Ax)
@@ -2397,7 +2725,7 @@ Banach 空間 $E$ 上所有線性連續泛函所成的 Banach 空間
 \]
 
 \noindent
-\pnum{82}
+\pnum{84}
 \textbf{引理 2.2.1}\quad
 設 $A$ 是 $E\to E$ 的線性有界算子，則
 \[
@@ -2418,7 +2746,7 @@ Banach 空間 $E$ 上所有線性連續泛函所成的 Banach 空間
 此引理由數學歸納法容易證明。
 
 \noindent
-\pnum{83}
+\pnum{85}
 設 $D\subset E$，$A:D\to B$。如果對每一元素 $y\in B$，方程
 \begin{equation}
     Ax=y
@@ -2453,7 +2781,7 @@ Banach 空間 $E$ 上所有線性連續泛函所成的 Banach 空間
 也是線性的。
 
 \noindent
-\pnum{84}
+\pnum{86}
 \textbf{定理 2.2.2}\quad
 設 $E$ 是 Banach 空間，
 \[
@@ -2471,7 +2799,7 @@ Banach 空間 $E$ 上所有線性連續泛函所成的 Banach 空間
 \newpage
 
 \noindent
-\pnum{85}
+\pnum{87}
 （i）對所有 $x\in E$，
 \[
     \sum_{k=0}^{m}A^k x
@@ -2511,7 +2839,7 @@ Banach 空間 $E$ 上所有線性連續泛函所成的 Banach 空間
 \end{equation}
 
 \noindent
-\pnum{86}
+\pnum{88}
 \textbf{證}\quad
 因為 $\|A\|<1$，故級數
 \[
@@ -2585,7 +2913,7 @@ Banach 空間 $E$ 上所有線性連續泛函所成的 Banach 空間
 \newpage
 
 \noindent
-\pnum{87}
+\pnum{89}
 即（2.2.8）成立。
 
 \noindent
@@ -2645,7 +2973,7 @@ Banach 空間 $E$ 上所有線性連續泛函所成的 Banach 空間
 是有界的。
 
 \noindent
-\pnum{88}
+\pnum{90}
 （iii）對於任意 $x\in E$ 有
 \[
     (I-A)\sum_{k=0}^{m}A^k x

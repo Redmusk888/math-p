@@ -1,0 +1,288 @@
+% !TeX program = xelatex
+% Encoding: UTF-8
+% 編譯方式：xelatex physics_math_W02_2026-10-09.tex
+\documentclass[12pt,a4paper]{article}
+\usepackage[margin=2.3cm]{geometry}
+\usepackage{fontspec}
+\usepackage{xeCJK}
+\setmainfont{Times New Roman}
+% Windows 優先使用標楷體；其他平台依序選擇備援中文字型。
+\IfFontExistsTF{標楷體}{
+  \setCJKmainfont[AutoFakeBold=2]{標楷體}
+}{
+  \IfFontExistsTF{Noto Serif TC}{
+    \setCJKmainfont{Noto Serif TC}
+  }{
+    \IfFontExistsTF{Microsoft JhengHei}{
+      \setCJKmainfont{Microsoft JhengHei}
+    }{
+      \setCJKmainfont{Noto Sans TC}
+    }
+  }
+}
+\usepackage{amsmath,amssymb}
+\usepackage{enumitem}
+\usepackage{setspace}
+\usepackage[unicode,hidelinks]{hyperref}
+\setstretch{1.18}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0.45em}
+\setlist{itemsep=0.3em,topsep=0.3em}
+\emergencystretch=2em
+\title{物理數學短練習 W2\\對稱矩陣、位能與振動}
+\author{}
+\date{2026 年 10 月 9 日至 10 月 15 日}
+\begin{document}
+\maketitle
+\vspace{-1.2em}
+\textbf{對應計畫：}新版 Q1，W2：Strang 6-4 譜定理與正交對角化。
+本次按計畫安排，不預設已完成前一週的診斷。
+
+\textbf{時間與負荷：}共 3 題，約 35--40 分鐘，可分次完成。
+輪班疲累時先做第 1、2 題，第 3 題留作選做。
+三題使用同一個矩陣，連結線性代數、向量分析、微分方程與分析力學。
+先完成題目，再翻至提示；完整解法另起頁。
+
+\section{題目：先自行作答}
+\subsection*{第 1 題：正交對角化（約 12 分鐘，必做）}
+給定實對稱矩陣
+\[
+    A=\begin{pmatrix}2&-1\\-1&2\end{pmatrix}.
+\]
+\begin{enumerate}
+    \item 求全部特徵值與對應的特徵向量。
+    \item 將特徵向量規範化，組成正交矩陣 \(Q\)，寫出
+          \[
+              A=Q\Lambda Q^T.
+          \]
+    \item 若 \(A\mathbf u=\lambda\mathbf u\)、\(A\mathbf v=\mu\mathbf v\)，
+          且 \(\lambda\ne\mu\)，利用 \(A^T=A\) 證明 \(\mathbf u\) 與 \(\mathbf v\) 正交。
+\end{enumerate}
+
+\subsection*{第 2 題：位能的梯度（約 8 分鐘，必做）}
+設位置向量為 \(\mathbf r=(x,y)^T\)，位能為
+\[
+    V(x,y)=\frac{k}{2}\mathbf r^TA\mathbf r,\qquad k>0.
+\]
+其中 \(x,y\) 的單位為公尺，\(k\) 的單位為 \(\mathrm{N/m}\)。
+\begin{enumerate}
+    \item 展開 \(V\)，求梯度 \(\nabla V\) 與力場 \(\mathbf F=-\nabla V\)。
+    \item 求滿足 \(\nabla V=\mathbf0\) 的駐點，判斷它是否為嚴格極小值。
+\end{enumerate}
+所需定義：
+\[
+    \nabla V=
+    \begin{pmatrix}
+        \partial V/\partial x \\
+        \partial V/\partial y
+    \end{pmatrix}.
+\]
+
+\subsection*{第 3 題：用特徵向量解振動方程（約 15 分鐘，選做）}
+質量為 \(m>0\) 的粒子在第 2 題的位能中運動：
+\[
+    m\ddot{\mathbf r}=-kA\mathbf r.
+\]
+初始條件為
+\[
+    \mathbf r(0)=\begin{pmatrix}a\\0\end{pmatrix},
+    \qquad \dot{\mathbf r}(0)=\mathbf0,\qquad a>0.
+\]
+其中 \(m\) 的單位為公斤，\(a\) 的單位為公尺，時間 \(t\) 的單位為秒。
+沿第 1 題的兩個正交規範特徵向量，寫成
+\[
+    \mathbf r(t)=c_1(t)\mathbf e_1+c_2(t)\mathbf e_2.
+\]
+求 \(c_1,c_2\)，以及 \(x(t),y(t)\)。
+
+可使用：
+\[
+    \ddot c+\omega^2c=0
+    \quad\Longrightarrow\quad
+    c(t)=C\cos(\omega t)+D\sin(\omega t).
+\]
+
+\clearpage
+\section{提示：需要時再看下一層}
+\subsection*{第 1 題}
+\textbf{第一層：}先算 \(\det(A-\lambda I)\)。
+
+\textbf{第二層：}試試 \((1,1)^T\) 與 \((1,-1)^T\)。
+證明正交時，從兩種方式計算 \(\mathbf u^TA\mathbf v\)。
+
+\subsection*{第 2 題}
+\textbf{第一層：}先把矩陣乘法展開，再取偏導數。
+
+\textbf{第二層：}使用
+\[
+    x^2-xy+y^2=\frac12(x-y)^2+\frac12(x^2+y^2).
+\]
+
+\subsection*{第 3 題}
+\textbf{第一層：}對每個特徵向量使用 \(A\mathbf e_i=\lambda_i\mathbf e_i\)。
+
+\textbf{第二層：}兩個係數各自滿足
+\[
+    \ddot c_i+\frac{k\lambda_i}{m}c_i=0.
+\]
+用 \(c_i(0)=\mathbf e_i^T\mathbf r(0)\) 求初始係數。
+
+\clearpage
+\section{完整解法}
+\subsection*{第 1 題}
+特徵方程為
+\[
+    \det(A-\lambda I)
+    =(2-\lambda)^2-1
+    =(\lambda-1)(\lambda-3)=0.
+\]
+因此
+\[
+    \lambda_1=1,\qquad\lambda_2=3.
+\]
+代入 \(A\mathbf v=\lambda\mathbf v\)，得到
+\[
+    \lambda_1=1:\quad\mathbf v_1=\begin{pmatrix}1\\1\end{pmatrix},
+    \qquad
+    \lambda_2=3:\quad\mathbf v_2=\begin{pmatrix}1\\-1\end{pmatrix}.
+\]
+兩向量內積為零，長度皆為 \(\sqrt2\)，所以正交規範基為
+\[
+    \mathbf e_1=\frac1{\sqrt2}\begin{pmatrix}1\\1\end{pmatrix},
+    \qquad
+    \mathbf e_2=\frac1{\sqrt2}\begin{pmatrix}1\\-1\end{pmatrix}.
+\]
+取
+\[
+    Q=\frac1{\sqrt2}\begin{pmatrix}1&1\\1&-1\end{pmatrix},
+    \qquad
+    \Lambda=\begin{pmatrix}1&0\\0&3\end{pmatrix}.
+\]
+因為 \(Q^TQ=I\)，且 \(AQ=Q\Lambda\)，所以
+\[
+    \boxed{A=Q\Lambda Q^T}.
+\]
+也能寫成譜分解：
+\[
+    A=\mathbf e_1\mathbf e_1^T+3\mathbf e_2\mathbf e_2^T.
+\]
+
+\textbf{不同特徵值對應的特徵向量正交：}
+由 \(A\mathbf v=\mu\mathbf v\)，
+\[
+    \mathbf u^TA\mathbf v=\mu\,\mathbf u^T\mathbf v.
+\]
+另一方面，由 \(A^T=A\)，
+\[
+    \mathbf u^TA\mathbf v
+    =(A\mathbf u)^T\mathbf v
+    =\lambda\,\mathbf u^T\mathbf v.
+\]
+相減得
+\[
+    (\lambda-\mu)\mathbf u^T\mathbf v=0.
+\]
+因 \(\lambda\ne\mu\)，故
+\[
+    \boxed{\mathbf u^T\mathbf v=0}.
+\]
+\textbf{注意：}特徵向量的正負號可以改，但 \(Q\) 中向量的順序必須和
+\(\Lambda\) 中特徵值的順序一致。
+
+\subsection*{第 2 題}
+先展開：
+\[
+    V=\frac{k}{2}(2x^2-2xy+2y^2)=k(x^2-xy+y^2).
+\]
+所以
+\[
+    \nabla V=k\begin{pmatrix}2x-y\\2y-x\end{pmatrix}=kA\mathbf r,
+    \qquad
+    \boxed{\mathbf F=\begin{pmatrix}-2kx+ky\\kx-2ky\end{pmatrix}}.
+\]
+求駐點：
+\[
+    2x-y=0,\qquad 2y-x=0
+    \quad\Longrightarrow\quad
+    \boxed{x=y=0}.
+\]
+為了判斷極值，改寫為
+\[
+    V=\frac{k}{2}\big[(x-y)^2+x^2+y^2\big].
+\]
+當 \((x,y)\ne(0,0)\) 時，上式嚴格大於零；原點的位能為零。
+因此，\textbf{原點是嚴格的全域極小值}。
+
+單位也吻合：
+\[
+    [V]=(\mathrm{N/m})\,\mathrm m^2=\mathrm J,\qquad
+    [\nabla V]=\mathrm{J/m}=\mathrm N.
+\]
+物理意義：在梯度非零的地方，位能沿梯度方向增加得最快，
+而力指向位能下降的方向。
+
+\subsection*{第 3 題}
+代入 \(\mathbf r=c_1\mathbf e_1+c_2\mathbf e_2\) 與
+\(A\mathbf e_i=\lambda_i\mathbf e_i\)，得到
+\[
+    m(\ddot c_1\mathbf e_1+\ddot c_2\mathbf e_2)
+    =-k(c_1\mathbf e_1+3c_2\mathbf e_2).
+\]
+由兩向量線性獨立，
+\[
+    \ddot c_1+\frac{k}{m}c_1=0,\qquad
+    \ddot c_2+\frac{3k}{m}c_2=0.
+\]
+因此兩個角頻率為
+\[
+    \omega_1=\sqrt{\frac{k}{m}},\qquad
+    \omega_2=\sqrt{\frac{3k}{m}}.
+\]
+兩者單位皆為 \(\mathrm{s^{-1}}\)。
+
+將初始位置投影到兩個方向：
+\[
+    c_1(0)=\mathbf e_1^T\mathbf r(0)=\frac a{\sqrt2},\qquad
+    c_2(0)=\mathbf e_2^T\mathbf r(0)=\frac a{\sqrt2}.
+\]
+初始速度為零，故 \(\dot c_1(0)=\dot c_2(0)=0\)，所以
+\[
+    c_1(t)=\frac a{\sqrt2}\cos(\omega_1t),\qquad
+    c_2(t)=\frac a{\sqrt2}\cos(\omega_2t).
+\]
+還原位置：
+\[
+    \boxed{x(t)=\frac a2[\cos(\omega_1t)+\cos(\omega_2t)]},
+\]
+\[
+    \boxed{y(t)=\frac a2[\cos(\omega_1t)-\cos(\omega_2t)]}.
+\]
+檢查 \(t=0\)：得到 \(x(0)=a,y(0)=0\)；對時間微分後，
+兩個初始速度也都是零。代回各係數的微分方程，即滿足原運動方程。
+
+\textbf{物理意義：}特徵向量決定互不耦合的振動方向，
+特徵值則決定各方向的恢復力強度。這正是正交對角化在力學中的用途。
+
+\section{本週重點整理}
+\begin{enumerate}
+    \item \textbf{譜定理：}實對稱矩陣具有實特徵值，並能選出由特徵向量
+          組成的正交規範基。重複特徵值的特徵空間內，仍需選取正交規範基。
+    \item \textbf{別漏掉規範化：}只有互相垂直還不夠；要讓 \(Q^TQ=I\)，
+          每個向量的長度也必須為 1。
+    \item \textbf{銜接分析力學：}由
+          \[
+              L=\frac12m(\dot x^2+\dot y^2)-V
+          \]
+          使用 Euler--Lagrange 方程，可得到本題的
+          \(m\ddot{\mathbf r}=-\nabla V\)。
+    \item \textbf{銜接電磁學：}靜電場同樣由負梯度得到：
+          \(\mathbf E=-\nabla\phi\)。注意 \(\phi\) 是電位；
+          電荷 \(q_{\mathrm e}\) 的位能是 \(V=q_{\mathrm e}\phi\)。
+    \item \textbf{銜接量子力學：}「求特徵值，再沿正交特徵向量分解」
+          會延伸到量子力學的厄米算符。本週先掌握實對稱矩陣即可。
+\end{enumerate}
+
+\subsection*{自我檢核}
+若第 3 題改成 \(\mathbf r(0)=a\mathbf e_1\)、初始速度仍為零，
+運動中會出現幾個角頻率？請用「初始位置的投影」說明理由。
+\end{document}

@@ -1,0 +1,289 @@
+% Compile with XeLaTeX.
+% 測度論最小模組：為目前的 L^2 / L^p / Banach 空間學習服務
+% Preamble style follows the user's previous study documents.
+
+\documentclass[11pt,a4paper,twoside]{article}
+
+\usepackage{fontspec}
+\usepackage{xeCJK}
+
+\IfFontExistsTF{Times New Roman}
+  {\setmainfont{Times New Roman}}
+  {\setmainfont{Latin Modern Roman}}
+
+\ifdefined\setCJKmainfont
+  \IfFontExistsTF{標楷體}
+    {\setCJKmainfont{標楷體}}
+    {\setCJKmainfont{標楷體}}
+\fi
+
+\usepackage{amsmath,amssymb,mathtools,empheq}
+\usepackage[most]{tcolorbox}
+\usepackage{tikz,wrapfig}
+\usepackage[a4paper,inner=2.5cm,outer=2cm,top=2.5cm,bottom=2.5cm]{geometry}
+\usepackage{setspace}
+\usepackage{fancyhdr}
+\usepackage[hang,flushmargin]{footmisc}
+
+\setstretch{1.25}
+\setlength{\parindent}{2em}
+\setlength{\parskip}{5pt}
+\setlength{\abovedisplayskip}{6pt}
+\setlength{\belowdisplayskip}{6pt}
+\setlength{\abovedisplayshortskip}{4pt}
+\setlength{\belowdisplayshortskip}{4pt}
+
+\pagestyle{fancy}
+\fancyhf{}
+\renewcommand{\headrulewidth}{0pt}
+\fancyfoot[RO,LE]{\small $\boldsymbol{\cdot}\;\thepage\;\boldsymbol{\cdot}$}
+
+\newif\ifstudynotes
+\studynotestrue
+
+\newtcolorbox{studyNote}[1][]{
+  enhanced,
+  breakable,
+  colback=gray!4,
+  colframe=black!35,
+  boxrule=0.5pt,
+  arc=1mm,
+  left=2mm,
+  right=2mm,
+  top=1.5mm,
+  bottom=1.5mm,
+  before skip=6pt,
+  after skip=8pt,
+  fonttitle=\bfseries,
+  title={複習註解},
+  #1
+}
+
+\newtcolorbox{importantNote}[1][]{
+  enhanced,
+  breakable,
+  colback=gray!8,
+  colframe=black!65,
+  boxrule=0.8pt,
+  arc=1mm,
+  left=2mm,
+  right=2mm,
+  top=1.5mm,
+  bottom=1.5mm,
+  before skip=7pt,
+  after skip=9pt,
+  fonttitle=\bfseries,
+  title={重要觀念},
+  #1
+}
+
+\newcommand{\StudyNote}[2]{%
+  \ifstudynotes
+    \begin{studyNote}[title={#1}]
+      #2
+    \end{studyNote}
+  \fi
+}
+
+\newcommand{\ImportantNote}[2]{%
+  \ifstudynotes
+    \begin{importantNote}[title={#1}]
+      #2
+    \end{importantNote}
+  \fi
+}
+
+\begin{document}
+
+\begin{center}
+    {\LARGE\bfseries 測度論最小學習計劃}\\[0.4em]
+    {\large 為 $L^2$、$L^p$、Banach 空間與變分法服務}
+\end{center}
+
+\par\vspace{0.4em}\hrule\vspace{1em}
+
+\ImportantNote{學習目標}{
+    目前不需要完整學完測度論。這個模組只補足理解
+    $L^2$、$L^p$、幾乎處處相等、完備化與函數收斂所需的最低限度知識。
+
+    建議安排為四次學習，每次約 60 分鐘；完成後立刻回頭重讀例 3。
+}
+
+\section*{第 1 次：測度與零測集}
+
+先把「測度」理解成集合大小的推廣。例如區間 $[a,b]$ 的長度為
+\[
+    m([a,b])=b-a.
+\]
+
+目前最重要的是單點集合的測度：
+\[
+    m(\{x_0\})=0.
+\]
+
+有限個點，以及可數集合，也可能具有測度零。這直接解釋了例 3 中為什麼只改變
+$\overline{\varphi}(0)$ 的值，不會改變 $L^2$ 距離。
+
+\ImportantNote{本節核心}{
+    若兩個函數只在一個零測集上不同，則這些差異不會影響 Lebesgue 積分。
+
+    特別地，若 $f$ 與 $g$ 只有在 $x=0$ 不同，則
+    \[
+        \int |f-g|^2\,dx=0.
+    \]
+}
+
+\StudyNote{練習}{
+    判斷下列集合哪些測度為零：
+    \[
+        \{0\},\qquad
+        \{1,2,3\},\qquad
+        \mathbb{Q}\cap[0,1],\qquad
+        [0,1].
+    \]
+}
+
+\section*{第 2 次：幾乎處處相等（a.e.）}
+
+符號
+\[
+    f=g\quad \text{a.e.}
+\]
+表示 $f$ 與 $g$ 並不一定在每一點都相等，而是它們不同的集合
+\[
+    \{x:f(x)\neq g(x)\}
+\]
+具有測度零。
+
+例如令
+\[
+    f(x)=
+    \begin{cases}
+        1, & x\neq0, \\
+        0, & x=0,
+    \end{cases}
+    \qquad
+    g(x)=1.
+\]
+
+雖然 $f(0)\neq g(0)$，但仍有 $f=g$ a.e.
+
+\ImportantNote{$L^p$ 空間真正的元素}{
+    在 $L^p$ 空間中，只在零測集上不同的函數會被視為同一個元素。
+
+    因此更精確地說，$L^p$ 的元素不是單一函數，而是「幾乎處處相等」所形成的等價類。
+}
+
+完成本節後，回頭重讀例 3 的段落 40--41，特別注意
+$\overline{\varphi}(0)$ 為什麼可以任意指定。
+
+\section*{第 3 次：Lebesgue 積分的基本直覺}
+
+這一階段不學 Lebesgue 積分的完整建構，只建立使用上的直覺。
+
+Riemann 積分主要從定義域出發切割區間；Lebesgue 積分則更適合按照函數值與對應集合來組織積分，因此在處理函數序列與極限時更自然。
+
+目前只需要認識三個關鍵詞：
+
+\begin{center}
+    可測函數 \qquad Lebesgue 可積 \qquad $p$ 次方可積
+\end{center}
+
+對 $p\ge1$，$L^p(\Omega)$ 的核心條件是
+\[
+    \int_{\Omega}|f(x)|^p\,dx<\infty.
+\]
+
+若把「幾乎處處相等」也納入，則概念上可以寫成
+\[
+    L^p(\Omega)
+    =
+    \left\{
+    f:\int_{\Omega}|f|^p\,dx<\infty
+    \right\}\big/\!\sim,
+\]
+其中
+\[
+    f\sim g
+    \quad\Longleftrightarrow\quad
+    f=g\ \text{a.e.}
+\]
+
+\section*{第 4 次：三種收斂不要混在一起}
+
+\subsection*{1. 逐點收斂}
+
+固定 $x$，再讓 $n\to\infty$：
+\[
+    f_n(x)\to f(x).
+\]
+
+\subsection*{2. 幾乎處處收斂}
+
+允許在某個零測集上收斂失敗：
+\[
+    f_n(x)\to f(x)\quad \text{a.e.}
+\]
+
+\subsection*{3. $L^p$ 收斂}
+
+以 $L^p$ 範數衡量整體誤差：
+\[
+    \|f_n-f\|_p\to0.
+\]
+
+在 $p=2$ 時，
+\[
+    \|f_n-f\|_2^2
+    =
+    \int |f_n-f|^2\,dx
+    \to0.
+\]
+
+\ImportantNote{最容易混淆的地方}{
+    $L^2$ 收斂並不等於「每一點都逐點收斂」。
+
+    例 3 的核心正是在比較「函數序列屬於 $C([-1,1])$」與
+    「其 $L^2$ 極限是否仍屬於 $C([-1,1])$」。
+}
+
+\section*{完成後：回頭重讀例 3}
+
+完成上述四次學習後，重新整理例 3：
+\[
+    \varphi_n\in C([-1,1]),
+    \qquad
+    \{\varphi_n\}\text{ 是 }L^2\text{-Cauchy 序列}.
+\]
+
+其 $L^2$ 極限可表示為
+\[
+    \varphi(x)=
+    \begin{cases}
+        -1, & x<0, \\
+        1,  & x>0,
+    \end{cases}
+\]
+而 $x=0$ 的值在 $L^2$ 意義下可以任意指定，因為單點集合的測度為零。
+
+因此這個極限不屬於 $C([-1,1])$，卻屬於 $L^2([-1,1])$，所以
+$C([-1,1])$ 在 $L^2$ 範數下不是完備空間，而其完備化為
+\[
+    L^2([-1,1]).
+\]
+
+\section*{目前暫時不用深入}
+
+為了維持學習效率，現階段先不深入：
+
+\begin{itemize}
+    \item $\sigma$-代數的完整抽象理論；
+    \item 外測度與 Carath\'eodory 可測性的完整建構；
+    \item Radon--Nikodym 定理；
+    \item Fubini 與 Tonelli 定理的完整證明；
+    \item 單調收斂定理與控制收斂定理的正式證明。
+\end{itemize}
+
+等之後進入 Sobolev 空間、弱收斂或更深入的 PDE，再進行第二階段測度論。
+
+\end{document}
