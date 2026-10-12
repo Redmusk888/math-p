@@ -29,6 +29,8 @@
 \setlength{\parskip}{0.45em}
 \setlist{itemsep=0.3em,topsep=0.3em}
 \emergencystretch=2em
+% 題目後的手寫作答留白；參數可用 6cm、8cm 等長度自行調整。
+\newcommand{\answerspace}[1]{\par\vspace*{#1}}
 \title{物理數學短練習 W2\\對稱矩陣、位能與振動}
 \author{}
 \date{2026 年 10 月 9 日至 10 月 15 日}
@@ -59,6 +61,9 @@
           且 \(\lambda\ne\mu\)，利用 \(A^T=A\) 證明 \(\mathbf u\) 與 \(\mathbf v\) 正交。
 \end{enumerate}
 
+% 第 1 題作答空間
+\answerspace{7cm}
+
 \subsection*{第 2 題：位能的梯度（約 8 分鐘，必做）}
 設位置向量為 \(\mathbf r=(x,y)^T\)，位能為
 \[
@@ -77,6 +82,9 @@
         \partial V/\partial y
     \end{pmatrix}.
 \]
+
+% 第 2 題作答空間
+\answerspace{6cm}
 
 \subsection*{第 3 題：用特徵向量解振動方程（約 15 分鐘，選做）}
 質量為 \(m>0\) 的粒子在第 2 題的位能中運動：
@@ -102,6 +110,10 @@
     c(t)=C\cos(\omega t)+D\sin(\omega t).
 \]
 
+% 第 3 題作答空間
+\answerspace{9cm}
+
+% \clearpage：先排完目前內容與等待中的圖表，再從新的一頁開始提示。
 \clearpage
 \section{提示：需要時再看下一層}
 \subsection*{第 1 題}
@@ -127,6 +139,7 @@
 \]
 用 \(c_i(0)=\mathbf e_i^T\mathbf r(0)\) 求初始係數。
 
+% \clearpage：把提示與完整解法分頁，並先清空尚未排出的浮動物件。
 \clearpage
 \section{完整解法}
 \subsection*{第 1 題}
