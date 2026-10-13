@@ -1,0 +1,488 @@
+% !TeX program = xelatex
+% Encoding: UTF-8
+\documentclass[12pt,a4paper]{article}
+
+\usepackage{fontspec}
+\usepackage{xeCJK}
+\usepackage{amsmath,amssymb,amsthm,mathtools}
+\usepackage{geometry}
+\usepackage{enumitem}
+\usepackage{hyperref}
+
+\geometry{margin=2.0cm}
+\setmainfont{Latin Modern Roman}
+\setCJKmainfont{標楷體}
+
+\setlength{\parindent}{2em}
+\setlength{\parskip}{0.5em}
+
+% Make displayed matrices easier to read
+\renewcommand{\arraystretch}{1.35}
+\setlength{\arraycolsep}{9pt}
+
+\newtheorem{theorem}{定理}
+
+\title{\textbf{Schur's Theorem（Schur 定理）}\\
+\large 歸納法證明}
+\author{}
+\date{}
+
+\begin{document}
+\maketitle
+
+\section{酉矩陣}
+
+對一個 $n\times n$ 的複數矩陣 $Q$，若
+\[
+    \overline{Q}^{\,T}=Q^{-1},
+\]
+則稱 $Q$ 為\textbf{酉矩陣（unitary matrix）}。
+
+如果一個酉矩陣同時也是實矩陣，那麼
+\[
+    \overline{Q}=Q,
+\]
+因此
+\[
+    Q^T=Q^{-1}.
+\]
+所以實數情形下的酉矩陣就是\textbf{正交矩陣（orthogonal matrix）}。
+
+\section{Schur 定理}
+
+\begin{theorem}[Schur's Theorem]
+    每一個方陣都可以分解成
+    \[
+        \boxed{
+            A=QTQ^{-1}=QT\overline{Q}^{\,T},
+        }
+    \]
+    其中 $T$ 是上三角矩陣，而 $Q$ 是酉矩陣。
+
+    如果 $A$ 的所有特徵值皆為實數，則 $Q$ 與 $T$ 都可以選成實矩陣。
+    此時
+    \[
+        Q^T=Q^{-1},
+    \]
+    也就是說 $Q$ 為正交矩陣。
+\end{theorem}
+
+\section{證明}
+
+我們使用數學歸納法證明。
+
+\subsection*{1. 基礎情形}
+
+當 $n=1$ 時，結論顯然成立：
+\[
+    a=1\cdot a\cdot 1^{-1}.
+\]
+
+\subsection*{2. 歸納假設}
+
+假設 Schur 定理對所有 $k\times k$ 矩陣成立，
+現在令 $A$ 為一個 $(k+1)\times(k+1)$ 矩陣。
+
+令 $\lambda_1$ 為 $A$ 的一個特徵值，
+並令 $q_1$ 為對應的單位特徵向量，因此
+\[
+    Aq_1=\lambda_1q_1,
+    \qquad
+    \|q_1\|=1.
+\]
+
+利用 Gram--Schmidt 過程，可以找到
+\[
+    q_2,q_3,\ldots,q_{k+1},
+\]
+使得
+\[
+    q_1,q_2,\ldots,q_{k+1}
+\]
+形成 $\mathbb{C}^{k+1}$ 的一組正交規範基。
+
+令
+\[
+    Q_1=
+    \left[
+        \begin{array}{cccc}
+            \;q_1\; & \;q_2\; & \cdots & \;q_{k+1}\;
+        \end{array}
+        \right].
+\]
+
+因為 $q_1,q_2,\ldots,q_{k+1}$ 是一組正交規範基，
+所以 $Q_1$ 是酉矩陣。
+
+\subsection*{3. 計算 $\overline{Q}_1^{\,T}AQ_1$}
+
+先把矩陣乘法完整寫開：
+\[
+    \overline{Q}_1^{\,T}AQ_1
+    =
+    \left[
+        \begin{array}{c}
+            \overline{q}_1^{\,T} \\[3pt]
+            \overline{q}_2^{\,T} \\[3pt]
+            \vdots               \\[3pt]
+            \overline{q}_{k+1}^{\,T}
+        \end{array}
+        \right]
+    \left[
+        \begin{array}{cccc}
+            Aq_1 & Aq_2 & \cdots & Aq_{k+1}
+        \end{array}
+        \right].
+\]
+
+因為
+\[
+    Aq_1=\lambda_1q_1,
+\]
+所以
+\[
+    \overline{Q}_1^{\,T}AQ_1
+    =
+    \left[
+        \begin{array}{c}
+            \overline{q}_1^{\,T} \\[3pt]
+            \overline{q}_2^{\,T} \\[3pt]
+            \vdots               \\[3pt]
+            \overline{q}_{k+1}^{\,T}
+        \end{array}
+        \right]
+    \left[
+        \begin{array}{cccc}
+            \lambda_1q_1 & Aq_2 & \cdots & Aq_{k+1}
+        \end{array}
+        \right].
+\]
+
+因此可以直接展開成
+\[
+    \overline{Q}_1^{\,T}AQ_1
+    =
+    \left[
+        \begin{array}{cccc}
+            \overline{q}_1^{\,T}\lambda_1q_1
+                   &
+            \overline{q}_1^{\,T}Aq_2
+                   &
+            \cdots
+                   &
+            \overline{q}_1^{\,T}Aq_{k+1}
+            \\[5pt]
+            \overline{q}_2^{\,T}\lambda_1q_1
+                   &
+            \overline{q}_2^{\,T}Aq_2
+                   &
+            \cdots
+                   &
+            \overline{q}_2^{\,T}Aq_{k+1}
+            \\[5pt]
+            \vdots & \vdots & \ddots & \vdots
+            \\[5pt]
+            \overline{q}_{k+1}^{\,T}\lambda_1q_1
+                   &
+            \overline{q}_{k+1}^{\,T}Aq_2
+                   &
+            \cdots
+                   &
+            \overline{q}_{k+1}^{\,T}Aq_{k+1}
+        \end{array}
+        \right].
+\]
+
+由正交規範性，
+\[
+    \overline{q}_1^{\,T}q_1=1,
+    \qquad
+    \overline{q}_j^{\,T}q_1=0
+    \quad(j=2,\ldots,k+1),
+\]
+因此第一欄化為
+\[
+    \left[
+        \begin{array}{c}
+            \lambda_1 \\[4pt]
+            0         \\[4pt]
+            \vdots    \\[4pt]
+            0
+        \end{array}
+        \right].
+\]
+
+所以整個矩陣可寫成
+\[
+    \boxed{
+        \overline{Q}_1^{\,T}AQ_1
+        =
+        \left[
+            \begin{array}{ccccc}
+                \lambda_1
+                 &
+                *
+                 &
+                *
+                 &
+                \cdots
+                 &
+                *
+                \\[5pt]
+                0
+                 &
+                 &
+                 &
+                 &
+                \\[-3pt]
+                0
+                 &
+                 &
+                A_2
+                 &
+                 &
+                \\[-3pt]
+                \vdots
+                 &
+                 &
+                 &
+                 &
+                \\[-3pt]
+                0
+                 &
+                 &
+                 &
+                 &
+            \end{array}
+            \right]
+    }
+\]
+其中 $A_2$ 是一個 $k\times k$ 矩陣。
+
+這裡最重要的是：
+\[
+    \boxed{\text{第一欄除了 }\lambda_1\text{ 以外，其餘元素全部為 }0.}
+\]
+
+\subsection*{4. 對 $A_2$ 使用歸納假設}
+
+因為 $A_2$ 是一個 $k\times k$ 矩陣，
+依照歸納假設，存在酉矩陣 $Q_2$ 與上三角矩陣 $T_2$，使得
+\[
+    A_2=Q_2T_2\overline{Q}_2^{\,T},
+\]
+因此
+\[
+    \overline{Q}_2^{\,T}A_2Q_2=T_2.
+\]
+
+令
+\[
+    Q
+    =
+    Q_1
+    \left[
+        \begin{array}{ccccc}
+            1      & 0 & 0   & \cdots & 0 \\[4pt]
+            0      &   &     &        &   \\[-3pt]
+            0      &   & Q_2 &        &   \\[-3pt]
+            \vdots &   &     &        &   \\[-3pt]
+            0      &   &     &        &
+        \end{array}
+        \right].
+\]
+
+為方便表示，設
+\[
+    D=
+    \left[
+        \begin{array}{ccccc}
+            1      & 0 & 0   & \cdots & 0 \\[4pt]
+            0      &   &     &        &   \\[-3pt]
+            0      &   & Q_2 &        &   \\[-3pt]
+            \vdots &   &     &        &   \\[-3pt]
+            0      &   &     &        &
+        \end{array}
+        \right],
+    \qquad
+    Q=Q_1D.
+\]
+
+\subsection*{5. 證明 $Q$ 是酉矩陣}
+
+因為 $Q_2$ 是酉矩陣，
+\[
+    Q_2\overline{Q}_2^{\,T}=I_k.
+\]
+
+因此
+\[
+    D\overline{D}^{\,T}
+    =
+    \left[
+        \begin{array}{ccccc}
+            1      & 0 & 0   & \cdots & 0 \\
+            0      &   &     &        &   \\
+            0      &   & Q_2 &        &   \\
+            \vdots &   &     &        &   \\
+            0      &   &     &        &
+        \end{array}
+        \right]
+    \left[
+        \begin{array}{ccccc}
+            1      & 0 & 0                    & \cdots & 0 \\
+            0      &   &                      &        &   \\
+            0      &   & \overline{Q}_2^{\,T} &        &   \\
+            \vdots &   &                      &        &   \\
+            0      &   &                      &        &
+        \end{array}
+        \right]
+    =
+    \left[
+        \begin{array}{ccccc}
+            1      & 0 & 0   & \cdots & 0 \\
+            0      &   &     &        &   \\
+            0      &   & I_k &        &   \\
+            \vdots &   &     &        &   \\
+            0      &   &     &        &
+        \end{array}
+        \right]
+    =
+    I_{k+1}.
+\]
+
+又因為 $Q_1$ 是酉矩陣，
+\[
+    Q_1\overline{Q}_1^{\,T}=I_{k+1}.
+\]
+
+故
+\[
+    \begin{aligned}
+        Q\overline{Q}^{\,T}
+         & =
+        Q_1D\overline{D}^{\,T}\overline{Q}_1^{\,T} \\
+         & =
+        Q_1I_{k+1}\overline{Q}_1^{\,T}             \\
+         & =
+        Q_1\overline{Q}_1^{\,T}                    \\
+         & =
+        I_{k+1}.
+    \end{aligned}
+\]
+
+因此 $Q$ 是酉矩陣。
+
+\subsection*{6. 計算 $\overline{Q}^{\,T}AQ$}
+
+由
+\[
+    Q=Q_1D,
+\]
+可得
+\[
+    \overline{Q}^{\,T}AQ
+    =
+    \overline{D}^{\,T}\,
+    \overline{Q}_1^{\,T}AQ_1\,
+    D.
+\]
+
+完整寫成矩陣：
+\[
+    \overline{Q}^{\,T}AQ
+    =
+    \left[
+        \begin{array}{ccccc}
+            1      & 0 & 0                    & \cdots & 0 \\
+            0      &   &                      &        &   \\
+            0      &   & \overline{Q}_2^{\,T} &        &   \\
+            \vdots &   &                      &        &   \\
+            0      &   &                      &        &
+        \end{array}
+        \right]
+    \left[
+        \begin{array}{ccccc}
+            \lambda_1 & * & *   & \cdots & * \\
+            0         &   &     &        &   \\
+            0         &   & A_2 &        &   \\
+            \vdots    &   &     &        &   \\
+            0         &   &     &        &
+        \end{array}
+        \right]
+    \left[
+        \begin{array}{ccccc}
+            1      & 0 & 0   & \cdots & 0 \\
+            0      &   &     &        &   \\
+            0      &   & Q_2 &        &   \\
+            \vdots &   &     &        &   \\
+            0      &   &     &        &
+        \end{array}
+        \right].
+\]
+
+因此
+\[
+    \overline{Q}^{\,T}AQ
+    =
+    \left[
+        \begin{array}{ccccc}
+            \lambda_1 & * & *                          & \cdots & * \\
+            0         &   &                            &        &   \\
+            0         &   & \overline{Q}_2^{\,T}A_2Q_2 &        &   \\
+            \vdots    &   &                            &        &   \\
+            0         &   &                            &        &
+        \end{array}
+        \right].
+\]
+
+再利用
+\[
+    \overline{Q}_2^{\,T}A_2Q_2=T_2,
+\]
+得到
+\[
+    \boxed{
+        \overline{Q}^{\,T}AQ
+        =
+        \left[
+            \begin{array}{ccccc}
+                \lambda_1 & * & *   & \cdots & * \\
+                0         &   &     &        &   \\
+                0         &   & T_2 &        &   \\
+                \vdots    &   &     &        &   \\
+                0         &   &     &        &
+            \end{array}
+            \right]
+        =T.
+    }
+\]
+
+因為 $T_2$ 是上三角矩陣，所以 $T$ 也是上三角矩陣。
+
+因此
+\[
+    \overline{Q}^{\,T}AQ=T.
+\]
+
+又因為
+\[
+    \overline{Q}^{\,T}=Q^{-1},
+\]
+所以
+\[
+    Q^{-1}AQ=T.
+\]
+
+左乘 $Q$、右乘 $Q^{-1}$，得到
+\[
+    \boxed{
+        A=QTQ^{-1}=QT\overline{Q}^{\,T}.
+    }
+\]
+
+因此 Schur 定理對 $(k+1)\times(k+1)$ 矩陣成立。
+
+由數學歸納法可知，Schur 定理對所有 $n\times n$ 複數矩陣皆成立。
+
+\end{document}

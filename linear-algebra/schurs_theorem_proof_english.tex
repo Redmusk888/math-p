@@ -1,0 +1,352 @@
+% !TeX program = xelatex
+% Encoding: UTF-8
+\documentclass[12pt,a4paper]{article}
+
+\usepackage{fontspec}
+\usepackage{amsmath,amssymb,amsthm,mathtools}
+\usepackage{geometry}
+\usepackage{enumitem}
+\usepackage{hyperref}
+
+\geometry{margin=2.0cm}
+\setmainfont{Latin Modern Roman}
+
+\setlength{\parindent}{2em}
+\setlength{\parskip}{0.5em}
+
+% Make displayed matrices easier to read
+\renewcommand{\arraystretch}{1.35}
+\setlength{\arraycolsep}{9pt}
+
+\newtheorem{theorem}{Theorem}
+
+\title{\textbf{Schur's Theorem}\\
+\large Proof by Mathematical Induction}
+\author{}
+\date{}
+
+\begin{document}
+\maketitle
+
+\section{Unitary Matrix}
+
+For an $n\times n$ complex matrix $Q$, if
+\[
+    \overline{Q}^{\,T}=Q^{-1},
+\]
+then $Q$ is called a \textbf{unitary matrix}.
+
+If a unitary matrix is real, then
+\[
+    \overline{Q}=Q,
+\]
+and hence
+\[
+    Q^T=Q^{-1}.
+\]
+Thus, in the real case, a unitary matrix is an \textbf{orthogonal matrix}.
+
+\section{Schur's Theorem}
+
+\begin{theorem}[Schur's Theorem]
+    Every square matrix can be factored as
+    \[
+        \boxed{
+            A=QTQ^{-1}=QT\overline{Q}^{\,T},
+        }
+    \]
+    where $T$ is upper triangular and $Q$ is unitary.
+
+    If $A$ has real eigenvalues, then $Q$ and $T$ can be chosen real. In this case,
+    \[
+        Q^T=Q^{-1},
+    \]
+    so $Q$ is orthogonal.
+\end{theorem}
+
+\section{Proof}
+
+We prove the theorem by mathematical induction.
+
+\subsection*{1. Base Case}
+
+For $n=1$,
+\[
+    a=1\cdot a\cdot 1^{-1}.
+\]
+
+\subsection*{2. Induction Hypothesis}
+
+Assume the theorem holds for every $k\times k$ matrix, and let $A$ be a
+$(k+1)\times(k+1)$ matrix.
+
+Let $\lambda_1$ be an eigenvalue of $A$ and $q_1$ a corresponding unit eigenvector:
+\[
+    Aq_1=\lambda_1q_1,
+    \qquad
+    \|q_1\|=1.
+\]
+
+Using Gram--Schmidt, extend $q_1$ to an orthonormal basis
+\[
+    q_1,q_2,\ldots,q_{k+1}.
+\]
+
+Let
+\[
+    Q_1=
+    \left[
+        \begin{array}{cccc}
+            q_1 & q_2 & \cdots & q_{k+1}
+        \end{array}
+        \right].
+\]
+Then $Q_1$ is unitary.
+
+\subsection*{3. Compute $\overline{Q}_1^{\,T}AQ_1$}
+
+Write the multiplication explicitly:
+\[
+    \overline{Q}_1^{\,T}AQ_1
+    =
+    \left[
+        \begin{array}{c}
+            \overline{q}_1^{\,T} \\[3pt]
+            \overline{q}_2^{\,T} \\[3pt]
+            \vdots               \\[3pt]
+            \overline{q}_{k+1}^{\,T}
+        \end{array}
+        \right]
+    \left[
+        \begin{array}{cccc}
+            Aq_1 & Aq_2 & \cdots & Aq_{k+1}
+        \end{array}
+        \right].
+\]
+
+Since
+\[
+    Aq_1=\lambda_1q_1,
+\]
+we get
+\[
+    \overline{Q}_1^{\,T}AQ_1
+    =
+    \left[
+        \begin{array}{cccc}
+            \overline{q}_1^{\,T}\lambda_1q_1     &
+            \overline{q}_1^{\,T}Aq_2             &
+            \cdots                               &
+            \overline{q}_1^{\,T}Aq_{k+1}
+            \\[5pt]
+            \overline{q}_2^{\,T}\lambda_1q_1     &
+            \overline{q}_2^{\,T}Aq_2             &
+            \cdots                               &
+            \overline{q}_2^{\,T}Aq_{k+1}
+            \\[5pt]
+            \vdots                               & \vdots & \ddots & \vdots
+            \\[5pt]
+            \overline{q}_{k+1}^{\,T}\lambda_1q_1 &
+            \overline{q}_{k+1}^{\,T}Aq_2         &
+            \cdots                               &
+            \overline{q}_{k+1}^{\,T}Aq_{k+1}
+        \end{array}
+        \right].
+\]
+
+Because the $q_i$ are orthonormal,
+\[
+    \overline{q}_1^{\,T}q_1=1,
+    \qquad
+    \overline{q}_j^{\,T}q_1=0
+    \quad(j=2,\ldots,k+1).
+\]
+
+Hence the first column becomes
+\[
+    \left[
+        \begin{array}{c}
+            \lambda_1 \\[4pt]
+            0         \\[4pt]
+            \vdots    \\[4pt]
+            0
+        \end{array}
+        \right],
+\]
+and therefore
+\[
+    \boxed{
+        \overline{Q}_1^{\,T}AQ_1
+        =
+        \left[
+            \begin{array}{ccccc}
+                \lambda_1 & * & *   & \cdots & * \\[5pt]
+                0         &   &     &        &   \\[-3pt]
+                0         &   & A_2 &        &   \\[-3pt]
+                \vdots    &   &     &        &   \\[-3pt]
+                0         &   &     &        &
+            \end{array}
+            \right].
+    }
+\]
+
+Here $A_2$ is a $k\times k$ matrix.
+
+\subsection*{4. Apply the Induction Hypothesis to $A_2$}
+
+By the induction hypothesis,
+\[
+    A_2=Q_2T_2\overline{Q}_2^{\,T},
+\]
+where $Q_2$ is unitary and $T_2$ is upper triangular. Hence
+\[
+    \overline{Q}_2^{\,T}A_2Q_2=T_2.
+\]
+
+Let
+\[
+    Q=
+    Q_1
+    \left[
+        \begin{array}{ccccc}
+            1      & 0 & 0   & \cdots & 0 \\
+            0      &   &     &        &   \\
+            0      &   & Q_2 &        &   \\
+            \vdots &   &     &        &   \\
+            0      &   &     &        &
+        \end{array}
+        \right].
+\]
+
+Denote the second matrix by $D$, so that $Q=Q_1D$.
+
+\subsection*{5. Show that $Q$ is Unitary}
+
+Since $Q_2$ is unitary,
+\[
+    Q_2\overline{Q}_2^{\,T}=I_k,
+\]
+and hence
+\[
+    D\overline{D}^{\,T}=I_{k+1}.
+\]
+
+Also,
+\[
+    Q_1\overline{Q}_1^{\,T}=I_{k+1}.
+\]
+
+Therefore
+\[
+    Q\overline{Q}^{\,T}
+    =
+    Q_1D\overline{D}^{\,T}\overline{Q}_1^{\,T}
+    =
+    I_{k+1}.
+\]
+
+Thus $Q$ is unitary.
+
+\subsection*{6. Compute $\overline{Q}^{\,T}AQ$}
+
+We have
+\[
+    \overline{Q}^{\,T}AQ
+    =
+    \overline{D}^{\,T}
+    \overline{Q}_1^{\,T}AQ_1
+    D.
+\]
+
+Writing out the matrices,
+\[
+    \overline{Q}^{\,T}AQ
+    =
+    \left[
+        \begin{array}{ccccc}
+            1      & 0 & 0                    & \cdots & 0 \\
+            0      &   &                      &        &   \\
+            0      &   & \overline{Q}_2^{\,T} &        &   \\
+            \vdots &   &                      &        &   \\
+            0      &   &                      &        &
+        \end{array}
+        \right]
+    \left[
+        \begin{array}{ccccc}
+            \lambda_1 & * & *   & \cdots & * \\
+            0         &   &     &        &   \\
+            0         &   & A_2 &        &   \\
+            \vdots    &   &     &        &   \\
+            0         &   &     &        &
+        \end{array}
+        \right]
+    \left[
+        \begin{array}{ccccc}
+            1      & 0 & 0   & \cdots & 0 \\
+            0      &   &     &        &   \\
+            0      &   & Q_2 &        &   \\
+            \vdots &   &     &        &   \\
+            0      &   &     &        &
+        \end{array}
+        \right].
+\]
+
+Therefore
+\[
+    \overline{Q}^{\,T}AQ
+    =
+    \left[
+        \begin{array}{ccccc}
+            \lambda_1 & * & *                          & \cdots & * \\
+            0         &   &                            &        &   \\
+            0         &   & \overline{Q}_2^{\,T}A_2Q_2 &        &   \\
+            \vdots    &   &                            &        &   \\
+            0         &   &                            &        &
+        \end{array}
+        \right].
+\]
+
+Since
+\[
+    \overline{Q}_2^{\,T}A_2Q_2=T_2,
+\]
+we obtain
+\[
+    \boxed{
+        \overline{Q}^{\,T}AQ
+        =
+        \left[
+            \begin{array}{ccccc}
+                \lambda_1 & * & *   & \cdots & * \\
+                0         &   &     &        &   \\
+                0         &   & T_2 &        &   \\
+                \vdots    &   &     &        &   \\
+                0         &   &     &        &
+            \end{array}
+            \right]
+        =T.
+    }
+\]
+
+Since $T_2$ is upper triangular, $T$ is upper triangular. Thus
+\[
+    \overline{Q}^{\,T}AQ=T.
+\]
+
+Because
+\[
+    \overline{Q}^{\,T}=Q^{-1},
+\]
+we have
+\[
+    Q^{-1}AQ=T,
+\]
+and therefore
+\[
+    \boxed{
+        A=QTQ^{-1}=QT\overline{Q}^{\,T}.
+    }
+\]
+
+Hence Schur's theorem is proved.
+\end{document}
