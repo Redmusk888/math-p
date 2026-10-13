@@ -24,8 +24,18 @@
 \usepackage{enumitem}
 \usepackage{setspace}
 \usepackage{xcolor}
-\pagecolor{black}
-\color{white}
+% 閱讀模式：\printversionfalse（黑底白字）
+% 列印模式：\printversiontrue（白底黑字）
+% 修改下一行後，使用 XeLaTeX 重新編譯；PDF 不會在列印時自動切換。
+\newif\ifprintversion
+\printversionfalse
+\ifprintversion
+  \pagecolor{white}
+  \color{black}
+\else
+  \pagecolor{black}
+  \color{white}
+\fi
 \usepackage[unicode,hidelinks]{hyperref}
 \setstretch{1.18}
 \setlength{\parindent}{0pt}
@@ -242,6 +252,9 @@
 而力指向位能下降的方向。
 
 \subsection*{子題 3}
+\textbf{本段初始條件：}\(\mathbf r(0)=(a,0)^T\)、\(\dot{\mathbf r}(0)=\mathbf0\)。
+自我檢核的 \(a\mathbf e_1\) 是另一組初始位置，其解答見文末。
+
 代入 \(\mathbf r=c_1\mathbf e_1+c_2\mathbf e_2\) 與
 \(A\mathbf e_i=\lambda_i\mathbf e_i\)，得到
 \[
@@ -283,6 +296,221 @@
 \textbf{物理意義：}特徵向量決定互不耦合的振動方向，
 特徵值則決定各方向的恢復力強度。這正是正交對角化在力學中的用途。
 
+\subsection*{子題 3 補充：解微分方程的完整過程}
+\textbf{解題路線：}先把耦合的運動方程，改寫成沿特徵向量方向的兩個獨立方程；再分別求通解、代入初始條件，最後還原位置。
+
+\subsubsection*{步驟一：先看清楚原方程在說什麼}
+展開矩陣乘法：
+\[
+    m\begin{pmatrix}\ddot x\\\ddot y\end{pmatrix}
+    =-k\begin{pmatrix}2x-y\\-x+2y\end{pmatrix}.
+\]
+所以
+\[
+    \begin{cases}
+        m\ddot x=-2kx+ky, \\
+        m\ddot y=kx-2ky.
+    \end{cases}
+\]
+這是兩個二階線性常微分方程。第一式含有 \(y\)，第二式含有 \(x\)，因此兩者互相耦合，不能把它們各自當成只含一個未知函數的方程求解。
+我們會利用子題 1 的特徵向量，找出能讓兩個方程分開的分量。
+
+\subsubsection*{步驟二：把位置分解到兩個固定方向}
+由子題 1，
+\[
+    \mathbf e_1=\frac1{\sqrt2}\begin{pmatrix}1\\1\end{pmatrix},\qquad
+    \mathbf e_2=\frac1{\sqrt2}\begin{pmatrix}1\\-1\end{pmatrix},
+\]
+且 \(A\mathbf e_1=\mathbf e_1\)、\(A\mathbf e_2=3\mathbf e_2\)。
+因為這兩個向量構成平面的正交規範基，所以每一個位置都可唯一寫成
+\[
+    \mathbf r(t)=c_1(t)\mathbf e_1+c_2(t)\mathbf e_2.
+\]
+\(\mathbf e_1,\mathbf e_2\) 是固定方向，\(c_1,c_2\) 是隨時間改變的有號分量，其單位為公尺。
+由正交規範性，對上式左乘 \(\mathbf e_1^T\)，得到
+\[
+    \mathbf e_1^T\mathbf r
+    =c_1\underbrace{\mathbf e_1^T\mathbf e_1}_{1}
+    +c_2\underbrace{\mathbf e_1^T\mathbf e_2}_{0}=c_1.
+\]
+同理 \(c_2=\mathbf e_2^T\mathbf r\)，因此
+\[
+    \boxed{c_1=\frac{x+y}{\sqrt2},\qquad c_2=\frac{x-y}{\sqrt2}}.
+\]
+反過來，
+\[
+    \boxed{x=\frac{c_1+c_2}{\sqrt2},\qquad y=\frac{c_1-c_2}{\sqrt2}}.
+\]
+注意：\(c_1\) 一般不等於 \(x\)，\(c_2\) 一般不等於 \(y\)。它們是在另一組方向上的分量。
+
+\subsubsection*{步驟三：為什麼代入後能拆成兩個方程？}
+因為特徵向量不隨時間改變，微分只作用在係數上：
+\[
+    \dot{\mathbf r}=\dot c_1\mathbf e_1+\dot c_2\mathbf e_2,\qquad
+    \ddot{\mathbf r}=\ddot c_1\mathbf e_1+\ddot c_2\mathbf e_2.
+\]
+另一方面，利用矩陣乘法的線性與特徵向量關係，
+\[
+    A\mathbf r=c_1A\mathbf e_1+c_2A\mathbf e_2
+    =c_1\mathbf e_1+3c_2\mathbf e_2.
+\]
+代入運動方程並移項：
+\[
+    (m\ddot c_1+kc_1)\mathbf e_1
+    +(m\ddot c_2+3kc_2)\mathbf e_2=\mathbf0.
+\]
+兩個向量線性獨立，因此它們的線性組合等於零時，兩個係數必須各自為零：
+\[
+    m\ddot c_1+kc_1=0,\qquad m\ddot c_2+3kc_2=0.
+\]
+除以 \(m>0\)，得到
+\[
+    \boxed{\ddot c_1+\frac{k}{m}c_1=0},\qquad
+    \boxed{\ddot c_2+\frac{3k}{m}c_2=0}.
+\]
+第一式只含 \(c_1\)，第二式只含 \(c_2\)，現在就能分別求解。
+也可把原來的 \(x,y\) 方程相加與相減，分別得到
+\(m(\ddot x+\ddot y)=-k(x+y)\) 與
+\(m(\ddot x-\ddot y)=-3k(x-y)\)，作為交叉檢查。
+
+\subsubsection*{步驟四：正弦與餘弦解是如何求出的？}
+先處理共同形式
+\[
+    \ddot c+\omega^2c=0,\qquad \omega>0.
+\]
+這是二階、線性、齊次、常係數微分方程。
+指數函數微分後仍是自身的倍數，因此嘗試 \(c=e^{st}\)，其中 \(s\) 是待求常數。
+計算
+\[
+    \dot c=se^{st},\qquad \ddot c=s^2e^{st},
+\]
+代回方程：
+\[
+    (s^2+\omega^2)e^{st}=0.
+\]
+由於 \(e^{st}\ne0\)，特徵方程為
+\[
+    s^2+\omega^2=0\quad\Longrightarrow\quad s=\pm\mathrm i\omega,
+    \qquad \mathrm i^2=-1.
+\]
+所以複數形式的通解是
+\[
+    c(t)=\alpha e^{\mathrm i\omega t}+\beta e^{-\mathrm i\omega t}.
+\]
+利用歐拉公式
+\[
+    e^{\mathrm i\theta}=\cos\theta+\mathrm i\sin\theta,
+    \qquad e^{-\mathrm i\theta}=\cos\theta-\mathrm i\sin\theta,
+\]
+可將實數解改寫成
+\[
+    \boxed{c(t)=C\cos(\omega t)+D\sin(\omega t)},\qquad C,D\in\mathbb R.
+\]
+這裡 \(C=\alpha+\beta\)、\(D=\mathrm i(\alpha-\beta)\)；實數解可以取 \(\beta=\overline\alpha\)。
+
+也能直接驗證：正弦和餘弦對時間微分兩次後，分別變成原函數的 \(-\omega^2\) 倍，因此都滿足方程。
+它們線性獨立：若 \(C\cos(\omega t)+D\sin(\omega t)\) 對所有時間均為零，代 \(t=0\) 得 \(C=0\)；微分後代 \(t=0\) 得 \(D\omega=0\)，所以 \(D=0\)。
+二階線性齊次方程的解空間為二維，故兩個線性獨立解已能組成全部解。
+
+本題對應
+\[
+    \omega_1^2=\frac{k}{m},\qquad \omega_2^2=\frac{3k}{m},
+\]
+所以
+\[
+    \begin{aligned}
+        c_1(t) & =C_1\cos(\omega_1t)+D_1\sin(\omega_1t), \\
+        c_2(t) & =C_2\cos(\omega_2t)+D_2\sin(\omega_2t).
+    \end{aligned}
+\]
+兩個二階方程共有四個積分常數，要由兩個初始位置分量與兩個初始速度分量決定。
+\textbf{注意：}矩陣 \(A\) 的特徵值為 \(1,3\)；微分方程的特徵根為 \(\pm\mathrm i\omega_i\)，兩者透過 \(s^2=-(k/m)\lambda_i\) 聯繫。
+
+\subsubsection*{步驟五：先把初始條件投影，再求積分常數}
+已知 \(x(0)=a\)、\(y(0)=0\)，所以
+\[
+    c_1(0)=\frac{x(0)+y(0)}{\sqrt2}=\frac a{\sqrt2},\qquad
+    c_2(0)=\frac{x(0)-y(0)}{\sqrt2}=\frac a{\sqrt2}.
+\]
+由 \(\dot x(0)=\dot y(0)=0\)，同樣得到
+\[
+    \dot c_1(0)=\frac{\dot x(0)+\dot y(0)}{\sqrt2}=0,\qquad
+    \dot c_2(0)=\frac{\dot x(0)-\dot y(0)}{\sqrt2}=0.
+\]
+對通解代入 \(t=0\)，利用 \(\cos0=1\)、\(\sin0=0\)：
+\[
+    c_i(0)=C_i.
+\]
+再對通解微分，\textbf{記得鏈鎖律帶來的角頻率因子}：
+\[
+    \dot c_i(t)=-C_i\omega_i\sin(\omega_it)
+    +D_i\omega_i\cos(\omega_it).
+\]
+因此
+\[
+    \dot c_i(0)=D_i\omega_i,
+    \qquad D_i=\frac{\dot c_i(0)}{\omega_i}.
+\]
+本題 \(\omega_i>0\)，可除以角頻率，故
+\[
+    C_1=C_2=\frac a{\sqrt2},\qquad D_1=D_2=0.
+\]
+得到
+\[
+    \boxed{c_1(t)=\frac a{\sqrt2}\cos(\omega_1t)},\qquad
+    \boxed{c_2(t)=\frac a{\sqrt2}\cos(\omega_2t)}.
+\]
+\textbf{正弦項消失的原因是初始速度為零。}若初始速度不為零，一般仍需保留正弦項。
+一般初始條件的公式可記成
+\[
+    c_i(t)=c_i(0)\cos(\omega_it)
+    +\frac{\dot c_i(0)}{\omega_i}\sin(\omega_it).
+\]
+初始速度為零只表示粒子一開始靜止，並不表示之後都靜止；本題初始位置的力不為零。
+
+\subsubsection*{步驟六：從係數還原到原來的位置}
+把求得的兩個係數代回
+\[
+    \mathbf r=\frac1{\sqrt2}\begin{pmatrix}c_1+c_2\\c_1-c_2\end{pmatrix},
+\]
+得到
+\[
+    \boxed{x(t)=\frac a2\left[
+            \cos\left(\sqrt{\frac{k}{m}}t\right)
+            +\cos\left(\sqrt{\frac{3k}{m}}t\right)\right]},
+\]
+\[
+    \boxed{y(t)=\frac a2\left[
+            \cos\left(\sqrt{\frac{k}{m}}t\right)
+            -\cos\left(\sqrt{\frac{3k}{m}}t\right)\right]}.
+\]
+前面的 \(a/2\) 來自投影係數的 \(a/\sqrt2\)，再乘上特徵向量分量的 \(1/\sqrt2\)。
+
+\subsubsection*{步驟七：檢查答案與物理意義}
+令 \(C=\cos(\omega_1t)\)、\(D=\cos(\omega_2t)\)，則
+\[
+    \ddot x=-\frac{ak}{2m}(C+3D),\qquad
+    \ddot y=\frac{ak}{2m}(-C+3D).
+\]
+另一方面，將 \(x=a(C+D)/2\)、\(y=a(C-D)/2\) 代入原方程右側，得到
+\[
+    -\frac{k}{m}(2x-y)=-\frac{ak}{2m}(C+3D)=\ddot x,
+\]
+\[
+    \frac{k}{m}(x-2y)=\frac{ak}{2m}(-C+3D)=\ddot y.
+\]
+因此原本兩個耦合方程都成立。初始位置為 \((a,0)^T\)，初始速度為零，也全部滿足。
+特別在 \(t=0\)，
+\[
+    \ddot x(0)=-\frac{2ka}{m},\qquad \ddot y(0)=\frac{ka}{m},
+\]
+正好等於 \(-kA(a,0)^T/m\) 的分量。
+所以即使 \(y(0)=\dot y(0)=0\)，\(y\) 仍會開始變化，因為初始的 \(x\) 位移造成了 \(y\) 方向的力。
+
+由單位檢查，\([k/m]=\mathrm{s^{-2}}\)，故 \([\omega_i]=\mathrm{s^{-1}}\)，\(\omega_it\) 無因次；\(c_i,x,y\) 都具有長度單位。
+本題的兩個特徵值皆為正，對應兩個振動方向；\(\lambda_2=3\) 使第二方向的角頻率是第一方向的 \(\sqrt3\) 倍。
+若初始位置只沿 \(\mathbf e_1\) 且初始速度為零，則 \(c_2(0)=\dot c_2(0)=0\)，第二方向便完全不被激發。
+
 \section{本週重點整理}
 \begin{enumerate}
     \item \textbf{譜定理：}實對稱矩陣具有實特徵值，並能選出由特徵向量
@@ -305,4 +533,122 @@
 \subsection*{自我檢核}
 若子題 3 改成 \(\mathbf r(0)=a\mathbf e_1\)、初始速度仍為零，
 運動中會出現幾個角頻率？請用「初始位置的投影」說明理由。
+\clearpage
+\subsection*{自我檢核解答與初始條件釐清}
+\textbf{先確認題目：}原子題 3 的初始位置是 \(\mathbf r(0)=(a,0)^T\)；
+自我檢核則把初始位置改為 \(\mathbf r(0)=a\mathbf e_1\)。兩題的初始速度都是零，
+但位置不同，投影係數及解答也不同。前面子題 3 的解答對應原題，以下另外求解自我檢核。
+
+\subsubsection*{一、兩組初始條件的差別}
+因為
+\[
+    \mathbf e_1=\frac1{\sqrt2}\begin{pmatrix}1\\1\end{pmatrix},\qquad
+    \mathbf e_2=\frac1{\sqrt2}\begin{pmatrix}1\\-1\end{pmatrix},
+\]
+所以
+\[
+    \begin{pmatrix}a\\0\end{pmatrix}
+    =\frac a{\sqrt2}\mathbf e_1+\frac a{\sqrt2}\mathbf e_2,
+    \qquad
+    a\mathbf e_1=\frac a{\sqrt2}\begin{pmatrix}1\\1\end{pmatrix}.
+\]
+\begin{center}
+    \renewcommand{\arraystretch}{1.5}
+    \begin{tabular}{c|c|c}
+        初始位置                  & \(c_1(0)\)   & \(c_2(0)\)   \\
+        \hline
+        原子題 3：\((a,0)^T\)     & \(a/\sqrt2\) & \(a/\sqrt2\) \\
+        自我檢核：\(a\mathbf e_1\) & \(a\)        & \(0\)
+    \end{tabular}
+\end{center}
+\textbf{容易混淆的地方：}自我檢核在原來的 \(x,y\) 方向上，
+初始座標是 \(x(0)=y(0)=a/\sqrt2\)；在特徵向量方向上，
+卻是 \(c_1(0)=a,c_2(0)=0\)。不能把 \(x,y\) 的分量直接當成 \(c_1,c_2\)。
+
+\subsubsection*{二、用複指數直接套用初始條件}
+兩題皆滿足
+\[
+    \ddot c_j+\omega_j^2c_j=0,\qquad
+    \omega_1=\sqrt{\frac{k}{m}},\quad \omega_2=\sqrt{\frac{3k}{m}}.
+\]
+令 \(\mathrm i^2=-1\)，通解寫成
+\[
+    c_j(t)=\alpha_j e^{\mathrm i\omega_jt}+\beta_j e^{-\mathrm i\omega_jt}.
+\]
+微分得
+\[
+    \dot c_j(t)=\mathrm i\omega_j\alpha_j e^{\mathrm i\omega_jt}
+    -\mathrm i\omega_j\beta_j e^{-\mathrm i\omega_jt}.
+\]
+在 \(t=0\) 時，
+\[
+    \alpha_j+\beta_j=c_j(0),\qquad
+    \mathrm i\omega_j(\alpha_j-\beta_j)=\dot c_j(0).
+\]
+由於兩題均有 \(\dot c_j(0)=0\)，且 \(\omega_j>0\)，故
+\[
+    \boxed{\alpha_j=\beta_j=\frac{c_j(0)}2}.
+\]
+因此
+\[
+    c_j(t)=\frac{c_j(0)}2
+    \left(e^{\mathrm i\omega_jt}+e^{-\mathrm i\omega_jt}\right)
+    =c_j(0)\cos(\omega_jt).
+\]
+\textbf{關鍵：}先求各自的 \(c_j(0)\)，再決定複指數係數；不能將不同初始位置的係數混用。
+
+\subsubsection*{三、自我檢核的正確解答：只有一個角頻率}
+由 \(\mathbf r(0)=a\mathbf e_1\)，利用正交規範性：
+\[
+    c_1(0)=\mathbf e_1^T(a\mathbf e_1)=a,\qquad
+    c_2(0)=\mathbf e_2^T(a\mathbf e_1)=0.
+\]
+又因 \(\dot{\mathbf r}(0)=\mathbf0\)，所以 \(\dot c_1(0)=\dot c_2(0)=0\)。
+代入上面的係數公式：
+\[
+    \alpha_1=\beta_1=\frac a2,\qquad \alpha_2=\beta_2=0.
+\]
+故
+\[
+    \boxed{c_1(t)=a\cos(\omega_1t),\qquad c_2(t)=0}.
+\]
+還原位置：
+\[
+    \boxed{\mathbf r(t)=a\cos\left(\sqrt{\frac{k}{m}}t\right)\mathbf e_1},
+\]
+也就是
+\[
+    \boxed{x(t)=y(t)=\frac a{\sqrt2}
+        \cos\left(\sqrt{\frac{k}{m}}t\right)}.
+\]
+答案只有一個角頻率 \(\omega_1=\sqrt{k/m}\)，因為初始位置與速度在第二特徵向量方向上的投影都為零。
+
+\textbf{驗算：}代 \(t=0\) 得 \(\mathbf r(0)=a\mathbf e_1\)，微分後代入得 \(\dot{\mathbf r}(0)=\mathbf0\)。
+此外，\(A\mathbf e_1=\mathbf e_1\)，故
+\[
+    m\ddot{\mathbf r}
+    =-m\omega_1^2a\cos(\omega_1t)\mathbf e_1
+    =-ka\cos(\omega_1t)\mathbf e_1
+    =-kA\mathbf r.
+\]
+初始條件與原運動方程全部成立。
+
+\subsubsection*{四、原子題 3 的複指數係數與解答}
+若使用原題的 \(\mathbf r(0)=(a,0)^T\)，則
+\[
+    \alpha_1=\beta_1=\alpha_2=\beta_2=\frac{a}{2\sqrt2},
+\]
+所以
+\[
+    c_1(t)=\frac a{\sqrt2}\cos(\omega_1t),\qquad
+    c_2(t)=\frac a{\sqrt2}\cos(\omega_2t).
+\]
+此時應沿用前面原題的答案：
+\[
+    x(t)=\frac a2[\cos(\omega_1t)+\cos(\omega_2t)],
+    \qquad
+    y(t)=\frac a2[\cos(\omega_1t)-\cos(\omega_2t)].
+\]
+原題含兩個角頻率；自我檢核僅含一個。差異來自初始條件激發了哪些方向。
+
 \end{document}
