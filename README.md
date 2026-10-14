@@ -67,7 +67,8 @@ xelatex git_basic_tutorial.tex
 ### 每週練習
 
 - [物理數學第二週練習](week_practice/physics_math_W02_2026-10-09.pdf)
-
+- [物理數學第二周加強練習]（week_practice/physics_math_W02Ehance_2026-10-14.pdf）
+  
 ### Git 教學
 
 - [Git 基礎教學](git_tutorial/git_basic_tutorial.pdf)
