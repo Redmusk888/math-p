@@ -1,0 +1,309 @@
+% !TeX program = xelatex
+% Encoding: UTF-8
+% 編譯方式：xelatex physics_math_W02_2026-10-14.tex
+\documentclass[12pt,a4paper]{article}
+\usepackage[margin=2.3cm]{geometry}
+\usepackage{fontspec}
+\usepackage{xeCJK}
+\setmainfont{Latin Modern Roman}
+% Windows 優先使用標楷體；其他平台依序選擇備援中文字型。
+\IfFontExistsTF{標楷體}{
+  \setCJKmainfont[AutoFakeBold=2]{標楷體}
+}{
+  \IfFontExistsTF{Noto Serif TC}{
+    \setCJKmainfont{Noto Serif TC}
+  }{
+    \IfFontExistsTF{Microsoft JhengHei}{
+      \setCJKmainfont{Microsoft JhengHei}
+    }{
+      \setCJKmainfont{Noto Sans TC}
+    }
+  }
+}
+\usepackage{amsmath,amssymb}
+\usepackage{enumitem}
+\usepackage{setspace}
+\usepackage{xcolor}
+% 閱讀模式：\printversionfalse（黑底白字）
+% 列印模式：\printversiontrue（白底黑字）
+% 修改下一行後，使用 XeLaTeX 重新編譯；PDF 不會在列印時自動切換。
+\newif\ifprintversion
+\printversionfalse
+\ifprintversion
+  \pagecolor{white}
+  \color{black}
+\else
+  \pagecolor{black}
+  \color{white}
+\fi
+\usepackage[unicode,hidelinks]{hyperref}
+\setstretch{1.18}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0.45em}
+\setlist{itemsep=0.3em,topsep=0.3em}
+\emergencystretch=2em
+\renewcommand{\arraystretch}{1.3}
+\title{物理數學短練習 W2 加強\protect\\重複特徵值與非零初始速度}
+\author{}
+\date{2026 年 10 月 14 日}
+\begin{document}
+\maketitle
+\vspace{-1.2em}
+\textbf{對應計畫：}Q1 的 W2：譜定理、重根、正交規範基與三階矩陣的譜分解。
+依你 10/13 回報，已學習到譜定理的證明，並完成上一組每週練習；今日以實際解題檢查理解。
+\textbf{時間：}暖身 3 分鐘、子題 1 約 15 分鐘、子題 2 約 8 分鐘、子題 3 約 12 分鐘、整理 3 分鐘。
+疲累時先完成子題 1，其餘分次作答。本份是一組大題，含三個有關聯的子題。
+
+\section{題目：一組大題、三個子題}
+\subsection*{共用矩陣與符號}
+本次全部子題使用同一個新的無因次矩陣
+\[
+  A=\begin{pmatrix}2&1&0\\1&2&0\\0&0&3\end{pmatrix}.
+\]
+\begin{itemize}
+  \item \(\mathbf r=(x,y,z)^T\) 是位置，\(x,y,z\) 的單位為公尺。
+  \item \(k>0\) 的單位為 \(\mathrm{N/m}\)，\(m>0\) 為質量，單位為公斤。
+  \item \(a>0\) 的單位為公尺，\(b>0\) 是初始速度大小，單位為 \(\mathrm{m/s}\)。
+  \item \(Q\) 是正交矩陣，\(\Lambda\) 是對應特徵值組成的對角矩陣；\(t\) 的單位為秒。
+\end{itemize}
+\textbf{沿用關係：}子題 2 沿用本矩陣及子題 1 的特徵值；子題 3 沿用子題 1 的正交規範基與子題 2 的力場。
+
+\subsection*{暖身：先用一句話回答}
+實對稱矩陣的任意兩個線性獨立特徵向量，一定互相正交嗎？說明你的判斷條件。
+
+\subsection*{子題 1：重複特徵值與正交規範基（必做）}
+\begin{enumerate}
+  \item 求 \(\det(A-\lambda I)\)，列出特徵值、代數重數，以及各特徵空間的一組基底。
+  \item 驗證 \(\mathbf v=(1,1,0)^T\)、\(\mathbf w=(1,1,1)^T\) 對應同一個特徵值，計算其內積，判斷兩者是否正交。
+  \item 對 \(\mathbf v,\mathbf w\) 使用 Gram--Schmidt 正交化，再規範化；與另一特徵空間的單位向量一起組成 \(Q\)，寫出 \(A=Q\Lambda Q^T\)。
+\end{enumerate}
+所需公式：先令 \(\mathbf e=\mathbf v/\|\mathbf v\|\)，再取
+\[
+  \mathbf w_\perp=\mathbf w-(\mathbf e^T\mathbf w)\mathbf e.
+\]
+此公式將 \(\mathbf w\) 沿 \(\mathbf e\) 的投影扣掉。
+
+\subsection*{子題 2：位能、梯度與極小值（可沿用子題 1）}
+定義
+\[
+  V(\mathbf r)=\frac{k}{2}\mathbf r^TA\mathbf r.
+\]
+\begin{enumerate}
+  \item 展開位能，求 \(\nabla V\) 及 \(\mathbf F=-\nabla V\)。
+  \item 求駐點，利用配方或子題 1 的特徵值，判斷原點是否為嚴格極小值。
+\end{enumerate}
+可使用 \(\nabla V=(\partial_xV,\partial_yV,\partial_zV)^T\)。
+
+\subsection*{子題 3：初始位置為零的方向，也可能運動（選做）}
+運動方程為
+\[
+  m\ddot{\mathbf r}=-kA\mathbf r.
+\]
+\textbf{本題的初始條件明確指定為}
+\[
+  \mathbf r(0)=\frac a{\sqrt2}\begin{pmatrix}1\\-1\\0\end{pmatrix},\qquad
+  \dot{\mathbf r}(0)=\begin{pmatrix}0\\0\\b\end{pmatrix}.
+\]
+\begin{enumerate}
+  \item 沿子題 1 的正交規範特徵向量分解，列出每個係數的初始位置與初始速度。
+  \item 求 \(x(t),y(t),z(t)\)。可用正弦餘弦或複指數。
+  \item 說明為何 \(z(0)=0\) 不代表 \(z(t)\) 恆為零，並核對全部初始條件。
+\end{enumerate}
+可沿用：\(A\mathbf e_j=\lambda_j\mathbf e_j\) 導出
+\[
+  \ddot c_j+\omega_j^2c_j=0,\qquad \omega_j=\sqrt{\frac{k\lambda_j}{m}}.
+\]
+
+\clearpage
+\section{提示：由輕到強}
+\subsection*{子題 1}
+\textbf{第一層：}沿第三列展開行列式，只需計算左上方二階部分。
+\textbf{第二層：}分別觀察 \((1,-1,0)^T\) 與所有 \((u,u,v)^T\) 向量。
+\textbf{第三層：}對 \(\mathbf w\) 扣除沿 \(\mathbf v\) 的投影後，留下 \(z\) 方向。
+
+\subsection*{子題 2}
+\textbf{第一層：}交叉項會出現兩次，展開後再取偏導數。
+\textbf{第二層：}注意
+\[
+  2x^2+2xy+2y^2=(x+y)^2+x^2+y^2.
+\]
+
+\subsection*{子題 3}
+\textbf{第一層：}位置和速度都要投影：
+\[
+  c_j(0)=\mathbf e_j^T\mathbf r(0),\qquad
+  \dot c_j(0)=\mathbf e_j^T\dot{\mathbf r}(0).
+\]
+\textbf{第二層：}一般初值解為
+\[
+  c_j(t)=c_j(0)\cos(\omega_jt)
+  +\frac{\dot c_j(0)}{\omega_j}\sin(\omega_jt).
+\]
+\textbf{第三層：}本題有一個純餘弦分量、一個零分量、一個純正弦分量。
+
+\clearpage
+\section{完整解法}
+\subsection*{暖身}
+不一定。\textbf{不同特徵值}的特徵向量必定正交；同一特徵值的特徵空間中，任意選取的基底未必正交，但可以選出正交規範基。
+
+\subsection*{子題 1}
+\[
+  \begin{aligned}
+    \det(A-\lambda I)
+     & =(3-\lambda)\big[(2-\lambda)^2-1\big] \\
+     & =(1-\lambda)(3-\lambda)^2.
+  \end{aligned}
+\]
+特徵值為 \(1\)（代數重數 1）及 \(3\)（代數重數 2）。
+當 \(\lambda=1\)，解 \((A-I)\mathbf u=\mathbf0\) 得 \(u_2=-u_1,u_3=0\)，故
+\[
+  E_1=\operatorname{span}\left\{\begin{pmatrix}1\\-1\\0\end{pmatrix}\right\}.
+\]
+當 \(\lambda=3\)，解 \((A-3I)\mathbf u=\mathbf0\) 得 \(u_2=u_1\)，\(u_3\) 自由，故
+\[
+  E_3=\operatorname{span}\left\{
+  \begin{pmatrix}1\\1\\0\end{pmatrix},
+  \begin{pmatrix}0\\0\\1\end{pmatrix}\right\}.
+\]
+其幾何重數分別為 1 與 2，總共可取三個線性獨立的特徵向量。
+
+題目給的 \(\mathbf v,\mathbf w\) 均在 \(E_3\) 中，所以
+\(A\mathbf v=3\mathbf v\)、\(A\mathbf w=3\mathbf w\)，但
+\[
+  \mathbf v^T\mathbf w=1+1=2\ne0.
+\]
+兩者並不正交；這不違反譜定理，因為它們對應的是同一特徵值。
+
+令
+\[
+  \mathbf e_2=\frac{\mathbf v}{\|\mathbf v\|}
+  =\frac1{\sqrt2}\begin{pmatrix}1\\1\\0\end{pmatrix},
+  \qquad \mathbf e_2^T\mathbf w=\sqrt2.
+\]
+於是
+\[
+  \mathbf w_\perp=\mathbf w-\sqrt2\mathbf e_2
+  =\begin{pmatrix}0\\0\\1\end{pmatrix}=\mathbf e_3.
+\]
+它本身已是單位向量。再取
+\[
+  \mathbf e_1=\frac1{\sqrt2}\begin{pmatrix}1\\-1\\0\end{pmatrix}.
+\]
+將這三個向量由左至右依序排成 \(Q\)，得到
+\[
+  Q=\begin{pmatrix}
+    1/\sqrt2  & 1/\sqrt2 & 0 \\
+    -1/\sqrt2 & 1/\sqrt2 & 0 \\
+    0         & 0        & 1
+  \end{pmatrix},\qquad
+  \Lambda=\begin{pmatrix}1&0&0\\0&3&0\\0&0&3\end{pmatrix}.
+\]
+可驗證 \(Q^TQ=I\)、\(AQ=Q\Lambda\)，因此
+\[
+  \boxed{A=Q\Lambda Q^T
+    =\mathbf e_1\mathbf e_1^T+3\mathbf e_2\mathbf e_2^T+3\mathbf e_3\mathbf e_3^T}.
+\]
+\textbf{為何正交化後仍是特徵向量？}因為同一特徵空間中的線性組合仍在該空間中。例如
+\(A(\mathbf w-\sqrt2\mathbf e_2)=3(\mathbf w-\sqrt2\mathbf e_2)\)。
+因此在同一個特徵空間內做 Gram--Schmidt，不會失去特徵向量性質。
+
+\subsection*{子題 2}
+\[
+  V=\frac{k}{2}(2x^2+2xy+2y^2+3z^2),
+\]
+所以
+\[
+  \nabla V=k\begin{pmatrix}2x+y\\x+2y\\3z\end{pmatrix}=kA\mathbf r,
+  \qquad
+  \boxed{\mathbf F=-k\begin{pmatrix}2x+y\\x+2y\\3z\end{pmatrix}}.
+\]
+駐點滿足 \(2x+y=0,x+2y=0,3z=0\)，得唯一駐點 \((0,0,0)\)。
+由
+\[
+  V=\frac{k}{2}\big[(x+y)^2+x^2+y^2+3z^2\big],
+\]
+可知除原點外皆有 \(V>0\)，故原點是嚴格全域極小值。
+亦可沿用子題 1：三個特徵值 \(1,3,3\) 都為正，因此 \(A\) 正定。
+\([V]=\mathrm{J}\)，\([\nabla V]=\mathrm N\)，單位吻合。
+
+\subsection*{子題 3}
+使用子題 1 的 \(\mathbf e_1,\mathbf e_2,\mathbf e_3\)，設
+\[
+  \mathbf r(t)=c_1(t)\mathbf e_1+c_2(t)\mathbf e_2+c_3(t)\mathbf e_3.
+\]
+由特徵向量固定及 \(A\mathbf e_j=\lambda_j\mathbf e_j\)，代入後比較獨立方向的係數，得
+\[
+  \ddot c_1+\frac{k}{m}c_1=0,\qquad
+  \ddot c_2+\frac{3k}{m}c_2=0,\qquad
+  \ddot c_3+\frac{3k}{m}c_3=0.
+\]
+令 \(\omega_1=\sqrt{k/m}\)、\(\omega_2=\omega_3=\sqrt{3k/m}\)。
+本題初始位置為 \(a\mathbf e_1\)，初始速度為 \(b\mathbf e_3\)，因此
+\begin{center}
+  \renewcommand{\arraystretch}{1.4}
+  \begin{tabular}{c|c|c|c}
+    方向              & \(c_j(0)\) & \(\dot c_j(0)\) & \(\omega_j\)    \\\hline
+    \(\mathbf e_1\) & \(a\)      & \(0\)           & \(\sqrt{k/m}\)  \\
+    \(\mathbf e_2\) & \(0\)      & \(0\)           & \(\sqrt{3k/m}\) \\
+    \(\mathbf e_3\) & \(0\)      & \(b\)           & \(\sqrt{3k/m}\)
+  \end{tabular}
+\end{center}
+\textbf{必須同時投影位置與速度。}由
+\[
+  c_j=C_j\cos(\omega_jt)+D_j\sin(\omega_jt)
+\]
+得 \(C_j=c_j(0)\)、\(D_j=\dot c_j(0)/\omega_j\)，因此
+\[
+  \boxed{c_1=a\cos(\omega_1t),\quad c_2=0,\quad c_3=\frac b{\omega_3}\sin(\omega_3t)}.
+\]
+還原成原座標：
+\[
+  \boxed{x(t)=\frac a{\sqrt2}\cos(\omega_1t)},\qquad
+  \boxed{y(t)=-\frac a{\sqrt2}\cos(\omega_1t)},
+\]
+\[
+  \boxed{z(t)=\frac b{\omega_3}\sin(\omega_3t)}.
+\]
+代入 \(t=0\) 得 \(x(0)=a/\sqrt2,y(0)=-a/\sqrt2,z(0)=0\)；
+微分得 \(\dot x(0)=\dot y(0)=0,\dot z(0)=b\)。
+三個模態方程也分別成立，故滿足原向量方程。
+\(z\) 方向雖無初始位移，仍有初始速度，所以會運動。
+只有同時滿足 \(c_j(0)=\dot c_j(0)=0\)，該分量才會在這個無外力的獨立方程中恆為零。
+
+\subsubsection*{複指數法：正弦項的係數如何出現？}
+取 \(c_j=\alpha_j e^{\mathrm i\omega_jt}+\beta_j e^{-\mathrm i\omega_jt}\)，
+初值方程為
+\[
+  \alpha_j+\beta_j=c_j(0),\qquad
+  \mathrm i\omega_j(\alpha_j-\beta_j)=\dot c_j(0).
+\]
+因此
+\[
+  \alpha_j=\frac12\left(c_j(0)-\frac{\mathrm i\dot c_j(0)}{\omega_j}\right),\qquad
+  \beta_j=\frac12\left(c_j(0)+\frac{\mathrm i\dot c_j(0)}{\omega_j}\right).
+\]
+第一方向 \(\alpha_1=\beta_1=a/2\)，第二方向兩係數皆零。
+第三方向則為
+\[
+  \alpha_3=-\frac{\mathrm i b}{2\omega_3},\qquad
+  \beta_3=\frac{\mathrm i b}{2\omega_3}.
+\]
+故
+\[
+  c_3=\frac b{\omega_3}
+  \frac{e^{\mathrm i\omega_3t}-e^{-\mathrm i\omega_3t}}{2\mathrm i}
+  =\frac b{\omega_3}\sin(\omega_3t).
+\]
+\(b/\omega_3\) 的單位為公尺，正好是振幅的單位。
+
+\section{本日重點整理}
+\begin{enumerate}
+  \item 不同特徵值的特徵向量必定正交；同一特徵值內選出的向量未必正交，可在該特徵空間內做正交化。
+  \item 譜定理保證實對稱矩陣可選出完整正交規範特徵基底，重複特徵值不妨礙正交對角化。
+  \item 初始位置決定餘弦係數；初始速度除以角頻率，決定正弦係數。不能只檢查初始位置。
+  \item 在本題質量矩陣為 \(mI\) 的條件下，特徵向量分解將運動拆成獨立振動；這會銜接分析力學的小振動問題。位能梯度的運算也將銜接靜電位與電場。
+  \item 同一特徵值可對應多個線性獨立方向；這是日後理解量子力學簡併現象所需的線性代數基礎。
+\end{enumerate}
+\subsection*{自我檢核}
+若把初始速度改為 \(b\mathbf e_2\)，初始位置仍為 \(a\mathbf e_1\)，哪個分量改成正弦項？哪個分量恆為零？
+\end{document}
