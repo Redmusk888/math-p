@@ -1,0 +1,772 @@
+% Compile with XeLaTeX.
+% Protocol 1: faithful transcription of supplied photographs, pp. 317--326.
+% Simplified Chinese converted to Traditional Chinese.
+\documentclass[11pt,a4paper,twoside]{article}
+
+\usepackage{fontspec}
+\usepackage{xeCJK}
+\setmainfont{Latin Modern Roman}
+\setCJKmainfont{標楷體}
+
+\usepackage{amsmath,amssymb,mathrsfs,mathtools}
+\usepackage[a4paper,inner=2.4cm,outer=2cm,top=2.3cm,bottom=2.3cm]{geometry}
+\usepackage{setspace}
+\usepackage{fancyhdr}
+
+\setstretch{1.22}
+\setlength{\parindent}{2em}
+\setlength{\parskip}{4pt}
+\setlength{\abovedisplayskip}{6pt}
+\setlength{\belowdisplayskip}{6pt}
+
+\pagestyle{fancy}
+\fancyhf{}
+\renewcommand{\headrulewidth}{0pt}
+\fancyfoot[RO,LE]{\small $\boldsymbol{\cdot}\;\thepage\;\boldsymbol{\cdot}$}
+\title{Measure theory - Real Analysis}
+\author{Redmusk}
+\date{}
+
+
+\begin{document}
+\maketitle
+
+\setcounter{page}{317}
+
+% =========================================================
+% 原書第 317 頁
+% =========================================================
+
+在 $R^n$ 中 $(\mu)$，則
+\[
+    \lambda(A)=\int_A f(x)\,d\mu
+\]
+也是 $R^n$ 上的測度，且對任意 $\varphi\in L^\infty(R^n,\mu)$ 有
+\[
+    \int_{R^n}\varphi f(x)\,dx=\int_{R^n}\varphi\,d\lambda .
+\]
+
+\noindent\textbf{定義 10}\quad
+設 $\mu$ 與 $\lambda$ 都是 $R^n$ 上的測度。如果對一切可測集
+$A\subset R^n$ 有
+\[
+    \mu(A)=0\quad\text{則}\quad \lambda(A)=0,
+\]
+則稱 $\lambda$ 關於 $\mu$ 是絕對連續的。
+
+下面的定理是定理 4 的逆定理。
+
+\noindent\textbf{定理 5（Radon--Nikodym）}\quad
+設 $\lambda$ 與 $\mu$ 都是 $R^n$ 上的測度。如果
+$\lambda$ 關於 $\mu$ 是絕對連續的，則存在非負函數
+$f\in L^1(R^n,\mu)$，使得
+\[
+    \lambda(A)=\int_A f(x)\,d\mu
+    \qquad \forall\, A\text{ 可測}.
+\]
+
+下面三個定理涉及積分與極限過程的交換問題。
+
+\noindent\textbf{定理 6（單調收斂定理）}\quad
+設 $A\subset R^n$，$A$ 是可測集，$\{f_k\}$ 是 $A$ 上可測函數序列，
+滿足
+\[
+    0\le f_1(x)\le f_2(x)\le\cdots\le f_k(x)\le\cdots
+    \qquad \forall\,x\in A,
+\]
+則有
+\[
+    \lim_{k\to\infty}\int_A f_k(x)\,d\mu
+    =
+    \int_A\left(\lim_{k\to\infty}f_k(x)\right)d\mu .
+\]
+
+\noindent\textbf{定理 7（Fatou）}\quad
+設 $A\subset R^n$，$A$ 是可測集，$\{f_k\}$ 是 $A$ 上的非負 $\mu$
+可測函數序列，則
+\[
+    \int_A \liminf_{k\to\infty}f_k(x)\,d\mu
+    \le
+    \liminf_{k\to\infty}\int_A f_k(x)\,d\mu .
+\]
+
+\noindent\textbf{定理 8（Lebesgue 控制收斂定理）}\quad
+設 $\{f_k\}$ 是可測集 $A$ 上的 $\mu$ 可測函數序列，它在 $A$ 上逐點收斂到一個極限函數。如果存在 $A$ 上的可積函數 $g$，使得
+\[
+    |f_k(x)|\le g(x)
+    \qquad \forall\,x\in A,\ k=1,2,\cdots,
+\]
+
+\newpage
+% =========================================================
+% 原書第 318 頁
+% =========================================================
+
+那麼
+\[
+    \lim_{k\to\infty}\int_A f_k(x)\,d\mu
+    =
+    \int_A\left(\lim_{k\to\infty}f_k(x)\right)d\mu .
+\]
+
+\noindent\textbf{定義 11}\quad
+如果函數 $F:R^n\to R$ 滿足條件
+
+\noindent
+(i) $F$ 是增函數：如果
+\[
+    a=(a_1,\cdots,a_n)\le (b_1,\cdots,b_n)=b
+\]
+（即 $a_1\le b_1,a_2\le b_2,\cdots,a_n\le b_n$），則
+\[
+    F(a,b]
+    =
+    \Delta_{b_1}^{a_1}\Delta_{b_2}^{a_2}\cdots\Delta_{b_n}^{a_n}
+    F(x_1,\cdots,x_n)\ge0,
+\]
+其中差算子 $\Delta_{b_i}^{a_i}$ 由下式定義
+\[
+    \Delta_{b_i}^{a_i}G(x_1,\cdots,x_n)
+    =
+    G(x_1,\cdots,x_{i-1},b_i,x_{i+1},\cdots,x_n)
+    -
+    G(x_1,\cdots,x_{i-1},a_i,x_{i+1},\cdots,x_n).
+\]
+
+\noindent
+(ii) $F$ 是右連續的：如果
+\[
+    x^1\ge x^2\ge\cdots\ge x^k\ge\cdots\to x,
+\]
+則
+\[
+    F(x^k)\to F(x).
+\]
+
+那麼，稱 $F$ 為 $R^n$ 上的分布函數。
+
+\noindent\textbf{引理 1}\quad
+設 $S\subset R^n$，函數序列 $\{u_k(x)\}$ 在 $S$ 上一致有界，即存在正常數 $M$ 使得
+\[
+    |u_k(x)|\le M
+    \qquad
+    \text{當 }x\in S,\ k=1,2,\cdots .
+    \tag{7}
+\]
+則對 $S$ 中的任意可數子集 $\{x^j\}$，$\{u_k(x)\}$ 有在所有
+$x^j\ (j=1,2,\cdots)$ 上均收斂的子序列。
+
+\noindent\textbf{證}\quad
+由條件 (7)，$\{u_k(x^1)\}$ 是有界數列，它有收斂的子數列，即序列
+$\{u_k(x)\}$ 有子序列
+\[
+    u_1^{(1)}(x),u_2^{(1)}(x),u_3^{(1)}(x),\cdots ,
+    \qquad (\mathrm{I})
+\]
+它在 $x=x^1$ 處收斂。在序列 (I) 中取 $x=x^2$，則由 (7) 得有界數列
+$\{u_k^{(1)}(x^2)\}$；它又有收斂的子數列，即序列 (I) 有子序列
+\[
+    u_1^{(2)}(x),u_2^{(2)}(x),u_3^{(2)}(x),\cdots ,
+    \qquad (\mathrm{II})
+\]
+它在 $x=x^2$ 處收斂。因為 (II) 是 (I) 的子序列，而 (I) 在 $x=x^1$ 處
+收斂，故 (II) 在 $x=x^1$ 處也收斂。把 $x=x^3$ 代入 (II)，又得有界數列
+$\{u_k^{(2)}(x^3)\}$，因而 (II) 又有子序列
+\[
+    u_1^{(3)}(x),u_2^{(3)}(x),u_3^{(3)}(x),\cdots ,
+    \qquad (\mathrm{III})
+\]
+
+\newpage
+% =========================================================
+% 原書第 319 頁
+% =========================================================
+
+它在 $x=x^1,x=x^2,x=x^3$ 處均收斂。這樣繼續下去，一般可以得到
+$\{u_k(x)\}$ 的子序列
+\[
+    u_1^{(k)}(x),u_2^{(k)}(x),u_3^{(k)}(x),\cdots
+    \qquad (k=1,2,\cdots),
+\]
+它在 $x=x^1,x=x^2,\cdots,x=x^k$ 處均收斂。現在按對角線法則選取
+$\{u_k(x)\}$ 的新的子序列（即在 (I) 中取第一個函數，在 (II) 中取第二個函數，
+在 (III) 中取第三個函數，$\cdots$）：
+\[
+    u^{(1)}(x)=u_1^{(1)}(x),\quad
+    u^{(2)}(x)=u_2^{(2)}(x),\quad
+    u^{(3)}(x)=u_3^{(3)}(x),\quad
+    \cdots,\quad
+    u^{(k)}(x)=u_k^{(k)}(x),\cdots .
+    \tag{*}
+\]
+今證明此序列在所有 $x=x^j\ (j=1,2,\cdots)$ 上均收斂。因為函數序列
+\[
+    u^{(k)}(x)=u_k^{(k)}(x),\quad
+    u^{(k+1)}(x)=u_{k+1}^{(k+1)}(x),\cdots
+    \tag{**}
+\]
+為序列 $(k)$ 的子序列，由序列 $(k)$ 當 $x=x^k$ 時收斂得出序列 (**)
+從而 (*) 當 $x=x^k$ 時收斂。
+
+\noindent\textbf{定理 9}\quad
+在 $L^1(R^n)$ 中有界的非負函數序列必有弱收斂於某個有界測度的子序列。
+
+\noindent\textbf{證}\quad
+設 $\{u_k\}\subset L^1(R^n)$ 滿足
+\[
+    u_k(x)\ge0\quad a.e.\text{ 在 }R^n\text{ 中},
+    \tag{8}
+\]
+\[
+    \int_{R^n}u_k(x)\,dx\le C\ (\text{常數}),\quad k=1,2,\cdots .
+    \tag{9}
+\]
+今證 $\{u_k\}$ 必有弱收斂於某個測度 $\mu$ 的子序列。由定理 4，等式
+\[
+    \mu_k(A)=\int_Au_k(x)\,dx
+    \tag{10}
+\]
+定義了 $R^n$ 上的一個測度，且有
+\[
+    \int_{R^n}\varphi(x)u_k(x)\,dx
+    =
+    \int_{R^n}\varphi(x)\,d\mu_k
+    \qquad
+    \forall\,\varphi\in L^\infty(R^n).
+    \tag{11}
+\]
+
+測度 $\mu_k$ 對應的分布函數為
+\[
+    \begin{aligned}
+        F_k(x)
+         & =F_k(x_1,\cdots,x_n)
+        =\mu_k(-\infty,x]                \\
+         & =\int_{-\infty}^{x}u_k(t)\,dt
+        =\int_{-\infty}^{x_1}\cdots\int_{-\infty}^{x_n}
+        u_k(t_1,\cdots,t_n)\,dt_1\cdots dt_n .
+    \end{aligned}
+    \tag{12}
+\]
+
+\newpage
+% =========================================================
+% 原書第 320 頁
+% =========================================================
+
+設 $A=\{r^j\}$ 為 $R^n$ 中所有有理點（坐標均為有理數的點）的集合。由
+(12)、(8) 及 (9) 有
+\[
+    0\le F_k(x)\le\int_{R^n}u_k(x)\,dx\le C,
+    \qquad
+    \text{當 }x\in R^n,\ k=1,2,\cdots .
+    \tag{13}
+\]
+因此，由引理 1 知道，序列 $\{F_k(x)\}$ 有在所有有理點
+$r^j\ (j=1,2,\cdots)$ 上均收斂的子序列 $\{F^{(k)}(x)\}$。因而在
+$R^n$ 的有理點集 $A=\{r^j\}$ 上定義了一個函數
+\[
+    \psi(r^j)=\lim_{k\to\infty}F^{(k)}(r^j),
+    \qquad j=1,2,\cdots .
+    \tag{14}
+\]
+由 (8) 及 (12) 知道 $F^{(k)}(x)$ 為單調增函數，再由 (14) 知道
+$\psi$ 為有理點集 $A=\{r^j\}$ 上的單調增函數。對任意 $x\in R^n$，令
+\[
+    \psi(x)=\inf_{\substack{r^j\in A\\ r^j>x}}\psi(r^j),
+    \tag{15}
+\]
+則 $\psi(x)$ 在 $R^n$ 上也是單調增函數，且是左連續的，即 $\psi$ 為
+$R^n$ 上的分布函數。今證對函數 $\psi$ 的任意連續點 $x\in R^n$ 有
+\[
+    \lim_{k\to\infty}F^{(k)}(x)=\psi(x).
+    \tag{16}
+\]
+對任意 $\varepsilon>0$，由於 $\psi$ 在 $x$ 處連續，必存在有理點
+$r^j,r^{j'}\in A$ 使得
+\[
+    r^j<x<r^{j'},
+    \qquad
+    |\psi(r^j)-\psi(x)|<\frac{\varepsilon}{2},
+    \qquad
+    |\psi(r^{j'})-\psi(x)|<\frac{\varepsilon}{2}.
+\]
+對 $r^j$ 與 $r^{j'}$，由 (14)，存在正整數 $k_0$ 使得
+\[
+    |F^{(k)}(r^j)-\psi(r^j)|<\frac{\varepsilon}{2},
+    \qquad
+    |F^{(k)}(r^{j'})-\psi(r^{j'})|<\frac{\varepsilon}{2}
+    \quad\text{當 }k>k_0.
+\]
+因此，當 $k>k_0$ 時有
+\[
+    \psi(x)-\varepsilon
+    <
+    F^{(k)}(r^j)
+    \le
+    F^{(k)}(x)
+    \le
+    F^{(k)}(r^{j'})
+    <
+    \psi(x)+\varepsilon,
+\]
+此即
+\[
+    |F^{(k)}(x)-\psi(x)|<\varepsilon
+    \qquad \text{當 }k>k_0.
+\]
+這就證明了 (16) 對 $\psi$ 的任意連續點均成立，從而當 $k\to\infty$ 時
+\[
+    F^{(k)}(a,b]
+    =
+    \Delta_{b_1}^{a_1}\cdots\Delta_{b_n}^{a_n}
+    F^{(k)}(x_1,\cdots,x_n)
+    \longrightarrow
+    \Delta_{b_1}^{a_1}\cdots\Delta_{b_n}^{a_n}
+    \psi(x_1,\cdots,x_n)
+    =
+    \psi(a,b].
+    \tag{17}
+\]
+
+\newpage
+% =========================================================
+% 原書第 321 頁
+% =========================================================
+
+對 $\psi$ 的所有連續點 $a,b$ 成立。令
+\[
+    \mu(a,b]=\psi(a,b],
+\]
+則由 Ash\textsuperscript{[10]} Theorem 1.4.9，$\mu$ 可唯一地擴張成
+$R^n$ 上的 Lebesgue--Stieltjes 測度。因 $\{F^{(k)}\}$ 為 $\{F_k\}$ 的
+子序列，由 (12) 可設 $\{u^{(k)}\}$ 為 $\{u_k\}$ 的子序列，使得
+\[
+    F^{(k)}(x)
+    =
+    \mu^{(k)}(-\infty,x]
+    =
+    \int_{-\infty}^{x}u^{(k)}(t)\,dt.
+\]
+由 (10) 知 $F^{(k)}$ 對應的測度 $\mu^{(k)}$ 為
+\[
+    \mu^{(k)}(A)=\int_Au^{(k)}(x)\,dx.
+\]
+且由 (11) 有
+\[
+    \int_{R^n}\varphi(x)u^{(k)}(x)\,dx
+    =
+    \int_{R^n}\varphi\,d\mu^{(k)}
+    \qquad
+    \forall\,\varphi\in L^\infty(R^n).
+    \tag{18}
+\]
+由 (17)，根據 Ash\textsuperscript{[10]} Comments 4.5.2 及
+Theorem 4.5.1 得出
+\[
+    \int_{R^n}\varphi\,d\mu^{(k)}
+    \longrightarrow
+    \int_{R^n}\varphi\,d\mu
+    \qquad
+    \forall\,\varphi\in L^\infty(R^n)\cap C(R^n).
+    \tag{19}
+\]
+由 (18) 及 (19) 有
+\[
+    \int_{R^n}\varphi u^{(k)}\,dx
+    \longrightarrow
+    \int_{R^n}\varphi\,d\mu
+    \qquad
+    \forall\,\varphi\in L^\infty(R^n)\cap C(R^n).
+    \tag{20}
+\]
+這就證明了 $\{u_k\}$ 有子序列 $\{u^{(k)}\}$，$\{u^{(k)}\}$ 弱收斂於
+測度 $\mu$。在 (20) 中取 $\varphi=1$ 得出
+\[
+    \int_{R^n}u^{(k)}\,dx
+    \longrightarrow
+    \int_{R^n}d\mu
+    =
+    \mu(R^n).
+\]
+由於 $u^{(k)}$ 滿足條件 (9)，故由上式得出
+\[
+    \mu(R^n)\le C,
+\]
+即測度 $\mu$ 是有界的。
+
+\newpage
+% =========================================================
+% 原書第 322 頁
+% =========================================================
+
+\begin{center}
+    {\Large\bfseries 附錄 2\quad $C(\overline{\Omega})$ 及 $L^p(\Omega)$ 中列緊性定理的證明}
+\end{center}
+
+設 $\Omega$ 是 $R^n$ 中的有界區域。本附錄給出
+$C(\overline{\Omega})$ 中列緊性定理 2.1.1 及
+$L^p(\Omega)$ 中列緊性定理 2.1.2 的證明。
+
+\noindent\textbf{定理 2.1.1（Arzela--Ascoli）之證}\quad
+設 $\{u_k(x)\}$ 為 $S$ 的任一子序列，由條件 (i)，對常數 $K>0$ 有
+\[
+    |u_k(x)|\le K
+    \qquad
+    \text{當 }x\in\overline{\Omega},\ k=1,2,\cdots .
+    \tag{1}
+\]
+以 $A=\{r_j\}$ 表示 $\overline{\Omega}$ 中所有有理點（坐標為有理數的點）的集合，
+它是可數的。根據附錄 1 引理 1，序列 $\{u_k(x)\}$ 有在所有有理點
+$r_j\ (j=1,2,\cdots)$ 上均收斂的子序列 $\{u^{(k)}(x)\}$。由條件 (ii)，
+對任意 $\varepsilon>0$，存在 $\delta=\delta(\varepsilon)>0$ 使得對所有
+$k=1,2,\cdots$ 有
+\[
+    |u^{(k)}(x)-u^{(k)}(y)|<\varepsilon
+    \qquad
+    \text{當 }x,y\in\overline{\Omega},\ |x-y|<\delta .
+    \tag{2}
+\]
+因為有理點集 $A=\{r_j\}$ 在 $\overline{\Omega}$ 中稠密，所以開球集
+$\{B_\delta(r_j)\mid r_j\in A\}$ 覆蓋 $\overline{\Omega}$，而
+$\overline{\Omega}$ 為有界閉集，故 $\overline{\Omega}$ 為開球集
+$\{B_\delta(r_j)\mid r_j\in A\}$ 中有限個開球
+\[
+    \mathscr{B}=\{B_\delta(r_1),\cdots,B_\delta(r_m)\}
+\]
+所覆蓋。因為 $u^{(k)}(x)$ 在 $x=r_j\ (j=1,2,\cdots,m)$ 處收斂，故存在正整數
+$N$，使得對 $j=1,2,\cdots,m$ 均有
+\[
+    |u^{(k)}(r_j)-u^{(l)}(r_j)|<\varepsilon
+    \qquad
+    \text{當 }k,l>N.
+    \tag{3}
+\]
+對任意 $x\in\overline{\Omega}$，由於 $\mathscr{B}$ 覆蓋 $\overline{\Omega}$，
+存在 $r_j\in A$ 使得
+\[
+    |x-r_j|<\delta .
+    \tag{4}
+\]
+於是當 $k,l>N$ 時，由 (4)、(2)、(3) 有
+\[
+    \begin{aligned}
+        |u^{(k)}(x)-u^{(l)}(x)|
+         & \le
+        |u^{(k)}(x)-u^{(k)}(r_j)|
+        +
+        |u^{(k)}(r_j)-u^{(l)}(r_j)|              \\
+         & \quad+
+        |u^{(l)}(r_j)-u^{(l)}(x)|                \\
+         & <\varepsilon+\varepsilon+\varepsilon.
+    \end{aligned}
+\]
+因為 $\{u^{(k)}(x)\}$ 在 $\overline{\Omega}$ 上一致收斂，即序列
+$\{u_k(x)\}$ 有子序列 $\{u^{(k)}(x)\}$ 在 $C(\overline{\Omega})$ 中收斂。
+證完。
+
+\newpage
+% =========================================================
+% 原書第 323 頁
+% =========================================================
+
+為了證明 $L^p(\Omega)$ 中的列緊性定理 2.1.2，需要引進下列定義。
+
+\noindent\textbf{定義}\quad
+設 $A$ 與 $B$ 都是度量空間 $X$ 的子集，$\varepsilon>0$。如果對任一點
+$x\in A$ 都可找出一點 $y\in B$，使得
+\[
+    \rho(x,y)<\varepsilon,
+\]
+則稱 $B$ 為 $A$ 的 $\varepsilon$ 網。
+
+\noindent\textbf{定理 1（Hausdorff）}\quad
+設 $X$ 是完備的度量空間，$A$ 是 $X$ 的子集。
+$A$ 是 $X$ 的列緊集的充要條件是：對任意正數 $\varepsilon$ 都有
+$A$ 的有限 $\varepsilon$ 網存在。
+
+\noindent\textbf{證}\quad
+先證明條件是充分的。設對任意正數 $\varepsilon$ 都有 $A$ 的有限
+$\varepsilon$ 網存在。從而對每一個
+\[
+    \varepsilon_n=\frac1n,
+\]
+存在 $A$ 的有限 $\varepsilon_n$ 網
+\[
+    M_n=\{x_1^{(n)},x_2^{(n)},\cdots,x_{k_n}^{(n)}\},
+\]
+使得
+\[
+    A\subset\bigcup_{i=1}^{k_n}B_{1/n}(x_i^{(n)}),
+    \qquad n=1,2,\cdots .
+\]
+設 $T$ 是 $A$ 的一個無窮子集，則由
+\[
+    T\subset A\subset \bigcup_{i=1}^{k_1}B_1(x_i^{(1)}),
+\]
+在 $B_1(x_1^{(1)}),\cdots,B_1(x_{k_1}^{(1)})$ 中至少有一個球含有
+$T$ 的無窮子集。設 $T$ 的無窮子集
+\[
+    T_1\subset B_1(x_1),
+    \qquad
+    x_1\in\{x_1^{(1)},\cdots,x_{k_1}^{(1)}\}.
+\]
+由於
+\[
+    T_1\subset T\subset A\subset
+    \bigcup_{i=1}^{k_2}B_{1/2}(x_i^{(2)}),
+\]
+同理，存在無窮子集 $T_2\subset T_1$ 使得
+\[
+    T_2\subset B_{1/2}(x_2),
+    \qquad
+    x_2\in\{x_1^{(2)},\cdots,x_{k_2}^{(2)}\}.
+\]
+照此類推，得到 $T$ 的無窮個無窮子集
+\[
+    T\supset T_1\supset T_2\supset\cdots\supset T_n\supset T_{n+1}\supset\cdots ,
+\]
+且存在
+\[
+    x_n\in\{x_1^{(n)},x_2^{(n)},\cdots,x_{k_n}^{(n)}\}
+\]
+使得
+\[
+    T_n\subset B_{1/n}(x_n),\qquad n=1,2,3,\cdots .
+\]
+因而 $T_n$ 中任意兩點的距離小於 $\frac2n$。依次取
+\[
+    t_1\in T_1,\quad
+    t_2\in T_2\setminus\{t_1\},\quad
+    t_3\in T_3\setminus\{t_1,t_2\},\quad\cdots,
+\]
+\[
+    t_n\in T_n\setminus\{t_1,\cdots,t_{n-1}\},
+\]
+
+\newpage
+% =========================================================
+% 原書第 324 頁
+% =========================================================
+
+得到序列 $\{t_n\}\subset T$。對任意正整數 $k$ 及 $n$ 有
+\[
+    t_n\in T_n,\qquad
+    t_{n+k}\in T_{n+k}\subset T_n.
+\]
+由此得出
+\[
+    \rho(t_n,t_{n+k})<\frac2n\to0
+    \qquad \text{當 }n\to\infty.
+\]
+即 $\{t_n\}$ 是 $X$ 中的 Cauchy 序列。因為 $X$ 為完備的度量空間，
+於是 $\{t_n\}$ 在 $X$ 中收斂。這就證明了 $A$ 的任意無窮子集 $T$
+都有收斂的子序列 $\{t_n\}$，所以 $A$ 是 $X$ 的列緊集。
+
+再證明條件是必要的。用反證法：假設對某個 $\varepsilon_0>0$ 使得 $A$
+沒有 $\varepsilon_0$ 網。任取 $x_1\in A$，必存在 $x_2\in A$ 使
+\[
+    \rho(x_1,x_2)\ge\varepsilon_0,
+\]
+否則 $\{x_1\}$ 就是 $A$ 的有限 $\varepsilon_0$ 網。同時，又必存在
+$x_3\in A$ 使
+\[
+    \rho(x_i,x_3)\ge\varepsilon_0,\qquad i=1,2,
+\]
+否則 $\{x_1,x_2\}$ 就是 $A$ 的有限 $\varepsilon_0$ 網。這樣繼續下去，
+對所有正整數 $n=2,3,\cdots$，必存在 $x_n\in A$ 使
+\[
+    \rho(x_m,x_n)\ge\varepsilon_0
+    \qquad \forall\,m<n.
+\]
+$A$ 的這個子序列 $\{x_n\}$ 顯然沒有收斂的子序列。因此 $A$ 不是 $X$
+的列緊集。
+
+\noindent\textbf{推論}\quad
+設 $A$ 是完備度量空間 $X$ 的子集。若對任意 $\varepsilon>0$ 都有
+$A$ 的列緊 $\varepsilon$ 網存在，則 $A$ 是 $X$ 的列緊集。
+
+\noindent\textbf{證}\quad
+對任意 $\varepsilon>0$，設 $M$ 是 $A$ 的一個列緊
+$\frac{\varepsilon}{2}$ 網。由定理 1 知道 $M$ 有有限
+$\frac{\varepsilon}{2}$ 網 $C$ 存在。今證 $C$ 是 $A$ 的有限
+$\varepsilon$ 網。對任一點 $x\in A$，必有 $y\in M$ 存在，使得
+\[
+    \rho(x,y)<\frac{\varepsilon}{2}.
+\]
+對 $y\in M$，又有 $z\in C$ 存在，使得
+\[
+    \rho(y,z)<\frac{\varepsilon}{2}.
+\]
+因而對任一點 $x\in A$，在 $C$ 中存在點 $z$ 使得
+\[
+    \rho(x,z)\le\rho(x,y)+\rho(y,z)
+    <
+    \frac{\varepsilon}{2}+\frac{\varepsilon}{2}
+    =
+    \varepsilon,
+\]
+即 $C$ 是 $A$ 的有限 $\varepsilon$ 網。
+
+\newpage
+% =========================================================
+% 原書第 325 頁
+% =========================================================
+
+\noindent\textbf{定理 2（Kolmogorov）}\quad
+設 $\Omega$ 是 $R^n$ 中的有界區域，$1\le p<\infty$。如果
+$S\subset L^p(\Omega)$ 滿足條件
+
+\noindent
+(i) $S$ 有界，即存在常數 $K>0$ 使得
+\[
+    \|u\|_p\le K
+    \qquad
+    \forall\,u\in S,
+    \tag{5}
+\]
+
+\noindent
+(ii) $S$ 中的函數 $u$ 的平均函數一致收斂於 $u$，即對任意正數
+$\varepsilon>0$，存在 $h_0=h_0(\varepsilon)>0$，$h_0$ 與 $u$ 無關，使得
+\[
+    \|u_h-u\|_p<\varepsilon
+    \qquad
+    \text{當 }u\in S,\ 0<h<h_0,
+    \tag{6}
+\]
+其中 $u_h$ 由 (5.2.2) 定義，且在 $\Omega$ 外視 $u=0$。
+那麼，$S$ 是 $L^p(\Omega)$ 中的列緊集。
+
+\noindent\textbf{證}\quad
+任意取定 $h>0$，由 (5.2.2)，函數 $u$ 的平均函數為
+\[
+    u_h(x)=\int_{R^n}\rho_h(x-y)u(y)\,dy.
+    \tag{7}
+\]
+先證明由下式定義的集合 $S_h$ 是 $C(\overline{\Omega})$ 中的列緊集：
+\[
+    S_h=\{u_h\mid u\in S\}\subset C(\overline{\Omega}).
+    \tag{8}
+\]
+由 (7)、(5) 及 (5.2.1) 有
+\[
+    |u_h(x)|
+    \le
+    \|\rho_h\|_{p'}\|u\|_p
+    \le
+    C_hK
+    \qquad
+    \text{當 }u\in S,\ x\in\overline{\Omega},
+\]
+其中 $C_h$ 是只與 $h$ 有關的常數。因此，$S_h$ 是一致有界的。由
+$\rho_h\in C_0^\infty(R^n)$ 知 $\rho_h$ 在 $R^n$ 中是一致連續的，對任意
+$\varepsilon>0$，存在 $\delta=\delta(\varepsilon)>0$ 使得
+\[
+    |\rho_h(x)-\rho_h(z)|
+    <
+    \frac{\varepsilon}
+    {|\Omega|^{1-\frac1p}K}
+    \qquad
+    \text{當 }|x-z|<\delta.
+    \tag{9}
+\]
+由 (7)、(9) 及 (5) 知道：當 $|x-z|<\delta$ 時有
+\[
+    \begin{aligned}
+        |u_h(x)-u_h(z)|
+         & \le
+        \int_{R^n}
+        |\rho_h(x-y)-\rho_h(z-y)|\,|u(y)|\,dy \\
+         & <
+        \int_{R^n}
+        \frac{\varepsilon}
+        {|\Omega|^{1-\frac1p}K}|u(y)|\,dy     \\
+         & \le
+        \frac{\varepsilon}
+        {|\Omega|^{1-\frac1p}K}
+        |\Omega|^{1-\frac1p}\|u\|_p
+        =
+        \varepsilon
+        \qquad \forall\,u\in S,
+    \end{aligned}
+\]
+
+\newpage
+% =========================================================
+% 原書第 326 頁
+% =========================================================
+
+即 $S_h$ 是等度連續的。由定理 2.1.1 知 $S_h$ 在
+$C(\overline{\Omega})$ 中是列緊的。因此，由 $\Omega$ 是有界區域易知
+$S_h$ 在 $L^p(\Omega)$ 中也是列緊的。由條件 (ii)，任取
+$\varepsilon>0$，存在 $h_0=h_0(\varepsilon)>0$ 使得
+\[
+    \|u_h-u\|_p<\varepsilon
+    \qquad
+    \text{當 }u\in S,\ 0<h<h_0,
+\]
+即 $S_h$ 為 $S$ 的列緊 $\varepsilon$ 網。由定理 1 的推論知道 $S$ 是列緊的。
+
+\noindent\textbf{定理 2.1.2（Riesz F.）之證}\quad
+只需證明由 (8) 定義的 $S_h$ 滿足定理 2 的條件 (ii)。由本定理的條件 (ii)，
+對任意 $\varepsilon>0$，存在 $h_0=h_0(\varepsilon)>0$ 使得
+\[
+    \|u(x+h)-u(x)\|_p<\varepsilon
+    \qquad
+    \text{當 }|h|<h_0,\ u\in S.
+    \tag{10}
+\]
+由 (7)，利用 Holder 不等式後，再經變數代換 $y=z+x$ 得出
+\[
+    \begin{aligned}
+        |u_h(x)-u(x)|
+         & =
+        \left|
+        \int_{R^n}\rho_h(x-y)[u(y)-u(x)]\,dy
+        \right|       \\
+         & \le
+        \left(\int_{R^n}\rho_h(x-y)\,dy\right)^{1/p'}
+        \left(
+        \int_{R^n}
+        \rho_h(x-y)|u(y)-u(x)|^p\,dy
+        \right)^{1/p} \\
+         & =
+        \left(
+        \int_{R^n}
+        \rho_h(x-y)|u(y)-u(x)|^p\,dy
+        \right)^{1/p} \\
+         & =
+        \left(
+        \int_{R^n}
+        \rho_h(z)|u(x+z)-u(x)|^p\,dz
+        \right)^{1/p}.
+    \end{aligned}
+\]
+由此式及 (10) 得出
+\[
+    \begin{aligned}
+        \int_\Omega|u_h(x)-u(x)|^p\,dx
+         & \le
+        \int_{R^n}\int_{R^n}
+        \rho_h(z)|u(x+z)-u(x)|^p\,dz\,dx     \\
+         & =
+        \int_{R^n}\rho_h(z)\,dz
+        \int_{R^n}|u(x+z)-u(x)|^p\,dx        \\
+         & <
+        \varepsilon^p\int_{R^n}\rho_h(z)\,dz \\
+         & =
+        \varepsilon^p,
+        \qquad
+        \text{當 }|h|<h_0,\ u\in S.
+    \end{aligned}
+\]
+由此得出
+\[
+    \|u_h-u\|_p<\varepsilon
+    \qquad
+    \text{當 }u\in S,\ |h|<h_0,
+\]
+即定理 2 的條件 (ii) 成立。故由定理 2 得證。
+
+\end{document}

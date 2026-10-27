@@ -48,6 +48,214 @@ this information won't actually be needed for our applications to classical mech
     \tag{7.28}
 \end{equation}
 
+\StudyNote{複習註解：7.28 式的兩個簡單例子}{
+    7.28 式是多變數函數的二階 Taylor 展開：
+    \[
+        f(\mathbf y+\delta\mathbf y)-f(\mathbf y)
+        =
+        \frac{\partial f}{\partial y_i}\delta y_i
+        +
+        \frac12
+        \frac{\partial^2 f}{\partial y_i\partial y_j}
+        \delta y_i\delta y_j+\cdots .
+    \]
+
+    \textbf{例 1：$f(x,y)=x^2+y^2$}
+
+    取展開點 $(1,2)$。有
+    \[
+        \nabla f=(2x,2y),
+    \]
+    所以在 $(1,2)$，
+    \[
+        \nabla f=(2,4).
+    \]
+
+    Hessian matrix 為
+    \[
+        H=
+        \begin{pmatrix}
+            2 & 0 \\
+            0 & 2
+        \end{pmatrix}.
+    \]
+
+    因此
+    \[
+        \Delta f
+        =
+        2\delta x+4\delta y
+        +
+        \delta x^2+\delta y^2.
+    \]
+
+    這裡一階項描述主要變化方向，二階項描述曲率。
+
+    \medskip
+
+    \textbf{例 2：$f(x,y)=x^2-y^2$}
+
+    取 stationary point $(0,0)$。因為
+    \[
+        \nabla f=(2x,-2y),
+    \]
+    所以在 $(0,0)$，
+    \[
+        \nabla f=(0,0).
+    \]
+
+    因此一階變化消失，只剩二階項。Hessian matrix 為
+    \[
+        H=
+        \begin{pmatrix}
+            2 & 0  \\
+            0 & -2
+        \end{pmatrix},
+    \]
+    所以
+    \[
+        \Delta f
+        =
+        \delta x^2-\delta y^2.
+    \]
+
+    若沿 $x$ 方向，令 $\delta y=0$，則
+    \[
+        \Delta f=\delta x^2>0.
+    \]
+
+    若沿 $y$ 方向，令 $\delta x=0$，則
+    \[
+        \Delta f=-\delta y^2<0.
+    \]
+
+    因此在同一個 stationary point 附近，有些方向使函數增加，
+    有些方向使函數減少，所以 $(0,0)$ 是鞍點，而不是極大值或極小值。
+
+    \[
+        \boxed{
+            \text{7.28 式的二階項決定 stationary point 附近的曲率，
+                並自然導向 Hessian matrix。}
+        }
+    \]
+}
+
+
+\StudyNote{複習註解：為什麼二階項可以寫成 $\frac12\delta\mathbf y^T H\delta\mathbf y$？}{
+    這不是形式上剛好可以這樣寫，而是由 7.28 式中的二階項按照矩陣乘法系統整理而來。
+
+    7.28 式的二階項為
+    \[
+        \frac12
+        \frac{\partial^2 f}{\partial y_i\partial y_j}
+        \delta y_i\delta y_j.
+    \]
+
+    其中重複指標 $i,j$ 表示要對所有 $i,j$ 加總，因此更完整地寫成
+    \[
+        \frac12
+        \sum_{i=1}^{n}\sum_{j=1}^{n}
+        \frac{\partial^2 f}{\partial y_i\partial y_j}
+        \delta y_i\delta y_j.
+    \]
+
+    定義 Hessian matrix
+    \[
+        H_{ij}
+        =
+        \frac{\partial^2 f}{\partial y_i\partial y_j},
+    \]
+    以及擾動向量
+    \[
+        \delta\mathbf y
+        =
+        \begin{pmatrix}
+            \delta y_1 \\
+            \delta y_2 \\
+            \vdots     \\
+            \delta y_n
+        \end{pmatrix}.
+    \]
+
+    依照矩陣乘法，
+    \[
+        \delta\mathbf y^T H\delta\mathbf y
+        =
+        \sum_{i=1}^{n}\sum_{j=1}^{n}
+        \delta y_iH_{ij}\delta y_j.
+    \]
+
+    代入 $H_{ij}$ 的定義便得到
+    \[
+        \delta\mathbf y^T H\delta\mathbf y
+        =
+        \sum_{i,j}
+        \frac{\partial^2 f}{\partial y_i\partial y_j}
+        \delta y_i\delta y_j.
+    \]
+
+    因此二階 Taylor 項可以寫成
+    \[
+        \boxed{
+            \Delta f
+            \approx
+            \frac12\delta\mathbf y^T H\delta\mathbf y.
+        }
+    \]
+
+    以二變數為例，
+    \[
+        H=
+        \begin{pmatrix}
+            f_{xx} & f_{xy} \\
+            f_{yx} & f_{yy}
+        \end{pmatrix},
+        \qquad
+        \delta\mathbf y=
+        \begin{pmatrix}
+            \delta x \\
+            \delta y
+        \end{pmatrix},
+    \]
+    則
+    \[
+        \delta\mathbf y^T H\delta\mathbf y
+        =
+        f_{xx}(\delta x)^2
+        +
+        f_{xy}\delta x\delta y
+        +
+        f_{yx}\delta y\delta x
+        +
+        f_{yy}(\delta y)^2.
+    \]
+
+    若 $f\in C^2$，則 $f_{xy}=f_{yx}$，所以
+    \[
+        \delta\mathbf y^T H\delta\mathbf y
+        =
+        f_{xx}(\delta x)^2
+        +
+        2f_{xy}\delta x\delta y
+        +
+        f_{yy}(\delta y)^2,
+    \]
+    正好就是多變數 Taylor 展開的二階項。
+
+    因此可以記成
+    \[
+        \boxed{
+            \text{二階偏導的雙重求和}
+            \Longleftrightarrow
+            \text{Hessian 所形成的矩陣二次型}.
+        }
+    \]
+
+    把二階項寫成矩陣形式的好處，是後面可以直接利用對稱矩陣的譜定理，
+    將 Hessian 正交對角化，再由特徵值的正負判斷 stationary point 的性質。
+}
+
+
 \noindent\pnum{45}We assume that $\mathbf{y}$ is a stationary point, so $\partial f/\partial y_i(\mathbf{y})=0$. That leaves us with the second order variation which is determined by the \textit{Hessian} matrix
 \begin{equation}
     H_{ij}(\mathbf{y})=\frac{\partial^2 f}{\partial y_i\partial y_j}(\mathbf{y}).
@@ -170,6 +378,78 @@ $\eta(a)=\eta(b)=0$. Moreover, we'll take a path that solves the Euler--Lagrange
     +\frac{\partial^2 L}{\partial y'^2}\eta'^2\right\}.
     \tag{7.33}
 \end{equation}
+\StudyNote{複習註解：7.33 式與二階變分的角色}{
+對泛函
+\[
+    F[y]=\int_a^b L(y,y',x)\,dx,
+\]
+令路徑做變化
+\[
+    y(x)\to y(x)+\epsilon\eta(x),
+\]
+且固定端點，因此
+\[
+    \eta(a)=\eta(b)=0.
+\]
+
+前面的一階變分
+\[
+    \delta F=0
+\]
+給出 Euler--Lagrange 方程，它只能告訴我們 $y(x)$ 是 stationary path，
+但還不能判斷它是極小、極大或其他情形。
+
+因此需要研究二階變分。
+
+二階項原本包含
+\[
+    \eta^2,\qquad \eta\eta',\qquad (\eta')^2.
+\]
+利用
+\[
+    2\eta\eta'=(\eta^2)'
+\]
+對混合項做分部積分，並利用固定端點條件
+$\eta(a)=\eta(b)=0$ 消去邊界項，可整理成
+\[
+    \delta^2F[y]
+    =
+    \frac12\epsilon^2
+    \int_a^b
+    \left\{
+    \left[
+        \frac{\partial^2L}{\partial y^2}
+        -
+        \frac{d}{dx}
+        \left(
+        \frac{\partial^2L}{\partial y\,\partial y'}
+        \right)
+        \right]\eta^2
+    +
+    \frac{\partial^2L}{\partial y'^2}(\eta')^2
+    \right\}dx.
+\]
+
+這就是泛函版本的二次型。
+
+普通多變數函數中，我們研究
+\[
+    \delta\mathbf y^T H\delta\mathbf y;
+\]
+在變分法中，對應的角色則由
+\[
+    \delta^2F[y]
+\]
+扮演。
+
+因此可以記成
+\[
+    \boxed{
+        \text{Euler--Lagrange 方程找 stationary path，
+            二階變分判斷 stationary path 的性質。}
+    }
+\]
+}
 
 \noindent\pnum{51}Here we've thrown away the boundary term on the grounds that $\eta(a)=\eta(b)=0$. We've also renamed this term $\delta^2 F$ to emphasise that it is the second-order variation.
 
@@ -186,6 +466,183 @@ $\eta(a)=\eta(b)=0$. Moreover, we'll take a path that solves the Euler--Lagrange
 \end{equation}
 
 \noindent\pnum{54}This is known as the \textit{Legendre condition}. We recognise $\partial^2 L/\partial y'^2$ as the final term in (7.33). The idea behind the Legendre condition is that if (7.35) does \textit{not} hold, so that $\partial^2 L/\partial y'^2<0$ for some region, then we can always find a test function so that $\eta$ is small in that region while $\eta'$ is large and make the final term in (7.33) arbitrarily negative so that $\delta^2 F<0$. The Legendre condition is therefore necessary for the path to be a minimum. It is not, however, sufficient.
+\StudyNote{複習註解：為什麼 Legendre condition 只是必要條件？}{
+若 $y(x)$ 真的是泛函的局部極小路徑，則對所有非零變分函數
+$\eta(x)$，應滿足
+\[
+    \delta^2F[y]>0.
+\]
 
+但直接檢查所有可能的 $\eta(x)$ 通常很困難，因此作者提出較簡單的必要條件
+\[
+    \boxed{
+        \frac{\partial^2L}{\partial y'^2}\ge0.
+    }
+\]
+
+原因是 7.33 式中有一項
+\[
+    \frac{\partial^2L}{\partial y'^2}(\eta')^2.
+\]
+
+由於
+\[
+    (\eta')^2\ge0,
+\]
+如果在某一區域內
+\[
+    \frac{\partial^2L}{\partial y'^2}<0,
+\]
+就可以選擇一個變分函數 $\eta(x)$，使該區域內 $\eta$ 很小但
+$\eta'$ 很大。
+
+此時含有 $\eta^2$ 的項可以很小，而
+\[
+    \frac{\partial^2L}{\partial y'^2}(\eta')^2
+\]
+會成為主要貢獻，並使
+\[
+    \delta^2F[y]<0,
+\]
+這和局部極小值所需要的二階變分非負相矛盾。
+
+因此若 $y(x)$ 是局部極小路徑，至少必須有
+\[
+    \frac{\partial^2L}{\partial y'^2}\ge0.
+\]
+
+但這只檢查了 7.33 式中的一部分。
+完整二階變分還包含
+\[
+    \left[
+        \frac{\partial^2L}{\partial y^2}
+        -
+        \frac{d}{dx}
+        \left(
+        \frac{\partial^2L}{\partial y\,\partial y'}
+        \right)
+        \right]\eta^2.
+\]
+
+所以即使 Legendre condition 成立，也不能保證
+\[
+    \delta^2F[y]>0
+\]
+對所有 $\eta$ 都成立。
+
+因此
+\[
+    \boxed{
+        \text{Legendre condition 是局部極小的必要條件，
+            但不是充分條件。}
+    }
+\]
+}
+
+\StudyNote{複習註解：這一段真正要掌握的重點}{
+這一段最重要的是把「普通函數的二階判別」推廣到泛函。
+
+對泛函
+\[
+    F[y],
+\]
+Euler--Lagrange 方程來自一階變分
+\[
+    \delta F=0,
+\]
+它只能告訴我們 $y(x)$ 是 stationary path，
+但不能直接判斷它是極小、極大或其他情形。
+
+因此還要研究二階變分
+\[
+    \delta^2F[y].
+\]
+
+對局部極小值而言，理想情況是對所有非零變分函數 $\eta(x)$ 都有
+\[
+    \delta^2F[y]>0.
+\]
+
+所以可以把邏輯記成
+\[
+    \boxed{
+        \delta F=0
+        \Longrightarrow
+        \text{找到 stationary path}
+    }
+\]
+以及
+\[
+    \boxed{
+        \delta^2F
+        \Longrightarrow
+        \text{判斷 stationary path 的性質}
+    }.
+\]
+
+7.33 式把二階變分整理成
+\[
+    \delta^2F[y]
+    =
+    \frac12\epsilon^2
+    \int_a^b
+    \left\{
+    A(x)\eta^2
+    +
+    B(x)(\eta')^2
+    \right\}dx,
+\]
+其中
+\[
+    A(x)
+    =
+    \frac{\partial^2L}{\partial y^2}
+    -
+    \frac{d}{dx}
+    \left(
+    \frac{\partial^2L}{\partial y\,\partial y'}
+    \right),
+    \qquad
+    B(x)
+    =
+    \frac{\partial^2L}{\partial y'^2}.
+\]
+
+真正要判斷的是整個二階變分對所有 $\eta(x)$ 的正負，
+不是只看某一個二階偏導數。
+
+Legendre condition
+\[
+    \boxed{
+        \frac{\partial^2L}{\partial y'^2}\ge0
+    }
+\]
+只是局部極小值的必要條件之一。
+
+它的意思是：若某處
+\[
+    \frac{\partial^2L}{\partial y'^2}<0,
+\]
+就可以選擇一個變分函數，使 $\eta$ 很小但 $\eta'$ 很大，
+讓 $(\eta')^2$ 那一項主導並使
+\[
+    \delta^2F[y]<0,
+\]
+因此不可能是局部極小值。
+
+但即使 Legendre condition 成立，也不能保證整個
+\[
+    \delta^2F[y]
+\]
+一定為正，因為還要考慮 $A(x)\eta^2$ 那一項。
+
+所以最精簡地記：
+\[
+    \boxed{
+        \text{Euler--Lagrange 找駐定路徑，二階變分判斷性質，
+            Legendre condition 是極小值的必要條件。}
+    }
+\]
+}
 % End of section 7.1.3. No following-section text is included.
 \end{document}
